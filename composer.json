@@ -1,0 +1,17 @@
+{
+    "name": "gusta/fullcalendar-office365",
+    "autoload": {
+        "psr-4": {
+            "Gusta\\FullcalendarOffice365\\": "src/"
+        }
+    },
+    "require": {
+        "microsoft/microsoft-graph": "^2.1",
+        "league/oauth2-client": "^2.7"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}
