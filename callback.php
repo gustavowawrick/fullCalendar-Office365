@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 // Define as credenciais do aplicativo Office 365
 $clientId = '1e8d0d52-7a13-4af0-a104-84d82cf24b5d';
 $clientSecret = 'Ero8Q~Dow7ZQH1~_Fm1ySoogJUaya~kUH422KafS';
@@ -11,7 +9,7 @@ $redirectUri = 'http://localhost/fullcalendar-office365/callback.php';
 $authorizationCode = $_GET['code'];
 
 // Verifica se o código de autorização está presente na URL
-if (isset($authorizationCode)) {
+if(isset($authorizationCode)) {
     // Dados a serem enviados para obter o token de acesso
     $postData = [
         'client_id' => $clientId,
@@ -44,9 +42,28 @@ if (isset($authorizationCode)) {
 
         // Verifica se a resposta contém um token de acesso válido
         if ($responseData && isset($responseData['access_token'])) {
-            $_SESSION['access_token'] = $responseData['access_token'];
-            header('Location: calendar.html');
-            exit();
+            $accessToken = $responseData['access_token'];
+
+            // Endpoint da API do Microsoft Graph para obter os eventos do calendário do usuário
+            $graphApiEndpoint = 'https://graph.microsoft.com/v1.0/me/calendar/events';
+
+            // Configura a solicitação para a API do Microsoft Graph
+            curl_setopt($ch, CURLOPT_URL, $graphApiEndpoint);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Authorization: Bearer ' . $accessToken
+            ));
+
+            // Executa a solicitação para obter os eventos do calendário do usuário
+            $responseEvents = curl_exec($ch);
+
+            // Verifica se ocorreu algum erro durante a solicitação cURL
+            if (curl_errno($ch)) {
+                echo 'Erro ao obter eventos do Office 365: ' . curl_error($ch);
+            } else {
+                // Redireciona para a página calendar.html com o token de acesso e os eventos codificados na URL
+                header('Location: calendar.html?access_token=' . $accessToken . '&events=' . urlencode($responseEvents));
+                exit();
+            }
         } else {
             // Exibe uma mensagem de erro se não foi possível obter o token de acesso
             echo 'Erro ao obter token de acesso: Resposta inválida';
@@ -62,3 +79,5 @@ if (isset($authorizationCode)) {
     echo 'Código de autorização não encontrado.';
     // Você pode redirecionar para uma página de erro aqui se desejar
 }
+
+?>
