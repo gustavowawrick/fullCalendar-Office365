@@ -19,7 +19,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // Desativa a verificação do host SSL
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Desativa a verificação do peer SSL
 
-curl_setopt($ch, CURLOPT_POST, false);
+curl_setopt($ch, CURLOPT_POST, false); 
 
 // Executa a solicitação para obter os eventos do calendário do usuário
 $responseEvents = curl_exec($ch);
