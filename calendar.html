@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang='en'>
+
 <head>
   <meta charset='utf-8' />
   <!-- Inclui a biblioteca FullCalendar -->
@@ -8,28 +9,44 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <title>Calendário</title>
 </head>
+
 <body>
   <div id='calendar'></div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       // Obtém o elemento do calendário
       var calendarEl = document.getElementById('calendar');
       // Cria uma instância do FullCalendar
       var calendar = new FullCalendar.Calendar(calendarEl, {
         // Configuração inicial para exibir o calendário no modo de mês
-        initialView: 'dayGridMonth',
+        initialView: 'timeGridDay', themeSystem: 'bootstrap',
+        headerToolbar: {
+          left: 'today prev,next',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+        },
+        initialDate: '2023-11-06',
+        navLinks: true,
+        nowIndicator: true,
+        weekNumberCalculation: 'ISO',
+        editable: true,
+        selectable: true,
+        dayMaxEvents: true,
+        weekends: false,
+        locale: 'pt-br',
+        timeZone: 'America/Sao_Paulo',
         events: {
           // Define a URL do endpoint para obter os eventos do Office 365
-          url: 'callback.php', // Endpoint para obter eventos
+          url: 'consultaEventos.php', // Endpoint para obter eventos
           // Define o método HTTP como GET para solicitar os eventos
           method: 'GET',
           // Passa o token de acesso como parâmetro extra na solicitação
           extraParams: {
-            access_token: getParameterByName('access_token') // Passa o token de acesso como parâmetro
+            //access_token: getParameterByName('access_token') // Passa o token de acesso como parâmetro
           },
           // Função para lidar com falhas na obtenção dos eventos
-          failure: function() {
+          failure: function () {
             alert('Erro ao obter eventos do Office 365.');
           }
         }
@@ -42,7 +59,7 @@
       function getParameterByName(name, url = window.location.href) {
         name = name.replace(/[\[\]]/g, '\\$&');
         var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-            results = regex.exec(url);
+          results = regex.exec(url);
         if (!results) return null;
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
@@ -50,4 +67,5 @@
     });
   </script>
 </body>
+
 </html>
