@@ -19,15 +19,28 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // Desativa a verificação do host SSL
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Desativa a verificação do peer SSL
 
-curl_setopt($ch, CURLOPT_POST, false); 
+curl_setopt($ch, CURLOPT_POST, false);
 
 // Executa a solicitação para obter os eventos do calendário do usuário
-$responseEvents = curl_exec($ch);
+
+$responseEvents = json_decode(curl_exec($ch));
 
 // Verifica se ocorreu algum erro durante a solicitação cURL
 if (curl_errno($ch)) {
     echo 'Erro ao obter eventos do Office 365: ' . curl_error($ch);
 } else {
     // Redireciona para a página calendar.html com o token de acesso e os eventos codificados na URL
-    echo ($responseEvents);
+
+    $arrayItens = [];
+
+    foreach ($responseEvents->value as $itemCalendar) {
+        $item = new stdClass();
+        $item->title = $itemCalendar->subject;
+        $item->start = $itemCalendar->start->dateTime;
+        $item->end = $itemCalendar->end->dateTime;
+
+        $arrayItens[] = $item;
+    }
+
+    echo (json_encode($arrayItens));
 }
