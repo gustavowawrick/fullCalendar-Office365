@@ -35,12 +35,17 @@ if (curl_errno($ch)) {
 
     foreach ($responseEvents->value as $itemCalendar) {
         $item = new stdClass();
-        $item->title = $itemCalendar->subject;
         $item->start = $itemCalendar->start->dateTime;
         $item->end = $itemCalendar->end->dateTime;
-
+        $item->title = $itemCalendar->subject;
+        $item->author = $itemCalendar->organizer->emailAddress->name;
+        
+        // Atribui o valor do tipo do evento diretamente
+        $item->type = $itemCalendar->type;
+        
         $arrayItens[] = $item;
     }
+    
 
     echo (json_encode($arrayItens));
 }
