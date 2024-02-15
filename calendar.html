@@ -3,10 +3,11 @@
 
 <head>
   <meta charset='utf-8' />
-  <!-- Inclui a biblioteca FullCalendar -->
+  <!-- Biblioteca FullCalendar -->
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-  <!-- Inclui a biblioteca jQuery -->
+  <!-- Biblioteca jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link href="style.css" rel="stylesheet"> <!-- Incluindo o arquivo de estilo CSS -->
   <title>Calendário</title>
 </head>
 
@@ -15,18 +16,16 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Obtém o elemento do calendário
       var calendarEl = document.getElementById('calendar');
-      // Cria uma instância do FullCalendar
       var calendar = new FullCalendar.Calendar(calendarEl, {
-        // Configuração inicial para exibir o calendário no modo de mês
-        initialView: 'timeGridDay', themeSystem: 'bootstrap',
+        initialView: 'dayGridMonth',
+        themeSystem: 'bootstrap',
         headerToolbar: {
           left: 'today prev,next',
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
         },
-        initialDate: '2023-11-06',
+        initialDate: '2024-02-15',
         navLinks: true,
         nowIndicator: true,
         weekNumberCalculation: 'ISO',
@@ -36,26 +35,51 @@
         weekends: false,
         locale: 'pt-br',
         timeZone: 'America/Sao_Paulo',
+        eventContent: function (arg) {
+          // Obtém o tipo de visualização atual
+          var viewType = arg.view.type;
+          // Define o conteúdo do evento com base na visualização
+          var content = '<div class="fc-content">';
+          if (viewType === 'dayGridMonth') {
+            // Visualização de Mês: exibe hora de início, título, tipo e autor
+            content += '<span class="fc-time">' + formatDate(arg.event.start) + ' </span>';
+            content += '<span class="fc-title">' + arg.event.title + ' - </span>';
+            content += '<span class="fc-author">' + arg.event.extendedProps.author + '; </span>';
+            content += '<span class="fc-type">Reunião Microsoft Teams</span>';
+          } else if (viewType === 'timeGridWeek' || viewType === 'timeGridDay') {
+            // Visualização de Semana ou Dia: exibe título, tipo e autor
+            content += '<span class="fc-title">' + arg.event.title + ' - </span>';
+            content += '<span class="fc-author">' + arg.event.extendedProps.author + '; </span>';
+            content += '<span class="fc-type">Reunião Microsoft Teams</span>';
+          } else if (viewType === 'listWeek') {
+            // Visualização de Lista: exibe título, tipo e autor
+            content += '<span class="fc-title">' + arg.event.title + ' - </span>';
+            content += '<span class="fc-author">' + arg.event.extendedProps.author + '; </span>';
+            content += '<span class="fc-type">Reunião Microsoft Teams</span>';
+          }
+          content += '</div>';
+          return { html: content };
+        },
         events: {
-          // Define a URL do endpoint para obter os eventos do Office 365
-          url: 'consultaEventos.php', // Endpoint para obter eventos
-          // Define o método HTTP como GET para solicitar os eventos
+          url: 'consultaEventos.php',
           method: 'GET',
-          // Passa o token de acesso como parâmetro extra na solicitação
           extraParams: {
-            //access_token: getParameterByName('access_token') // Passa o token de acesso como parâmetro
           },
-          // Função para lidar com falhas na obtenção dos eventos
           failure: function () {
             alert('Erro ao obter eventos do Office 365.');
           }
         }
       });
 
-      // Renderiza o calendário
       calendar.render();
 
-      // Função para obter parâmetros da URL
+      function formatDate(date) {
+        // Cria um novo objeto de data com o fuso horário local
+        var localDate = new Date(date);
+        // Formata a data e hora no formato desejado usando o fuso horário local
+        return localDate.toLocaleString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
+      }
+
       function getParameterByName(name, url = window.location.href) {
         name = name.replace(/[\[\]]/g, '\\$&');
         var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
