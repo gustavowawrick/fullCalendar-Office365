@@ -24,7 +24,7 @@ body {
 }
 
 .fc-daygrid-event>div>.fc-title {
-    font-family: Bahnschrift;
+    font-family: Bahnschrift, Arial, sans-serif;
     color: #3D3E78;
 }
 
@@ -49,4 +49,25 @@ body {
     position: relative;
     top: 1.5px;
     margin-right: 3px;
+}
+
+#tooltip {
+    position: absolute;
+    z-index: 10;
+    background: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    padding: 5px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+}
+
+#tooltip.hidden {
+    display: none;
+}
+
+.tooltip {
+    font-family: Bahnschrift, Arial, sans-serif;
+    color: #333;
+    font-size: 90%;
 }
