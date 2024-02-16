@@ -7,7 +7,11 @@
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
   <!-- Biblioteca jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link href="style.css" rel="stylesheet"> <!-- Incluindo o arquivo de estilo CSS -->
+  <!-- Ícones Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <!-- Estilo CSS -->
+  <link href="style.css" rel="stylesheet">
+
   <title>Calendário</title>
 </head>
 
@@ -16,6 +20,18 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      const customLocale = {
+        weekText: 'Semana',
+        allDayText: 'Dia inteiro',
+        moreLinkText: 'mais',
+        today: 'Hoje',
+        month: 'Mês',
+        week: 'Semana',
+        day: 'Dia',
+        list: 'Lista',
+        dayHeaderFormat: { weekday: 'long' },
+      };
+
       var calendarEl = document.getElementById('calendar');
       var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -25,7 +41,6 @@
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
         },
-        initialDate: '2024-02-15',
         navLinks: true,
         nowIndicator: true,
         weekNumberCalculation: 'ISO',
@@ -34,25 +49,22 @@
         dayMaxEvents: true,
         weekends: false,
         locale: 'pt-br',
+        dayHeaderFormat: customLocale.dayHeaderFormat,
+        buttonText: customLocale,
         timeZone: 'America/Sao_Paulo',
         eventContent: function (arg) {
-          // Obtém o tipo de visualização atual
           var viewType = arg.view.type;
-          // Define o conteúdo do evento com base na visualização
           var content = '<div class="fc-content">';
           if (viewType === 'dayGridMonth') {
-            // Visualização de Mês: exibe hora de início, título, tipo e autor
-            content += '<span class="fc-time">' + formatDate(arg.event.start) + ' </span>';
-            content += '<span class="fc-title">' + arg.event.title + ' - </span>';
-            content += '<span class="fc-author">' + arg.event.extendedProps.author + '; </span>';
-            content += '<span class="fc-type">Reunião Microsoft Teams</span>';
+            content += '<div class="fc-bar"></div>';
+            content += '<span class="fc-time">' + formatDate(arg.event.start) + '</span>';
+            content += '<img src="img/iconTeams.png" alt="Ícone do Teams">';
+            content += '<span class="fc-title">' + arg.event.title + '</span>';
           } else if (viewType === 'timeGridWeek' || viewType === 'timeGridDay') {
-            // Visualização de Semana ou Dia: exibe título, tipo e autor
             content += '<span class="fc-title">' + arg.event.title + ' - </span>';
             content += '<span class="fc-author">' + arg.event.extendedProps.author + '; </span>';
             content += '<span class="fc-type">Reunião Microsoft Teams</span>';
           } else if (viewType === 'listWeek') {
-            // Visualização de Lista: exibe título, tipo e autor
             content += '<span class="fc-title">' + arg.event.title + ' - </span>';
             content += '<span class="fc-author">' + arg.event.extendedProps.author + '; </span>';
             content += '<span class="fc-type">Reunião Microsoft Teams</span>';
@@ -74,9 +86,7 @@
       calendar.render();
 
       function formatDate(date) {
-        // Cria um novo objeto de data com o fuso horário local
         var localDate = new Date(date);
-        // Formata a data e hora no formato desejado usando o fuso horário local
         return localDate.toLocaleString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
       }
 
