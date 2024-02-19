@@ -28,6 +28,7 @@
       const tooltip = document.getElementById('tooltip');
       let timeoutId; // Variável para armazenar o ID do timeout
 
+      // Configuração do FullCalendar
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         themeSystem: 'bootstrap',
@@ -44,6 +45,14 @@
         dayMaxEvents: true,
         weekends: false,
         locale: 'pt-br',
+        slotMinTime: '06:00',
+        slotMaxTime: '23:00',
+        allDaySlot: false,
+        dayHeaderFormat: {
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric'
+        },
         buttonText: {
           today: 'Hoje',
           month: 'Mês',
@@ -54,7 +63,7 @@
         weekText: 'Semana',
         allDayText: 'Dia inteiro',
         slotLabelFormat: {
-          hour: 'numeric',
+          hour: '2-digit',
           minute: '2-digit',
           omitZeroMinute: false,
           meridiem: 'narrow',
@@ -99,9 +108,12 @@
             content += '</div>';
           } else if (viewType === 'timeGridDay') {
             truncatedTitle = truncateText(arg.event.title, 40);
-            content += '<div class="fc-content-day">';
-            content += '<span class="fc-time">' + formatDate(arg.event.start) + ' - ' + formatDate(arg.event.end) + '</span>';
-            content += '<span class="fc-title" title="' + arg.event.title + '">' + arg.event.title + '</span>';
+            content += '<div class="fc-content-week">';
+            content += '<div class="fc-bar"></div>';
+            content += '<span class="fc-title-container">';
+            content += '<img src="img/' + icon + '" alt="Ícone">';
+            content += '<span class="fc-title" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
+            content += '</span>';
             content += '</div>';
           } else if (viewType === 'listWeek') {
             truncatedTitle = truncateText(arg.event.title, 50);
@@ -119,16 +131,26 @@
           failure: function () {
             alert('Erro ao obter eventos do Office 365.');
           }
+        },
+        // Atualiza o título da guia Semana com o mês por extenso
+        viewDidMount: function (arg) {
+          if (arg.view.type === 'timeGridWeek') {
+            const toolbarTitle = document.querySelector('.fc-toolbar-title');
+            const month = arg.view.title.toLocaleString('default', { month: 'long' });
+            toolbarTitle.textContent = month;
+          }
         }
       });
 
       calendar.render();
 
+      // Função para formatar a data no formato "HH:MM"
       function formatDate(date) {
         const localDate = new Date(date);
         return localDate.toLocaleString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
       }
 
+      // Função para truncar o texto se exceder o limite de caracteres
       function truncateText(text, maxLength) {
         if (text.length > maxLength) {
           let truncated = text.substring(0, maxLength);
@@ -148,22 +170,26 @@
         return new Date(date).toLocaleDateString('pt-BR', options).replace(/\b\w/g, l => l.toUpperCase());
       }
 
-      // Função para formatar a data e hora no formato "HH:mm"
+      // Função para formatar o horário no formato "HH:MM"
       function formatTime(time) {
-        const options = { hour: '2-digit', minute: '2-digit', hour12: false };
-        return new Date(time).toLocaleTimeString('pt-BR', options);
+        const date = new Date(time);
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
       }
 
-      // Função para formatar a data e hora completa
+      // Função para formatar a data e hora no formato "dd de MMMM de yyyy, HH:MM"
       function formatDateTime(date) {
         return formatDateExtended(date) + ', ' + formatTime(date);
       }
 
+      // Função para obter o dia do mês
       function getDayOfMonth() {
         const currentDate = new Date();
         return currentDate.getDate();
       }
 
+      // Função para obter o mês atual
       function getCurrentMonth() {
         const currentDate = new Date();
         const monthFormat = new Intl.DateTimeFormat('pt-BR', { month: 'long' });
@@ -171,18 +197,21 @@
         return month;
       }
 
+      // Função para obter o ano atual
       function getCurrentYear() {
         const currentDate = new Date();
         const year = currentDate.getFullYear();
         return year;
       }
 
+      // Função para formatar o intervalo de tempo do evento
       function formatEventTimeRange(startTime, endTime) {
         const start = formatTime(startTime);
         const end = formatTime(endTime);
         return `${start} a ${end}`;
       }
 
+      // Função para obter o conteúdo do tooltip do evento
       function getEventTooltip(event) {
         const startDate = formatDateTime(event.start);
         const endDate = formatDateTime(event.end);
