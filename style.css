@@ -11,21 +11,37 @@ body {
     height: 95vh;
 }
 
-.fc-daygrid-event {
+.fc-daygrid-event,
+.fc-content-week,
+.fc-v-event {
     font-family: "Segoe UI", system-ui, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
     background-color: rgba(91, 94, 199, 0.12);
     color: rgb(61, 62, 120);
     font-size: 100%;
     border-radius: 3.5px;
+    border: none;
 }
 
 .fc .fc-daygrid-event {
     margin-top: 4px;
 }
 
-.fc-daygrid-event>div>.fc-title {
+.fc-daygrid-event>div>.fc-title,
+.fc-content-week .fc-title {
     font-family: Bahnschrift, Arial, sans-serif;
     color: #3D3E78;
+}
+
+.fc-content-week .fc-title-container {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    margin-top: 1.5px;
+}
+
+.fc-content-week .fc-title {
+    text-align: center;
+    font-size: 16px;
 }
 
 .fc-bar {
@@ -46,8 +62,6 @@ body {
 .fc-content img {
     width: 15px;
     height: 100%;
-    position: relative;
-    top: 1.5px;
     margin-right: 3px;
 }
 
@@ -70,4 +84,9 @@ body {
     font-family: Bahnschrift, Arial, sans-serif;
     color: #333;
     font-size: 90%;
+}
+
+.fc .fc-daygrid-day.fc-day-today,
+.fc .fc-timegrid-col.fc-day-today {
+    background-color: rgb(245, 245, 245) !important;
 }
