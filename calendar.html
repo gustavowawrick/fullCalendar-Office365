@@ -44,6 +44,24 @@
         dayMaxEvents: true,
         weekends: false,
         locale: 'pt-br',
+        buttonText: {
+          today: 'Hoje',
+          month: 'Mês',
+          week: 'Semana',
+          day: 'Dia',
+          list: 'Lista'
+        },
+        weekText: 'Semana',
+        allDayText: 'Dia inteiro',
+        slotLabelFormat: {
+          hour: 'numeric',
+          minute: '2-digit',
+          omitZeroMinute: false,
+          meridiem: 'narrow',
+          hour12: false
+        },
+        dayHeaderFormat: { weekday: 'long' }, // Exibe os nomes dos dias por extenso
+        dayPopoverFormat: { weekday: 'long', month: 'long', day: 'numeric', omitCommas: true },
         eventMouseEnter: function (arg) {
           clearTimeout(timeoutId); // Limpa o timeout anterior, se houver
           timeoutId = setTimeout(function () {
@@ -124,9 +142,9 @@
         }
       }
 
-      // Função para formatar a data no formato "dd de MMMM de yyyy"
+      // Função para formatar a data e hora no formato "dd de MMMM de yyyy"
       function formatDateExtended(date) {
-        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+        const options = { day: '2-digit', month: 'long', year: 'numeric' };
         return new Date(date).toLocaleDateString('pt-BR', options).replace(/\b\w/g, l => l.toUpperCase());
       }
 
