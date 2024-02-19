@@ -12,25 +12,12 @@
   <!-- Estilo CSS -->
   <link href="style.css" rel="stylesheet">
 
-  <style>
-    /* Estilo para o tooltip */
-    .tooltip {
-      position: absolute;
-      z-index: 10;
-      background: #fff;
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      display: none;
-      /* Oculta inicialmente */
-    }
-  </style>
-
   <title>Calendário</title>
+
 </head>
 
 <body>
+
   <div id='calendar'></div>
 
   <div id="tooltip" class="tooltip"></div>
@@ -75,24 +62,31 @@
         eventContent: function (arg) {
           const viewType = arg.view.type;
           let content = '<div class="fc-content">';
-          const truncatedTitle = arg.view.type === 'dayGridMonth' ? truncateText(arg.event.title, 29) : arg.event.title;
-          const icon = 'iconeTeams.png'; // Sempre usar o ícone do Teams
+          let truncatedTitle;
+          const icon = 'iconeTeams.png';
           if (viewType === 'dayGridMonth') {
+            truncatedTitle = truncateText(arg.event.title, 30);
             content += '<div class="fc-bar"></div>';
             content += '<span class="fc-time">' + formatDate(arg.event.start) + '</span>';
             content += '<img src="img/' + icon + '" alt="Ícone">';
             content += '<span class="fc-title" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
           } else if (viewType === 'timeGridWeek') {
+            truncatedTitle = truncateText(arg.event.title, 30);
             content += '<div class="fc-content-week">';
-            content += '<span class="fc-time">' + formatDate(arg.event.start) + ' - ' + formatDate(arg.event.end) + '</span>';
-            content += '<span class="fc-title" title="' + arg.event.title + '">' + arg.event.title + '</span>';
+            content += '<div class="fc-bar"></div>';
+            content += '<span class="fc-title-container">';
+            content += '<img src="img/' + icon + '" alt="Ícone">';
+            content += '<span class="fc-title" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
+            content += '</span>';
             content += '</div>';
           } else if (viewType === 'timeGridDay') {
+            truncatedTitle = truncateText(arg.event.title, 40);
             content += '<div class="fc-content-day">';
             content += '<span class="fc-time">' + formatDate(arg.event.start) + ' - ' + formatDate(arg.event.end) + '</span>';
             content += '<span class="fc-title" title="' + arg.event.title + '">' + arg.event.title + '</span>';
             content += '</div>';
           } else if (viewType === 'listWeek') {
+            truncatedTitle = truncateText(arg.event.title, 50);
             content += '<span class="fc-title">' + truncatedTitle + ' - </span>';
             content += '<span class="fc-author">' + arg.event.extendedProps.author + '; </span>';
             content += '<span class="fc-type">Reunião Microsoft Teams</span>';
@@ -119,11 +113,12 @@
 
       function truncateText(text, maxLength) {
         if (text.length > maxLength) {
-          if (text[maxLength] === ' ') {
-            return text.substring(0, maxLength) + '...';
-          } else {
-            return text.substring(0, maxLength - 3) + '...';
+          let truncated = text.substring(0, maxLength);
+          let lastSpaceIndex = truncated.lastIndexOf(' ');
+          if (lastSpaceIndex !== -1) {
+            truncated = truncated.substring(0, lastSpaceIndex);
           }
+          return truncated + '...';
         } else {
           return text;
         }
