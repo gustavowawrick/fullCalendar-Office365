@@ -117,6 +117,7 @@
             content += '</div>';
           } else if (viewType === 'listWeek') {
             truncatedTitle = truncateText(arg.event.title, 50);
+            content += '<img src="img/' + icon + '" alt="Ícone">';
             content += '<span class="fc-title">' + truncatedTitle + ' - </span>';
             content += '<span class="fc-author">' + arg.event.extendedProps.author + '; </span>';
             content += '<span class="fc-type">Reunião Microsoft Teams</span>';
