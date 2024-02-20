@@ -39,13 +39,17 @@ if (curl_errno($ch)) {
         $item->end = $itemCalendar->end->dateTime;
         $item->title = $itemCalendar->subject;
         $item->author = $itemCalendar->organizer->emailAddress->name;
-        
-        // Atribui o valor do tipo do evento diretamente
-        $item->type = $itemCalendar->type;
-        
+
+        $item->extendedProps = new stdClass();
+
+        if ($itemCalendar->isOnlineMeeting == true) {
+            $item->extendedProps->type = true;
+        } else {
+            $item->extendedProps->type = false;
+        }
+
         $arrayItens[] = $item;
     }
-    
 
     echo (json_encode($arrayItens));
 }
