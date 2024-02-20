@@ -28,6 +28,16 @@
       const tooltip = document.getElementById('tooltip');
       let timeoutId; // Variável para armazenar o ID do timeout
 
+      // Método para comparar o tipo de evento
+      function compareEventType(event) {
+        // Verifica se o tipo do evento é "teams"
+        if (event.extendedProps.type === true) {
+          return 'iconeTeams.png';
+        } else {
+          return 'nota.png';
+        }
+      }
+
       // Configuração do FullCalendar
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -80,35 +90,44 @@
             tooltip.style.top = arg.jsEvent.pageY + 'px';
             tooltip.style.left = arg.jsEvent.pageX + 'px';
           }, 1000);
-          arg.el.title = '';
         },
         eventMouseLeave: function () {
           clearTimeout(timeoutId); // Limpa o timeout se o mouse sair antes de 2 segundos
           tooltip.style.display = 'none';
         },
+        eventClick: function (info) {
+          const event = info.event;
+          const modalContent = `
+            <div>
+              <h2>${event.title}</h2>
+              <p><strong>Data de Início:</strong> ${event.start.toLocaleString()}</p>
+              <p><strong>Data de Término:</strong> ${event.end.toLocaleString()}</p>
+              <p><strong>Descrição:</strong> ${event.extendedProps.description || 'Nenhuma descrição disponível'}</p>
+            </div>
+          `;
+          showModal(modalContent);
+        },
         eventContent: function (arg) {
           const viewType = arg.view.type;
-          let content = '<div class="fc-content">';
+          let content = '<div class="fc-content ';
           let truncatedTitle;
-          const icon = 'iconeTeams.png';
+          let icon;
+
+          icon = compareEventType(arg.event);
+
           if (viewType === 'dayGridMonth') {
             truncatedTitle = truncateText(arg.event.title, 30);
+            content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
+            content += '">'; // Fecha a declaração da classe
             content += '<div class="fc-bar"></div>';
             content += '<span class="fc-time">' + formatDate(arg.event.start) + '</span>';
             content += '<img src="img/' + icon + '" alt="Ícone">';
             content += '<span class="fc-title" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
-          } else if (viewType === 'timeGridWeek') {
-            truncatedTitle = truncateText(arg.event.title, 30);
-            content += '<div class="fc-content-week">';
-            content += '<div class="fc-bar"></div>';
-            content += '<span class="fc-title-container">';
-            content += '<img src="img/' + icon + '" alt="Ícone">';
-            content += '<span class="fc-title" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
-            content += '</span>';
-            content += '</div>';
-          } else if (viewType === 'timeGridDay') {
-            truncatedTitle = truncateText(arg.event.title, 40);
-            content += '<div class="fc-content-week">';
+          } else if (viewType === 'timeGridWeek' || viewType === 'timeGridDay') {
+            truncatedTitle = truncateText(arg.event.title, viewType === 'timeGridWeek' ? 30 : 40);
+            content += 'fc-content-week ';
+            content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
+            content += '">'; // Fecha a declaração da classe
             content += '<div class="fc-bar"></div>';
             content += '<span class="fc-title-container">';
             content += '<img src="img/' + icon + '" alt="Ícone">';
@@ -117,12 +136,15 @@
             content += '</div>';
           } else if (viewType === 'listWeek') {
             truncatedTitle = truncateText(arg.event.title, 50);
+            content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
+            content += '">'; // Fecha a declaração da classe
             content += '<img src="img/' + icon + '" alt="Ícone">';
             content += '<span class="fc-title">' + truncatedTitle + ' - </span>';
             content += '<span class="fc-author">' + arg.event.extendedProps.author + '; </span>';
             content += '<span class="fc-type">Reunião Microsoft Teams</span>';
           }
           content += '</div>';
+
           return { html: content };
         },
         events: {
@@ -135,11 +157,14 @@
         },
         // Atualiza o título da guia Semana com o mês por extenso
         viewDidMount: function (arg) {
-          if (arg.view.type === 'timeGridWeek') {
-            const toolbarTitle = document.querySelector('.fc-toolbar-title');
-            const month = arg.view.title.toLocaleString('default', { month: 'long' });
-            toolbarTitle.textContent = month;
+          const toolbarTitle = document.querySelector('.fc-toolbar-title');
+          let month;
+          if (arg.view.type === 'timeGridWeek' || arg.view.type === 'listWeek') {
+            month = arg.view.title.toLocaleString('default', { month: 'long' });
+          } else {
+            month = arg.view.title.toLocaleString('default', { month: 'long' });
           }
+          toolbarTitle.textContent = month;
         }
       });
 
@@ -227,6 +252,21 @@
           eventTimeRange;
       }
 
+      // Função para exibir uma janela modal com o conteúdo fornecido
+      function showModal(content) {
+        const modal = document.createElement('div');
+        modal.classList.add('modal');
+        modal.innerHTML = content;
+
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Fechar';
+        closeButton.addEventListener('click', function () {
+          modal.remove();
+        });
+
+        modal.appendChild(closeButton);
+        document.body.appendChild(modal);
+      }
     });
   </script>
 
