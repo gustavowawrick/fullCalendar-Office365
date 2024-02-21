@@ -127,9 +127,9 @@ body {
     transform: translate(-50%, -50%);
     background-color: white;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
 }
 
 .modal button {
@@ -141,4 +141,12 @@ body {
 .fc-col-header-cell-cushion::first-letter,
 .fc-toolbar-title::first-letter {
     text-transform: uppercase !important;
+}
+
+.estiloTeams {
+    background-color: black !important;
+}
+
+.estiloNota {
+    background-color: darkblue !important;
 }
