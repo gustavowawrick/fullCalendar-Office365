@@ -34,7 +34,7 @@
         if (event.extendedProps.type === true) {
           return 'iconeTeams.png';
         } else {
-          return 'nota.png';
+          return 'iconeNota.png';
         }
       }
 
@@ -90,6 +90,7 @@
             tooltip.style.top = arg.jsEvent.pageY + 'px';
             tooltip.style.left = arg.jsEvent.pageX + 'px';
           }, 1000);
+          $('.fc-title').attr('title', '');
         },
         eventMouseLeave: function () {
           clearTimeout(timeoutId); // Limpa o timeout se o mouse sair antes de 2 segundos
@@ -165,6 +166,9 @@
             month = arg.view.title.toLocaleString('default', { month: 'long' });
           }
           toolbarTitle.textContent = month;
+
+          // Remove o atributo 'title' dos botões
+          $('.fc-today-button, .fc-prev-button, .fc-next-button, .fc-month-button, .fc-week-button, .fc-day-button, .fc-list-button').removeAttr('title');
         }
       });
 
