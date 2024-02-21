@@ -14,6 +14,16 @@
 
   <title>Calendário</title>
 
+  <style>
+    .modal {
+      position: absolute;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      z-index: 1000;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -27,10 +37,10 @@
       const calendarEl = document.getElementById('calendar');
       const tooltip = document.getElementById('tooltip');
       let timeoutId; // Variável para armazenar o ID do timeout
+      let modalOpen = false; // Variável para rastrear se o modal está aberto
 
-      // Método para comparar o tipo de evento
+      // Método para comparar o tipo de evento e retornar a imagem
       function compareEventType(event) {
-        // Verifica se o tipo do evento é "teams"
         if (event.extendedProps.type === true) {
           return 'iconeTeams.png';
         } else {
@@ -106,7 +116,7 @@
               <p><strong>Descrição:</strong> ${event.extendedProps.description || 'Nenhuma descrição disponível'}</p>
             </div>
           `;
-          showModal(modalContent);
+          openModal(modalContent, info.el);
         },
         eventContent: function (arg) {
           const viewType = arg.view.type;
@@ -256,21 +266,51 @@
           eventTimeRange;
       }
 
-      // Função para exibir uma janela modal com o conteúdo fornecido
-      function showModal(content) {
-        const modal = document.createElement('div');
-        modal.classList.add('modal');
-        modal.innerHTML = content;
+      // Função para abrir o modal
+      // Função para abrir o modal
+function openModal(content, eventElement) {
+  if (!modalOpen) {
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.innerHTML = content;
 
-        const closeButton = document.createElement('button');
-        closeButton.textContent = 'Fechar';
-        closeButton.addEventListener('click', function () {
-          modal.remove();
-        });
+    const rect = eventElement.getBoundingClientRect();
+    const modalWidth = 150; // Largura do modal
+    const modalHeight = 255; // Altura do modal
+    const padding = 10; // Espaçamento entre o modal e o evento
 
-        modal.appendChild(closeButton);
-        document.body.appendChild(modal);
-      }
+    let left;
+    let top;
+
+    if (rect.right + modalWidth + padding <= window.innerWidth) {
+      left = rect.right + padding;
+      top = rect.top; // Manter a mesma posição vertical do evento
+    } else if (rect.left - modalWidth - padding >= 0) {
+      left = rect.left - modalWidth - padding;
+      top = rect.top; // Manter a mesma posição vertical do evento
+    } else {
+      left = (window.innerWidth - modalWidth) / 2; // Centralizar horizontalmente
+      top = (window.innerHeight - modalHeight) / 2; // Centralizar verticalmente
+    }
+
+    modal.style.top = top + 'px';
+    modal.style.left = left + 'px';
+
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Fechar';
+    closeButton.addEventListener('click', function () {
+      modal.remove();
+      modalOpen = false; // Atualiza o status do modal para fechado
+    });
+
+    modal.appendChild(closeButton);
+    document.body.appendChild(modal);
+    modalOpen = true; // Atualiza o status do modal para aberto
+  }
+}
+
+
+
     });
   </script>
 
