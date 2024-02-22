@@ -14,16 +14,6 @@
 
   <title>Calendário</title>
 
-  <style>
-    .modal {
-      position: absolute;
-      background-color: white;
-      border: 1px solid #ccc;
-      padding: 20px;
-      z-index: 1000;
-    }
-  </style>
-
 </head>
 
 <body>
@@ -164,7 +154,7 @@
           extraParams: {},
           failure: function () {
             alert('Erro ao obter eventos do Office 365.');
-          }
+          },
         },
         // Atualiza o título da guia Semana com o mês por extenso
         viewDidMount: function (arg) {
@@ -181,6 +171,7 @@
           $('.fc-today-button, .fc-prev-button, .fc-next-button, .fc-month-button, .fc-week-button, .fc-day-button, .fc-list-button').removeAttr('title');
         }
       });
+
 
       calendar.render();
 
@@ -267,50 +258,54 @@
       }
 
       // Função para abrir o modal
-      // Função para abrir o modal
-function openModal(content, eventElement) {
-  if (!modalOpen) {
-    const modal = document.createElement('div');
-    modal.classList.add('modal');
-    modal.innerHTML = content;
+      function openModal(content, eventElement) {
+        console.log($(eventElement).width());
+        if (!modalOpen) {
+          const modal = document.createElement('div');
+          modal.classList.add('modal');
+          modal.innerHTML = content;
 
-    const rect = eventElement.getBoundingClientRect();
-    const modalWidth = 150; // Largura do modal
-    const modalHeight = 255; // Altura do modal
-    const padding = 10; // Espaçamento entre o modal e o evento
+          const rect = eventElement.getBoundingClientRect();
 
-    let left;
-    let top;
+          console.log(rect);
 
-    if (rect.right + modalWidth + padding <= window.innerWidth) {
-      left = rect.right + padding;
-      top = rect.top; // Manter a mesma posição vertical do evento
-    } else if (rect.left - modalWidth - padding >= 0) {
-      left = rect.left - modalWidth - padding;
-      top = rect.top; // Manter a mesma posição vertical do evento
-    } else {
-      left = (window.innerWidth - modalWidth) / 2; // Centralizar horizontalmente
-      top = (window.innerHeight - modalHeight) / 2; // Centralizar verticalmente
-    }
+          const modalWidth = 150; // Largura do modal
+          const modalHeight = 255; // Altura do modal
+          const padding = 10; // Espaçamento entre o modal e o evento
 
-    modal.style.top = top + 'px';
-    modal.style.left = left + 'px';
+          let left;
+          let top;
 
-    const closeButton = document.createElement('button');
-    closeButton.textContent = 'Fechar';
-    closeButton.addEventListener('click', function () {
-      modal.remove();
-      modalOpen = false; // Atualiza o status do modal para fechado
-    });
+          if (rect.right + modalWidth + padding <= window.innerWidth) {
+            left = rect.left + rect.width + padding + modalWidth; //Esquerda
+            console.log('left');
+            console.log(left);
+            top = rect.top; // Manter a mesma posição vertical do evento
+          } else if (rect.left - modalWidth - padding >= 0) {
+            console.log('rigth');
+            left = rect.left - modalWidth - padding;
+            top = rect.top; // Manter a mesma posição vertical do evento
+          } else {
+            console.log('center');
+            left = (window.innerWidth - modalWidth) / 2; // Centralizar horizontalmente
+            top = (window.innerHeight - modalHeight) / 2; // Centralizar verticalmente
+          }
 
-    modal.appendChild(closeButton);
-    document.body.appendChild(modal);
-    modalOpen = true; // Atualiza o status do modal para aberto
-  }
-}
+          modal.style.top = top + 'px';
+          modal.style.left = left + 'px';
 
+          const closeButton = document.createElement('button');
+          closeButton.textContent = 'Fechar';
+          closeButton.addEventListener('click', function () {
+            modal.remove();
+            modalOpen = false; // Atualiza o status do modal para fechado
+          });
 
-
+          modal.appendChild(closeButton);
+          document.body.appendChild(modal);
+          modalOpen = true; // Atualiza o status do modal para aberto
+        }
+      }
     });
   </script>
 
