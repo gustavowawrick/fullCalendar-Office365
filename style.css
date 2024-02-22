@@ -32,6 +32,14 @@ body {
     color: #3D3E78;
 }
 
+.fc-daygrid-event.normal{
+    background-color: rgba(61, 62, 120, 0.5) !important;
+}
+
+.fc-daygrid-event.urgent{
+    background-color: rgba(255,0,0,0.5) !important;
+}
+
 .fc-content-week .fc-title-container {
     display: flex;
     align-items: center;

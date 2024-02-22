@@ -169,9 +169,15 @@
 
           // Remove o atributo 'title' dos botões
           $('.fc-today-button, .fc-prev-button, .fc-next-button, .fc-month-button, .fc-week-button, .fc-day-button, .fc-list-button').removeAttr('title');
+        }, 
+        eventClassNames: function(arg){
+          if (arg.event.extendedProps.type) {
+            return [ 'urgent' ]
+          } else {
+            return [ 'normal' ]
+          }
         }
       });
-
 
       calendar.render();
 
