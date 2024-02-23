@@ -92,6 +92,9 @@ body {
     margin-right: 3px;
 }
 
+div.fc-content-week>.fc-title-container>img {
+    top: 0;
+}
 
 #tooltip {
     position: absolute;
@@ -168,14 +171,26 @@ body {
 }
 
 .colorBarPurple {
-    background-color: rgba(91, 94, 199, 120) !important;
+    background-color: rgba(91, 94, 199, 120);
 }
 
 .colorBarBlue {
-    background-color: rgb(27, 128, 214) !important;
+    background-color: rgb(27, 128, 214);
 }
 
 .fc-list-event.estiloNota,
 .fc-list-event.estiloTeams {
     background-color: rgb(255, 255, 255);
+}
+
+.fc-time.colorBarPurple,
+.fc-title.colorBarPurple {
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(61, 62, 120) !important;
+}
+
+.fc-time.colorBarBlue,
+.fc-title.colorBarBlue {
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(0, 61, 122) !important;
 }
