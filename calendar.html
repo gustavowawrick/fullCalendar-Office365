@@ -260,18 +260,20 @@
 
       // Função para obter o conteúdo do tooltip do evento
       function getEventTooltip(event) {
-        const startDate = formatDateTime(event.start);
-        const endDate = formatDateTime(event.end);
         const dayOfMonth = getDayOfMonth();
         const currentMonth = getCurrentMonth();
         const currentYear = getCurrentYear();
         const eventTimeRange = formatEventTimeRange(event.start, event.end);
 
+        // Verifica se o tipo do evento é verdadeiro antes de adicionar a mensagem "Reunião Microsoft Teams"
+        const teamsMeetingMessage = event.extendedProps.type ? 'Reunião Microsoft Teams<br>' : '';
+
         return event.title + '<br>' +
-          'Reunião Microsoft Teams<br>' +
+          teamsMeetingMessage +
           dayOfMonth + " de " + currentMonth + ' de ' + currentYear + ", " +
           eventTimeRange;
       }
+
 
       // Função para abrir o modal
       function openModal(content, eventElement) {
