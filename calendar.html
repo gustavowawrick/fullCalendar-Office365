@@ -131,9 +131,9 @@
             content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
             content += '">'; // Fecha a declaração da classe
             content += '<div class="fc-bar ' + classColor + '"></div>';
-            content += '<span class="fc-time">' + formatDate(arg.event.start) + '</span>';
+            content += '<span class="fc-time ' + classColor + '">' + formatDate(arg.event.start) + '</span>';
             content += '<img src="img/' + icon + '" alt="Ícone">';
-            content += '<span class="fc-title" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
+            content += '<span class="fc-title ' + classColor + '" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
           } else if (viewType === 'timeGridWeek' || viewType === 'timeGridDay') {
             truncatedTitle = truncateText(arg.event.title, viewType === 'timeGridWeek' ? 30 : 40);
             content += 'fc-content-week ';
@@ -142,7 +142,7 @@
             content += '<div class="fc-bar ' + classColor + '"></div>';
             content += '<span class="fc-title-container">';
             content += '<img src="img/' + icon + '" alt="Ícone">';
-            content += '<span class="fc-title" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
+            content += '<span class="fc-title ' + classColor + '" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
             content += '</span>';
             content += '</div>';
           } else if (viewType === 'listWeek') {
