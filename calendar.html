@@ -38,6 +38,14 @@
         }
       }
 
+      function compareEventTypeColorBar(event) {
+        if (event.extendedProps.type === true) {
+          return 'colorBarPurple';
+        } else {
+          return 'colorBarBlue';
+        }
+      }
+
       // Configuração do FullCalendar
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -113,14 +121,16 @@
           let content = '<div class="fc-content ';
           let truncatedTitle;
           let icon;
+          let classColor;
 
+          classColor = compareEventTypeColorBar(arg.event);
           icon = compareEventType(arg.event);
 
           if (viewType === 'dayGridMonth') {
             truncatedTitle = truncateText(arg.event.title, 30);
             content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
             content += '">'; // Fecha a declaração da classe
-            content += '<div class="fc-bar"></div>';
+            content += '<div class="fc-bar ' + classColor + '"></div>';
             content += '<span class="fc-time">' + formatDate(arg.event.start) + '</span>';
             content += '<img src="img/' + icon + '" alt="Ícone">';
             content += '<span class="fc-title" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
@@ -129,7 +139,7 @@
             content += 'fc-content-week ';
             content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
             content += '">'; // Fecha a declaração da classe
-            content += '<div class="fc-bar"></div>';
+            content += '<div class="fc-bar ' + classColor + '"></div>';
             content += '<span class="fc-title-container">';
             content += '<img src="img/' + icon + '" alt="Ícone">';
             content += '<span class="fc-title" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
@@ -169,12 +179,12 @@
 
           // Remove o atributo 'title' dos botões
           $('.fc-today-button, .fc-prev-button, .fc-next-button, .fc-month-button, .fc-week-button, .fc-day-button, .fc-list-button').removeAttr('title');
-        }, 
-        eventClassNames: function(arg){
+        },
+        eventClassNames: function (arg) {
           if (arg.event.extendedProps.type) {
-            return [ 'urgent' ]
+            return ['estiloTeams']
           } else {
-            return [ 'normal' ]
+            return ['estiloNota']
           }
         }
       });
