@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ERROR | E_PARSE);
+
 session_start();
 
 $accessToken = $_SESSION['access_token'];
@@ -48,8 +50,11 @@ if (curl_errno($ch)) {
             $item->extendedProps->type = false;
         }
 
+        $item->extendedProps->url = $itemCalendar->onlineMeeting->joinUrl;
+
         $arrayItens[] = $item;
     }
+
 
     echo (json_encode($arrayItens));
 }
