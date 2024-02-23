@@ -107,15 +107,23 @@
         eventClick: function (info) {
           const event = info.event;
           const modalContent = `
-            <div>
-              <h2>${event.title}</h2>
-              <p><strong>Data de Início:</strong> ${event.start.toLocaleString()}</p>
-              <p><strong>Data de Término:</strong> ${event.end.toLocaleString()}</p>
-              <p><strong>Descrição:</strong> ${event.extendedProps.description || 'Nenhuma descrição disponível'}</p>
-            </div>
-          `;
+          <div class="modal-header">
+            <img src="img/iconeEditar.png" class="icone" alt="Editar">
+            <img src="img/iconeFechar.png" class="icone" alt="Fechar">
+            <h2>${event.title}</h2>
+          </div>
+          <div>
+            <p class="date">${event.end.toLocaleString()}</p>
+            <p class="meeting"><img src="img/iconeLocalizacao.png" class="icone" alt="Ícone Localização">Reunião Microsoft Teams</p>
+            <p class="link"><img src="img/iconeLink.png" class="icone" alt="Ícone Link">${truncateText(event.extendedProps.url, 50)}<img src="img/iconeCopiar.png" class="icone" alt="Ícone Copiar"></p>
+            <p class="organizer"><img src="img/iconePessoa.png" class="icone" alt="Ícone Pessoa">${event.extendedProps.author}</p>
+        <p>Organizador</p>
+          </div>`;
+
+
           openModal(modalContent, info.el);
         },
+
         eventContent: function (arg) {
           const viewType = arg.view.type;
           let content = '<div class="fc-content ';
