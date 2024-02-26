@@ -108,22 +108,19 @@
           const event = info.event;
           const modalContent = `
           <div class="modal-header">
-            <img src="img/iconeEditar.png" class="icone" alt="Editar">
-            <img src="img/iconeFechar.png" class="icone" alt="Fechar">
-            <h2>${event.title}</h2>
+            <span class="meuCalendario">Meu Calendário</span>
+            <img src="img/iconeFechar.png" class="icone iconeFechar" alt="Fechar">
+            <h2 class="tituloEvento">${event.title}</h2>
           </div>
           <div>
-            <p class="date">${event.end.toLocaleString()}</p>
-            <p class="meeting"><img src="img/iconeLocalizacao.png" class="icone" alt="Ícone Localização">Reunião Microsoft Teams</p>
-            <p class="link"><img src="img/iconeLink.png" class="icone" alt="Ícone Link">${truncateText(event.extendedProps.url, 50)}<img src="img/iconeCopiar.png" class="icone" alt="Ícone Copiar"></p>
-            <p class="organizer"><img src="img/iconePessoa.png" class="icone" alt="Ícone Pessoa">${event.extendedProps.author}</p>
-        <p>Organizador</p>
+            <p class="data"><img src="img/iconeHora.png" class="icone iconeHora" alt="Ícone Relógio">${event.end.toLocaleString()}</p>
+            <p class="reuniao"><img src="img/iconeLocalizacao.png" class="icone iconeLoc" alt="Ícone Localização">Reunião Microsoft Teams</p>
+            <p class="link"><img src="img/iconeLink.png" class="icone iconeLink" alt="Ícone Link">${truncateText(event.extendedProps.url, 43)}<img src="img/iconeCopiar.png" class="icone iconeCopiar" alt="Ícone Copiar"></p>
+            <p class="author"><img src="img/iconePessoa.png" class="icone iconePessoa" alt="Ícone Pessoa">${event.extendedProps.author}</p>
+            <p>Organizador</p>
           </div>`;
-
-
           openModal(modalContent, info.el);
         },
-
         eventContent: function (arg) {
           const viewType = arg.view.type;
           let content = '<div class="fc-content ';
@@ -170,9 +167,6 @@
           url: 'consultaEventos.php',
           method: 'GET',
           extraParams: {},
-          failure: function () {
-            alert('Erro ao obter eventos do Office 365.');
-          },
         },
         // Atualiza o título da guia Semana com o mês por extenso
         viewDidMount: function (arg) {
@@ -320,18 +314,17 @@
           modal.style.top = top + 'px';
           modal.style.left = left + 'px';
 
-          const closeButton = document.createElement('button');
-          closeButton.textContent = 'Fechar';
-          closeButton.addEventListener('click', function () {
+          const iconFechar = modal.querySelector('.iconeFechar'); // Seleciona o iconeFechar dentro do modal
+          iconFechar.addEventListener('click', function () {
             modal.remove();
-            modalOpen = false; // Atualiza o status do modal para fechado
+            modalOpen = false;
           });
 
-          modal.appendChild(closeButton);
           document.body.appendChild(modal);
-          modalOpen = true; // Atualiza o status do modal para aberto
+          modalOpen = true;
         }
       }
+
     });
   </script>
 
