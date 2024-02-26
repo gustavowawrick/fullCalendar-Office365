@@ -129,49 +129,6 @@ div.fc-content-week>.fc-title-container>img {
     box-shadow: none !important;
 }
 
-.modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    z-index: 9999;
-    width: 360px !important;
-    height: 36%;
-}
-
-.modal p {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px; /* Adiciona um pequeno espaçamento entre as linhas divisórias */
-    margin-bottom: 5px; /* Adiciona um pequeno espaçamento entre os parágrafos */
-}
-
-.modal p:last-child,.modal p.organizer {
-    border-bottom: none;
-    margin-bottom: 0; 
-}
-
-
-
-.modal:before {
-    position: absolute;
-    content: "";
-    border-top: 15px solid transparent;
-    border-right: 15px solid pink;
-    border-bottom: 15px solid transparent;
-    top: 50%;
-    left: -15px;
-}
-
-.modal button {
-    display: block;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
 .fc-col-header-cell-cushion::first-letter,
 .fc-toolbar-title::first-letter {
     text-transform: uppercase !important;
@@ -210,7 +167,90 @@ div.fc-content-week>.fc-title-container>img {
     color: rgb(0, 61, 122) !important;
 }
 
-.icone{
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    width: 360px !important;
+    height: 36%;
+}
+
+.modal p {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+}
+
+.modal p:last-child,
+.modal p.organizer {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.modal:before {
+    position: absolute;
+    content: "";
+    border-top: 15px solid transparent;
+    border-right: 15px solid pink;
+    border-bottom: 15px solid transparent;
+    top: 50%;
+    left: -15px;
+}
+
+.modal button {
+    display: block;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.meuCalendario {
+    position: relative;
+    top: -13px;
+}
+
+.icone {
     width: 20px;
     height: 100%;
+}
+
+.iconeFechar {
+    position: relative;
+    top: -13px;
+    left: 250px;
+    cursor: pointer;
+}
+
+.iconeHora,
+.iconeLoc,
+.iconeLink,
+.iconeCopiar,
+.iconePessoa {
+    text-align: center;
+    margin-right: 10px;
+    width: 18px;
+    height: 100%;
+}
+
+.iconeCopiar {
+    position: relative;
+    right: -10px;
+}
+
+.data,
+.reuniao,
+.link,
+.author {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.meuCalendario {
+    font-size: 15px;
 }
