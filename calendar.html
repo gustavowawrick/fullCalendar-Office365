@@ -106,28 +106,45 @@
         },
         eventClick: function (info) {
           const event = info.event;
+          const fullUrl = event.extendedProps.url;
+
           const modalContent = `
-          <div class="modal-header">
-            <span class="meuCalendario">Meu Calendário</span>
-            <img src="img/iconeFechar.png" class="icone iconeFechar" alt="Fechar">
-          </div>
-          <div>
-            <h2 class="tituloEvento">${event.title}</h2>
-            <p class="data"><img src="img/iconeHora.png" class="icone iconeHora" alt="Ícone Relógio">${event.end.toLocaleString()}</p>
-            <hr class="line">
-            <p class="reuniao"><img src="img/iconeLocalizacao.png" class="icone iconeLoc" alt="Ícone Localização">Reunião Microsoft Teams</p>
-            <hr class="line">
-            <p class="link"><img src="img/iconeLink.png" class="icone iconeLink" alt="Ícone Link">${truncateText(event.extendedProps.url, 43)}<img src="img/iconeCopiar.png" class="icone iconeCopiar" alt="Ícone Copiar"></p>
-            <hr class="line">
-            <p class="author"><img src="img/iconePessoa.png" class="icone iconePessoa" alt="Ícone Pessoa">${event.extendedProps.author}</p>
-            <p class="organizador">Organizador</p>
-            <hr class="ultimaLinha">
-          </div>
-          <div class="botoes-container">
-            <button class="editarBotao"><img src="img/iconeEditar.png" alt="Editar">Editar</button>
-            <button class="excluirBotao"><img src="img/iconeExcluir.png" alt="Excluir">Excluir</button>
-          </div>`;
+            <div class="modal-header">
+              <span class="meuCalendario">Meu Calendário</span>
+              <img src="img/iconeFechar.png" class="icone iconeFechar" alt="Fechar">
+            </div>
+            <div>
+              <h2 class="tituloEvento">${truncateText(event.title, 30)}</h2>
+              <p class="data"><img src="img/iconeHora.png" class="icone iconeHora" alt="Ícone Relógio">${event.end.toLocaleString()}</p>
+              <hr class="line">
+              <p class="reuniao"><img src="img/iconeLocalizacao.png" class="icone iconeLoc" alt="Ícone Localização">Reunião Microsoft Teams</p>
+              <hr class="line">
+              <p class="link"><a href="#" class="truncate-link" data-full-url="${fullUrl}"><img src="img/iconeLink.png" class="icone iconeLink" alt="Ícone Link"></a><a href="#" class="truncate-link" data-full-url="${fullUrl}">${truncateText(fullUrl, 43)}</a><img src="img/iconeCopiar.png" class="icone iconeCopiar" alt="Ícone Copiar"></p>
+              <hr class="line">
+              <p class="author"><img src="img/iconePessoa.png" class="icone iconePessoa" alt="Ícone Pessoa">${event.extendedProps.author}</p>
+              <p class="organizador">Organizador</p>
+              <hr class="ultimaLinha">
+            </div>
+            <div class="botoes-container">
+              <button class="editarBotao"><img src="img/iconeEditar.png" alt="Editar">Editar</button>
+              <button class="excluirBotao"><img src="img/iconeExcluir.png" alt="Excluir">Excluir</button>
+            </div>`;
+
           openModal(modalContent, info.el);
+
+          $('.iconeCopiar').on('click', function () {
+            const textoParaCopiar = fullUrl;
+            const $this = $(this);
+
+            navigator.clipboard.writeText(textoParaCopiar)
+              .then(() => {
+                $this.attr('src', 'img/iconeCheck.png');
+
+                setTimeout(() => {
+                  $this.attr('src', 'img/iconeCopiar.png');
+                }, 1500);
+              });
+          });
         },
         eventContent: function (arg) {
           const viewType = arg.view.type;
