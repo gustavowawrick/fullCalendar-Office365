@@ -121,22 +121,22 @@
           <div>
             <h2 class="tituloEvento">${truncateText(event.title, 30)}</h2>
             <p class="data"><img src="img/iconeHora.png" class="icone iconeHora" alt="Ícone Relógio">${event.end.toLocaleString()}</p>
-            ${linkSection ? '<hr class="line">' : ''}
+            <hr class="line">
             ${linkSection || event.extendedProps.type ? '<p class="reuniao"><img src="img/iconeLocalizacao.png" class="icone iconeLoc" alt="Ícone Localização">Reunião Microsoft Teams</p>' : ''}
             ${linkSection || event.extendedProps.type ? '<hr class="line">' : ''}
             ${linkSection}
             ${linkSection ? '<hr class="line">' : ''}
             ${linkSection || event.extendedProps.type ? `<p class="author"><img src="img/iconePessoa.png" class="icone iconePessoa" alt="Ícone Pessoa">${event.extendedProps.author}</p>` : ''}
             ${linkSection || event.extendedProps.type ? '<p class="organizador">Organizador</p>' : ''}
-            <hr class="ultimaLinha">
+            ${linkSection || event.extendedProps.type ? '<hr class="ultimaLinha">' : ''}
             ${!event.extendedProps.type ? `
               <div class="descricao">
                 <img src="img/iconeDescricao.png" class="icone iconeDescricao" alt="Ícone Descrição">
-                <textarea class="descricaoEvento" spellcheck="false">${truncateText(event.extendedProps.bodyPreview, 130)}</textarea>
+                <textarea class="descricaoEvento" spellcheck="false" disabled>${truncateText(event.extendedProps.bodyPreview, 130)}</textarea>
               </div>` : ''}
           <div class="botoes-container">
             <button class="editarBotao"><img src="img/iconeEditar.png" alt="Editar">Editar</button>
-            <button class="excluirBotao"><img src="img/iconeExcluir.png" alt="Excluir">Excluir</button>
+            <button class="excluirBotao" disabled><img src="img/iconeExcluir.png" alt="Excluir">Excluir</button>
           </div>`;
 
           openModal(modalContent, info.el);
@@ -323,9 +323,20 @@
 
           console.log(rect);
 
-          const modalWidth = 150; // Largura do modal
-          const modalHeight = 255; // Altura do modal
-          const padding = 10; // Espaçamento entre o modal e o evento
+          let modalWidth;
+          let modalHeight;
+
+          // Verifica se o evento é uma anotação
+          if (!eventElement.classList.contains('estiloTeams')) {
+            modalWidth = 360;
+            modalHeight = 250;
+          } else {
+
+            modalWidth = 360;
+            modalHeight = 320;
+          }
+
+          const padding = 10;
 
           let left;
           let top;
@@ -347,6 +358,8 @@
 
           modal.style.top = top + 'px';
           modal.style.left = left + 'px';
+          modal.style.width = modalWidth + 'px'; // Define a largura do modal
+          modal.style.height = modalHeight + 'px'; // Define a altura do modal
 
           const iconFechar = modal.querySelector('.iconeFechar'); // Seleciona o iconeFechar dentro do modal
           iconFechar.addEventListener('click', function () {
