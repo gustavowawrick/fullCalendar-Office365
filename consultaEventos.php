@@ -52,6 +52,8 @@ if (curl_errno($ch)) {
 
         $item->extendedProps->url = $itemCalendar->onlineMeeting->joinUrl;
 
+        $item->extendedProps->bodyPreview = $itemCalendar->bodyPreview;
+
         $arrayItens[] = $item;
     }
 
