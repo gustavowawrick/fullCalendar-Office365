@@ -196,11 +196,11 @@ div.fc-content-week>.fc-title-container>img {
 .modal:before {
     position: absolute;
     content: "";
-    border-top: 15px solid transparent;
-    border-right: 15px solid pink;
-    border-bottom: 15px solid transparent;
-    top: 50%;
-    left: -15px;
+    border-top: 7px solid transparent;
+    border-right: 7px solid rgb(255, 255, 255);
+    border-bottom: 7px solid transparent;
+    top: 51.9%;
+    left: -7px;
 }
 
 .modal button {
@@ -300,8 +300,8 @@ div.fc-content-week>.fc-title-container>img {
 .botoes-container {
     display: flex;
     justify-content: left;
-    margin-top: -2vh;
     margin-left: 1.5vw;
+    margin-top: -1.5vh !important;
 }
 
 .editarBotao,
