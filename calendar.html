@@ -28,6 +28,7 @@
       const tooltip = document.getElementById('tooltip');
       let timeoutId; // Variável para armazenar o ID do timeout
       let modalOpen = false; // Variável para rastrear se o modal está aberto
+      const accessToken = '<?php echo $accessToken; ?>'; // Define o access token como uma variável JavaScript
 
       // Método para comparar o tipo de evento e retornar a imagem
       function compareEventType(event) {
@@ -140,10 +141,8 @@
             
           <div class="botoes-container">
             <button class="editarBotao"><img src="img/iconeEditar.png" alt="Editar">Editar</button>
-            <button class="excluirBotao" disabled><img src="img/iconeExcluir.png" alt="Excluir">Excluir</button>
+            <button class="excluirBotao"><img src="img/iconeExcluir.png" alt="Excluir">Excluir</button>
           </div>`;
-
-          console.log(event.extendedProps.bodyPreview);
 
           openModal(modalContent, info.el);
 
@@ -160,6 +159,33 @@
                 }, 1500);
               });
           });
+
+          $('.excluirBotao').on('click', function () {
+            const eventId = info.event.id;
+
+            console.log("Resposta: " + accessToken)
+
+            if (confirm('Tem certeza que deseja excluir este evento?')) {
+              // Remover o evento do calendário
+              calendar.getEventById(eventId).remove();
+
+              // Remover o evento do Office 365
+              $.ajax({
+                url: 'https://graph.microsoft.com/v1.0/me/events/' + eventId,
+                method: 'DELETE',
+                headers: {
+                  'Authorization': 'Bearer ' + accessToken
+                },
+                success: function (response) {
+                  console.log('Evento excluído com sucesso do Office 365');
+                },
+                error: function (xhr, status, error) {
+                  console.error('Erro ao excluir evento do Office 365:', error);
+                }
+              });
+            }
+          });
+
         },
         eventContent: function (arg) {
           const viewType = arg.view.type;
@@ -319,7 +345,6 @@
 
       // Função para abrir o modal
       function openModal(content, eventElement) {
-        console.log($(eventElement).width());
         if (!modalOpen) {
           const modal = document.createElement('div');
           modal.classList.add('modal');
@@ -327,7 +352,6 @@
 
           const rect = eventElement.getBoundingClientRect();
 
-          console.log(rect);
 
           let modalWidth = 360;
           let modalHeight;
@@ -336,9 +360,9 @@
           if (eventElement.classList.contains('estiloTeams')) {
             modalHeight = 320;
           } else if (content.includes('descricao')) {
-            modalHeight = 212;
+            modalHeight = 205;
           } else {
-            modalHeight = 170;
+            modalHeight = 160;
           }
 
           const padding = 10;
@@ -347,16 +371,12 @@
           let top;
 
           if (rect.right + modalWidth + padding <= window.innerWidth) {
-            left = rect.left + rect.width + padding + modalWidth; //Esquerda
-            console.log('left');
-            console.log(left);
-            top = rect.top; // Manter a mesma posição vertical do evento
+            left = rect.left + rect.width + padding + modalWidth - 167;
+            top = rect.top;
           } else if (rect.left - modalWidth - padding >= 0) {
-            console.log('rigth');
             left = rect.left - modalWidth - padding;
-            top = rect.top; // Manter a mesma posição vertical do evento
+            top = rect.top;
           } else {
-            console.log('center');
             left = (window.innerWidth - modalWidth) / 2; // Centralizar horizontalmente
             top = (window.innerHeight - modalHeight) / 2; // Centralizar verticalmente
           }
@@ -368,6 +388,12 @@
 
           const iconFechar = modal.querySelector('.iconeFechar'); // Seleciona o iconeFechar dentro do modal
           iconFechar.addEventListener('click', function () {
+            modal.remove();
+            modalOpen = false;
+          });
+
+          const iconExcluir = modal.querySelector('.excluirBotao');
+          iconExcluir.addEventListener('click', function () {
             modal.remove();
             modalOpen = false;
           });
