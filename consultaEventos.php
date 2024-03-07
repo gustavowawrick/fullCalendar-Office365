@@ -54,6 +54,8 @@ if (curl_errno($ch)) {
 
         $item->extendedProps->bodyPreview = $itemCalendar->bodyPreview;
 
+        $item->extendedProps->id = $itemCalendar->id;
+
         $arrayItens[] = $item;
     }
 
