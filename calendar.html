@@ -112,7 +112,7 @@
           let descricao = '';
 
           if (event.extendedProps.type) {
-            linkSection = `<p class="link"><a href="#" class="truncate-link" data-full-url="${fullUrl}"><img src="img/iconeLink.png" class="icone iconeLink" alt="Ícone Link"></a><a href="#" class="truncate-link" data-full-url="${fullUrl}">${truncateText(fullUrl, 43)}</a><img src="img/iconeCopiar.png" class="icone iconeCopiar" alt="Ícone Copiar"></p>`;
+            linkSection = `<p class="link"><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')"><img src="img/iconeLink.png" class="icone iconeLink" alt="Ícone Link"></a><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')">${truncateText(fullUrl, 43)}</a><img src="img/iconeCopiar.png" class="icone iconeCopiar" alt="Ícone Copiar"></p>`;
           }
 
           if (!event.extendedProps.type && event.extendedProps.bodyPreview !== '') {
@@ -146,6 +146,12 @@
 
           openModal(modalContent, info.el);
 
+          $('.truncate-link').on('click', function (event) {
+            event.preventDefault();
+            const fullUrl = $(this).attr('data-full-url');
+            window.open(fullUrl, '_blank');
+          });
+
           $('.iconeCopiar').on('click', function () {
             const textoParaCopiar = fullUrl;
             const $this = $(this);
@@ -161,28 +167,30 @@
           });
 
           $('.excluirBotao').on('click', function () {
-            const eventId = info.event.id;
-
-            console.log("Resposta: " + accessToken)
+            const eventId = calendar.getEventById(info.event.id);
 
             if (confirm('Tem certeza que deseja excluir este evento?')) {
-              // Remover o evento do calendário
-              calendar.getEventById(eventId).remove();
+              if (eventId) {
+                // Remover o evento do calendário
+                event.remove();
 
-              // Remover o evento do Office 365
-              $.ajax({
-                url: 'https://graph.microsoft.com/v1.0/me/events/' + eventId,
-                method: 'DELETE',
-                headers: {
-                  'Authorization': 'Bearer ' + accessToken
-                },
-                success: function (response) {
-                  console.log('Evento excluído com sucesso do Office 365');
-                },
-                error: function (xhr, status, error) {
-                  console.error('Erro ao excluir evento do Office 365:', error);
-                }
-              });
+                // Remover o evento do Office 365
+                /*$.ajax({
+                  url: 'https://graph.microsoft.com/v1.0/me/events/' + eventId,
+                  method: 'DELETE',
+                  headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                  },
+                  success: function (response) {
+                    console.log('Evento excluído com sucesso do Office 365');
+                  },
+                  error: function (xhr, status, error) {
+                    console.error('Erro ao excluir evento do Office 365:', error);
+                  }
+                });*/
+              } else {
+                console.error('ID do evento não encontrado.');
+              }
             }
           });
 
