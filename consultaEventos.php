@@ -4,34 +4,54 @@ error_reporting(E_ERROR | E_PARSE);
 
 session_start();
 
-$accessToken = $_SESSION['access_token'];
+function calendarEvents($action = 'GET', $eventId = '')
+{
+    $accessToken = $_SESSION['access_token'];
 
-// Endpoint da API do Microsoft Graph para obter os eventos do calendário do usuário
-$graphApiEndpoint = 'https://graph.microsoft.com/v1.0/me/calendar/events';
+    // Endpoint da API do Microsoft Graph para obter os eventos do calendário do usuário
 
-$ch = curl_init();
+    if (isset($_POST['eventId'])) {
+        $eventId = '/' . $_POST['eventId'];
+    } else {
+        $eventId = '';
+    }
 
-// Configura a solicitação para a API do Microsoft Graph
-curl_setopt($ch, CURLOPT_URL, $graphApiEndpoint);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-    'Authorization: Bearer ' . $accessToken
-));
+    $graphApiEndpoint = 'https://graph.microsoft.com/v1.0/me/calendar/events' . $eventId;
 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // Desativa a verificação do host SSL
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Desativa a verificação do peer SSL
+    $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_POST, false);
+    // Configura a solicitação para a API do Microsoft Graph
+    curl_setopt($ch, CURLOPT_URL, $graphApiEndpoint);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Authorization: Bearer ' . $accessToken
+    ));
 
-// Executa a solicitação para obter os eventos do calendário do usuário
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // Desativa a verificação do host SSL
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Desativa a verificação do peer SSL
 
-$responseEvents = json_decode(curl_exec($ch));
+    if (isset($_POST['eventId'])) {
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        //curl_setopt($ch, CURLOPT_POST, ['eventId' => $_POST['eventId']]);
+    } else {
+        curl_setopt($ch, CURLOPT_POST, false);
+    }
 
-// Verifica se ocorreu algum erro durante a solicitação cURL
-if (curl_errno($ch)) {
-    echo 'Erro ao obter eventos do Office 365: ' . curl_error($ch);
-} else {
-    // Redireciona para a página calendar.html com o token de acesso e os eventos codificados na URL
+    // Executa a solicitação para obter os eventos do calendário do usuário
+
+    $responseEvents = json_decode(curl_exec($ch));
+
+    // Verifica se ocorreu algum erro durante a solicitação cURL
+    if (curl_errno($ch)) {
+        echo 'Erro ao obter eventos do Office 365: ' . curl_error($ch);
+    } else {
+        return $responseEvents;
+    }
+}
+
+$responseEvents = calendarEvents();
+
+if (!isset($_POST['eventId'])) {
 
     $arrayItens = [];
 
@@ -59,6 +79,7 @@ if (curl_errno($ch)) {
         $arrayItens[] = $item;
     }
 
-
     echo (json_encode($arrayItens));
+} else {
+    var_dump($responseEvents);
 }
