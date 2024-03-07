@@ -168,6 +168,7 @@
 
           $('.excluirBotao').on('click', function () {
             const eventId = calendar.getEventById(info.event.id);
+            console.log(info.event.extendedProps.id);
 
             if (confirm('Tem certeza que deseja excluir este evento?')) {
               if (eventId) {
@@ -175,21 +176,11 @@
                 event.remove();
 
                 // Remover o evento do Office 365
-                /*$.ajax({
-                  url: 'https://graph.microsoft.com/v1.0/me/events/' + eventId,
-                  method: 'DELETE',
-                  headers: {
-                    'Authorization': 'Bearer ' + accessToken
-                  },
-                  success: function (response) {
-                    console.log('Evento excluído com sucesso do Office 365');
-                  },
-                  error: function (xhr, status, error) {
-                    console.error('Erro ao excluir evento do Office 365:', error);
-                  }
-                });*/
-              } else {
-                console.error('ID do evento não encontrado.');
+                $.ajax({
+                  url: 'consultaEventos.php',
+                  type: 'POST',
+                  data: 'eventId=' + info.event.extendedProps.id
+                });
               }
             }
           });
