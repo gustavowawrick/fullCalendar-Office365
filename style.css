@@ -193,7 +193,7 @@ div.fc-content-week>.fc-title-container>img {
     height: 32.5%;
 }
 
-.modal:before {
+.modal.opened-right:before {
     position: absolute;
     content: "";
     border-top: 7px solid transparent;
@@ -201,6 +201,16 @@ div.fc-content-week>.fc-title-container>img {
     border-bottom: 7px solid transparent;
     top: 51.9%;
     left: -7px;
+}
+
+.modal.opened-left:before {
+    position: absolute;
+    content: "";
+    border-top: 7px solid transparent;
+    border-left: 7px solid rgb(255, 255, 255);
+    border-bottom: 7px solid transparent;
+    top: 51.9%;
+    right: -7px;
 }
 
 .modal button {

@@ -351,7 +351,6 @@
 
           const rect = eventElement.getBoundingClientRect();
 
-
           let modalWidth = 360;
           let modalHeight;
 
@@ -370,22 +369,24 @@
           let top;
 
           if (rect.right + modalWidth + padding <= window.innerWidth) {
+            modal.classList.add('opened-right');
             left = rect.left + rect.width + padding + modalWidth - 167;
             top = rect.top;
           } else if (rect.left - modalWidth - padding >= 0) {
-            left = rect.left - modalWidth - padding;
+            modal.classList.add('opened-left');
+            left = rect.left - modalWidth - padding + 166;
             top = rect.top;
           } else {
-            left = (window.innerWidth - modalWidth) / 2; // Centralizar horizontalmente
-            top = (window.innerHeight - modalHeight) / 2; // Centralizar verticalmente
+            left = (window.innerWidth - modalWidth) / 2;
+            top = (window.innerHeight - modalHeight) / 2;
           }
 
           modal.style.top = top + 'px';
           modal.style.left = left + 'px';
-          modal.style.width = modalWidth + 'px'; // Define a largura do modal
-          modal.style.height = modalHeight + 'px'; // Define a altura do modal
+          modal.style.width = modalWidth + 'px';
+          modal.style.height = modalHeight + 'px';
 
-          const iconFechar = modal.querySelector('.iconeFechar'); // Seleciona o iconeFechar dentro do modal
+          const iconFechar = modal.querySelector('.iconeFechar');
           iconFechar.addEventListener('click', function () {
             modal.remove();
             modalOpen = false;
@@ -401,7 +402,6 @@
           modalOpen = true;
         }
       }
-
     });
   </script>
 
