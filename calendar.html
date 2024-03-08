@@ -52,7 +52,7 @@
         initialView: 'dayGridMonth',
         themeSystem: 'bootstrap',
         headerToolbar: {
-          left: 'today prev,next',
+          left: 'today prev,next adicionar,mais',
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
         },
@@ -78,6 +78,14 @@
           week: 'Semana',
           day: 'Dia',
           list: 'Lista'
+        },
+        customButtons: {
+          adicionar: {
+            text: 'Adicionar',
+            click: function () {
+              console.log('Botão de adicionar clicado');
+            }
+          }
         },
         weekText: 'Semana',
         allDayText: 'Dia inteiro',
