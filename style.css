@@ -213,6 +213,16 @@ div.fc-content-week>.fc-title-container>img {
     right: -7px;
 }
 
+.modal.opened-right.opened-top:before,
+.modal.opened-left.opened-top:before {
+    top: 22% !important;
+}
+
+.modal.opened-right.opened-bottom:before,
+.modal.opened-left.opened-bottom:before {
+    top: 68.5% !important;
+}
+
 .modal button {
     display: block;
     margin-top: 10px;
@@ -357,4 +367,39 @@ div.fc-content-week>.fc-title-container>img {
 
 .link a:hover {
     color: rgb(77, 38, 168);
+}
+
+.ui-dialog-title,
+.ui-dialog-content.ui-widget-content {
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    font-size: 1.1rem;
+    color: #000000;
+}
+
+.ui-dialog-content.ui-widget-content {
+    font-size: 0.9rem;
+    color: #424242;
+}
+
+.ui-widget-header {
+    border: none !important;
+    background: #FFFFFF !important;
+}
+
+.ui-button:first-of-type {
+    background: #2c3e50 !important;
+    color: #FFFFFF !important;
+}
+
+.ui-button:first-of-type:hover {
+    background: #3a5268 !important;
+}
+
+.ui-button:active {
+    background: #f6f6f6 !important;
+    border: none !important;
+}
+
+.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
+    display: none;
 }
