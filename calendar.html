@@ -12,15 +12,27 @@
   <!-- Estilo CSS -->
   <link href="style.css" rel="stylesheet">
 
+  <!-- Estilos e scripts para o jQuery UI Dialog -->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
   <title>Calendário</title>
 
 </head>
 
 <body>
 
+  <!-- Elemento para exibir o calendário -->
   <div id='calendar'></div>
 
+  <!-- Elemento para exibir tooltips -->
   <div id="tooltip" class="tooltip"></div>
+
+  <!-- Elemento para exibir a confirmação da exclusão do evento -->
+  <div id="dialog-confirm" title="Excluir evento" style="display: none;">
+    <p>Tem certeza de que deseja excluir este evento?</p>
+  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -62,7 +74,6 @@
         editable: true,
         selectable: true,
         dayMaxEvents: true,
-        weekends: false,
         locale: 'pt-br',
         slotMinTime: '06:00',
         slotMaxTime: '23:00',
@@ -174,25 +185,44 @@
               });
           });
 
-          $('.excluirBotao').on('click', function () {
-            const eventId = calendar.getEventById(info.event.id);
-            console.log(info.event.extendedProps.id);
-
-            if (confirm('Tem certeza que deseja excluir este evento?')) {
-              if (eventId) {
-                // Remover o evento do calendário
-                event.remove();
-
-                // Remover o evento do Office 365
-                $.ajax({
-                  url: 'consultaEventos.php',
-                  type: 'POST',
-                  data: 'eventId=' + info.event.extendedProps.id
-                });
-              }
-            }
+          $(function () {
+            $('.excluirBotao').on('click', function () {
+              // Exibir o diálogo de confirmação
+              $("#dialog-confirm").dialog({
+                resizable: false,
+                height: "auto",
+                width: 400,
+                modal: true,
+                draggable: false,
+                buttons: {
+                  "Excluir": function () {
+                    $(this).dialog("close");
+                    const eventId = calendar.getEventById(info.event.id);
+                    console.log(info.event.extendedProps.id);
+                    if (eventId) {
+                      // Remove o evento do calendário
+                      event.remove();
+                      // Remove o evento do Office 365
+                      $.ajax({
+                        url: 'consultaEventos.php',
+                        type: 'POST',
+                        data: 'eventId=' + info.event.extendedProps.id,
+                        success: function (response) {
+                          console.log('Evento excluído com sucesso');
+                        },
+                        error: function (xhr, status, error) {
+                          console.error('Erro ao excluir evento:', error);
+                        }
+                      });
+                    }
+                  },
+                  Cancelar: function () {
+                    $(this).dialog("close");
+                  }
+                }
+              });
+            });
           });
-
         },
         eventContent: function (arg) {
           const viewType = arg.view.type;
@@ -352,12 +382,16 @@
 
       // Função para abrir o modal
       function openModal(content, eventElement) {
+        closeModal();
+
         if (!modalOpen) {
           const modal = document.createElement('div');
           modal.classList.add('modal');
           modal.innerHTML = content;
 
           const rect = eventElement.getBoundingClientRect();
+
+          console.log(rect);
 
           let modalWidth = 360;
           let modalHeight;
@@ -389,6 +423,17 @@
             top = (window.innerHeight - modalHeight) / 2;
           }
 
+          if (rect.top < 200) {
+            modal.classList.add('opened-top');
+            top = 250;
+          } else if (rect.top > 700) {
+            modal.classList.add('opened-bottom');
+            top = 770;
+          }
+
+          const minHeight = 200;
+
+
           modal.style.top = top + 'px';
           modal.style.left = left + 'px';
           modal.style.width = modalWidth + 'px';
@@ -400,6 +445,14 @@
             modalOpen = false;
           });
 
+          document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && modalOpen) {
+              const modal = document.querySelector('.modal');
+              modal.remove();
+              modalOpen = false;
+            }
+          });
+
           const iconExcluir = modal.querySelector('.excluirBotao');
           iconExcluir.addEventListener('click', function () {
             modal.remove();
@@ -408,6 +461,16 @@
 
           document.body.appendChild(modal);
           modalOpen = true;
+        }
+      }
+
+      function closeModal() {
+        // Verifica se há um modal aberto
+        const modal = document.querySelector('.modal');
+        if (modal) {
+          // Remove o modal
+          modal.remove();
+          modalOpen = false;
         }
       }
     });
