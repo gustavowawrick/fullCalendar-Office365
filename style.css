@@ -140,6 +140,7 @@ div.fc-content-week>.fc-title-container>img {
 
 .estiloTeams {
     background-color: rgba(91, 94, 199, 0.12);
+    cursor: pointer;
 }
 
 .estiloTeams:hover {
@@ -148,6 +149,7 @@ div.fc-content-week>.fc-title-container>img {
 
 .estiloNota {
     background-color: rgb(178, 214, 242);
+    cursor: pointer;
 }
 
 .estiloNota:hover {
@@ -402,4 +404,8 @@ div.fc-content-week>.fc-title-container>img {
 
 .ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
     display: none;
+}
+
+.fc-mais-button>.fc-icon.fc-icon-chevron-right {
+    transform: rotate(90deg);
 }
