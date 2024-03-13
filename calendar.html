@@ -73,7 +73,7 @@
         navLinks: true,
         nowIndicator: true,
         weekNumberCalculation: 'ISO',
-        editable: true,
+        editable: false,
         selectable: true,
         dayMaxEvents: true,
         locale: 'pt-br',
@@ -95,11 +95,13 @@
         },
         customButtons: {
           adicionar: {
-            text: 'bi bi-plus',
+            text: 'Adicionar',
             click: function () {
               console.log('Botão de adicionar clicado');
             },
-            icon: '<i class="bi bi-plus"></i>'
+          },
+          mais: {
+            icon: 'chevron-right'
           }
         },
         weekText: 'Semana',
@@ -125,7 +127,7 @@
           $('.fc-title').attr('title', '');
         },
         eventMouseLeave: function () {
-          clearTimeout(timeoutId); // Limpa o timeout se o mouse sair antes de 2 segundos
+          clearTimeout(timeoutId);
           tooltip.style.display = 'none';
         },
         eventClick: function (info) {
@@ -133,6 +135,11 @@
           const fullUrl = event.extendedProps.url;
           let linkSection = '';
           let descricao = '';
+
+          if (info.el.classList.contains('fc-timegrid-event-harness')) {
+            info.el.classList.add('opened-top-week');
+          }
+
 
           if (event.extendedProps.type) {
             linkSection = `<p class="link"><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')"><img src="img/iconeLink.png" class="icone iconeLink" alt="Ícone Link"></a><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')">${truncateText(fullUrl, 43)}</a><img src="img/iconeCopiar.png" class="icone iconeCopiar" alt="Ícone Copiar"></p>`;
@@ -436,7 +443,6 @@
           }
 
           const minHeight = 200;
-
 
           modal.style.top = top + 'px';
           modal.style.left = left + 'px';
