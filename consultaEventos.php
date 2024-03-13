@@ -49,10 +49,17 @@ function calendarEvents($action = 'GET', $eventId = '', $pageToken = null)
     }
 }
 
-$responseEvents = calendarEvents();
-
-if (!isset($_POST['eventId'])) {
-
+// Verifica se foi enviada uma solicitação de exclusão de evento
+if (isset($_POST['eventId'])) {
+    $eventId = $_POST['eventId'];
+    // Chama a função para excluir o evento do calendário do Office 365
+    $response = calendarEvents('DELETE', $eventId);
+    // Retorna a resposta para o cliente
+    echo json_encode($response);
+} else {
+    // Se não foi enviada uma solicitação de exclusão, retorna os eventos normais
+    $responseEvents = calendarEvents();
+    // Formata a resposta dos eventos para ser retornada ao cliente
     $arrayItens = [];
 
     foreach ($responseEvents->value as $itemCalendar) {
@@ -79,7 +86,5 @@ if (!isset($_POST['eventId'])) {
         $arrayItens[] = $item;
     }
 
-    echo (json_encode($arrayItens));
-} else {
-    var_dump($responseEvents);
+    echo json_encode($arrayItens);
 }
