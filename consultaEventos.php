@@ -2,6 +2,8 @@
 
 error_reporting(E_ERROR | E_PARSE);
 
+date_default_timezone_set('America/Sao_Paulo');
+
 session_start();
 
 function calendarEvents($action = 'GET', $eventId = '', $pageToken = null)
@@ -27,7 +29,7 @@ function calendarEvents($action = 'GET', $eventId = '', $pageToken = null)
     // Configura a solicitação para a API do Microsoft Graph
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $graphApiEndpoint);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $accessToken]);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $accessToken, 'Prefer: outlook.timezone = "America/Sao_Paulo"']);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // Desativa a verificação do host SSL
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Desativa a verificação do peer SSL
@@ -68,6 +70,7 @@ if (isset($_POST['eventId'])) {
         $item->end = $itemCalendar->end->dateTime;
         $item->title = $itemCalendar->subject;
         $item->author = $itemCalendar->organizer->emailAddress->name;
+
 
         $item->extendedProps = new stdClass();
 
