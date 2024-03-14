@@ -182,27 +182,41 @@ div.fc-content-week>.fc-title-container>img {
 }
 
 .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgb(255, 255, 255);
-    padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-    z-index: 9999;
-    height: 32.5%;
+    height: 37.5vh !important;
+    width: 20.5vw !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background-color: rgb(255, 255, 255) !important;
+    border: 1px solid #ccc !important;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 3px !important;
+    z-index: 9999 !important;
+    display: inline-block !important;
+}
+
+.modal-header {
+    background-color: rgb(240, 240, 240);
+    border-bottom: none !important;
+    width: 100% !important;
+    height: 1vh !important;
+}
+
+.modal-body{
+    padding: 0;
+    padding-left: 1vw;
+    padding-top: 2vh;
 }
 
 .modal.opened-right:before {
-    position: absolute;
-    content: "";
-    border-top: 7px solid transparent;
-    border-right: 7px solid rgb(255, 255, 255);
-    border-bottom: 7px solid transparent;
-    top: 51.9%;
-    left: -7px;
+    position: absolute !important;
+    content: "" !important;
+    border-top: 7px solid transparent !important;
+    border-right: 7px solid rgb(255, 255, 255) !important;
+    border-bottom: 7px solid transparent !important;
+    top: 51.9% !important;
+    left: -7px !important;
 }
 
 .modal.opened-left:before {
@@ -226,9 +240,9 @@ div.fc-content-week>.fc-title-container>img {
 }
 
 .modal button {
-    display: block;
-    margin-top: 10px;
-    cursor: pointer;
+    display: block !important;
+    margin-top: 10px !important;
+    cursor: pointer !important;
 }
 
 .line,
@@ -236,13 +250,14 @@ div.fc-content-week>.fc-title-container>img {
     position: relative;
     border: 0;
     border-top: 1px solid #CCC;
-    width: 330px;
+    width: 18.5vw;
     margin-right: 2px;
+    margin-bottom: 5px;
     top: -7px;
 }
 
 .ultimaLinha {
-    top: -1.4vh;
+    top: -2.1vh;
 }
 
 .icone {
@@ -252,9 +267,9 @@ div.fc-content-week>.fc-title-container>img {
 
 .iconeFechar {
     position: relative;
-    top: -13px;
-    left: 250px;
+    left: 15px;
     cursor: pointer;
+    color: #424242
 }
 
 .iconeHora,
@@ -301,7 +316,6 @@ div.fc-content-week>.fc-title-container>img {
 
 .meuCalendario {
     position: relative;
-    top: -13px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
     font-size: 0.9rem;
     color: rgb(96, 94, 92);
@@ -309,6 +323,7 @@ div.fc-content-week>.fc-title-container>img {
 
 .tituloEvento {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
+    margin-bottom: 3vh;
 }
 
 .organizador {
@@ -323,7 +338,7 @@ div.fc-content-week>.fc-title-container>img {
     display: flex;
     justify-content: left;
     margin-left: 1.5vw;
-    margin-top: -1.5vh !important;
+    margin-top: -2.3vh !important;
 }
 
 .editarBotao,
@@ -353,10 +368,9 @@ div.fc-content-week>.fc-title-container>img {
     background-color: #69696915;
 }
 
-.editarBotao img,
-.excluirBotao img {
+.iconeEditar,
+.iconeExcluir {
     position: relative;
-    top: 3px;
     width: 1vw;
     height: 2vh;
     margin-right: 5px;
