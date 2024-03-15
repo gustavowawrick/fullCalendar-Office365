@@ -86,10 +86,10 @@ body {
 
 .fc-content img {
     position: relative;
-    top: -0.1vh;
-    width: 0.90vw;
+    top: 3px;
+    width: 18px;
     height: 100%;
-    margin-right: 0.1vw;
+    margin-right: 3px;
 }
 
 div.fc-content-week>.fc-title-container>img {
@@ -134,21 +134,8 @@ div.fc-content-week>.fc-title-container>img {
 }
 
 .fc-col-header-cell-cushion::first-letter,
-.fc-toolbar-title::first-letter,
-.fc-list-day-text:first-letter {
+.fc-toolbar-title::first-letter {
     text-transform: uppercase !important;
-}
-
-.fc-col-header-cell-cushion,
-.fc-col-header-cell-cushion:hover,
-.fc-daygrid-day-number,
-.fc-daygrid-day-number:hover,
-.fc-list-day-text,
-.fc-list-day-text:hover,
-.fc-list-day-side-text,
-.fc-list-day-side-text:hover {
-    color: rgb(50, 50, 50);
-    text-decoration: none;
 }
 
 .estiloTeams {
@@ -195,11 +182,11 @@ div.fc-content-week>.fc-title-container>img {
 }
 
 .modal {
-    height: 37.5vh;
+    height: 37.5vh !important;
     width: 20.5vw !important;
     position: fixed !important;
-    top: 50%;
-    left: 50%;
+    top: 50% !important;
+    left: 50% !important;
     transform: translate(-50%, -50%) !important;
     background-color: rgb(255, 255, 255) !important;
     border: 1px solid #ccc !important;
@@ -207,7 +194,6 @@ div.fc-content-week>.fc-title-container>img {
     border-radius: 3px !important;
     z-index: 9999 !important;
     display: inline-block !important;
-    overflow: visible;
 }
 
 .modal-header {
@@ -217,7 +203,7 @@ div.fc-content-week>.fc-title-container>img {
     height: 1vh !important;
 }
 
-.modal-body {
+.modal-body{
     padding: 0;
     padding-left: 1vw;
     padding-top: 2vh;
@@ -229,13 +215,12 @@ div.fc-content-week>.fc-title-container>img {
     border-top: 7px solid transparent !important;
     border-right: 7px solid rgb(255, 255, 255) !important;
     border-bottom: 7px solid transparent !important;
-    top: 51.9%;
-    left: -0.8vh;
-    overflow: visible !important;
+    top: 51.9% !important;
+    left: -7px !important;
 }
 
 .modal.opened-left:before {
-    position: absolute !important;
+    position: absolute;
     content: "";
     border-top: 7px solid transparent;
     border-left: 7px solid rgb(255, 255, 255);
@@ -246,12 +231,12 @@ div.fc-content-week>.fc-title-container>img {
 
 .modal.opened-right.opened-top:before,
 .modal.opened-left.opened-top:before {
-    top: 31.5%;
+    top: 22% !important;
 }
 
 .modal.opened-right.opened-bottom:before,
 .modal.opened-left.opened-bottom:before {
-    top: 71.1%;
+    top: 68.5% !important;
 }
 
 .modal button {
@@ -262,12 +247,12 @@ div.fc-content-week>.fc-title-container>img {
 
 .line,
 .ultimaLinha {
-    position: relative !important;
-    border: 0 !important;
-    border-top: 1px solid #CCC !important;
-    width: 18.5vw !important;
-    margin-right: 2px !important;
-    margin-bottom: 5px !important;
+    position: relative;
+    border: 0;
+    border-top: 1px solid #CCC;
+    width: 18.5vw;
+    margin-right: 2px;
+    margin-bottom: 5px;
     top: -7px;
 }
 
@@ -303,11 +288,6 @@ div.fc-content-week>.fc-title-container>img {
     position: relative;
     right: -0.3vw;
     width: 16px;
-    bottom: -0.1vh;
-}
-
-.iconeCheck {
-    bottom: -0.2vh;
 }
 
 .iconePessoa {
@@ -361,10 +341,6 @@ div.fc-content-week>.fc-title-container>img {
     margin-top: -2.3vh !important;
 }
 
-.botoesDescricao {
-    margin-top: -1vh !important;
-}
-
 .editarBotao,
 .excluirBotao {
     display: flex;
@@ -411,7 +387,7 @@ div.fc-content-week>.fc-title-container>img {
 
 .ui-dialog-title,
 .ui-dialog-content.ui-widget-content {
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
     font-size: 1.1rem;
     color: #000000;
 }
@@ -419,12 +395,6 @@ div.fc-content-week>.fc-title-container>img {
 .ui-dialog-content.ui-widget-content {
     font-size: 0.9rem;
     color: #424242;
-}
-
-.ui-button.ui-corner-all.ui-widget {
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
-    padding-bottom: 0.8vh !important;
-    background-color: rgb(255, 255, 255);
 }
 
 .ui-widget-header {
@@ -442,7 +412,7 @@ div.fc-content-week>.fc-title-container>img {
 }
 
 .ui-button:active {
-    background: #cccccc !important;
+    background: #f6f6f6 !important;
     border: none !important;
 }
 
