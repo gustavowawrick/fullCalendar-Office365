@@ -71,7 +71,7 @@
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
         },
-        navLinks: false,
+        navLinks: true,
         nowIndicator: true,
         weekNumberCalculation: 'ISO',
         editable: false,
@@ -131,7 +131,7 @@
           }
 
           if (!event.extendedProps.type && event.extendedProps.bodyPreview !== '') {
-            descricao = `<p class="descricao"><i class="fa-regular fa-file-lines icone iconeDescricao"></i>${truncateText(event.extendedProps.bodyPreview, 40)}</p> <hr class="line">`;
+            descricao = `<p class="descricao"><img src="img/iconeDescricao.png" class="icone iconeDescricao" alt="Ícone Descrição">${truncateText(event.extendedProps.bodyPreview, 40)}</p><hr class="line">`;
           }
 
           const modalContent = `
@@ -174,9 +174,10 @@
 
             navigator.clipboard.writeText(textoParaCopiar)
               .then(() => {
-                $this.removeClass('fa-regular fa-copy').addClass('fa-solid fa-check iconeCheck').css('color', '#5b5fc7');
+                $this.attr('src', 'img/iconeCheck.png');
+
                 setTimeout(() => {
-                  $this.removeClass('fa-solid fa-check').addClass('fa-regular fa-copy iconeCopiar').css('color', '#5b5fc7');
+                  $this.attr('src', '<i class="fa-regular fa-copy" style="color: #5b5fc7;"></i>');
                 }, 1500);
               });
           });
@@ -387,18 +388,18 @@
 
           const rect = eventElement.getBoundingClientRect();
 
+          console.log(rect);
+
           let modalWidth = 360;
           let modalHeight;
 
           // Verifica se o evento é uma Reunião ou Anotação
           if (eventElement.classList.contains('estiloTeams')) {
-            modalHeight = 360;
+            modalHeight = 320;
           } else if (content.includes('descricao')) {
-            modalHeight = 256;
-            const botoesContainer = modal.querySelector('.botoes-container').classList.add('botoesDescricao');
+            modalHeight = 205;
           } else {
-            modalHeight = 210;
-            const botoesContainer = modal.querySelector('.botoes-container').classList.add('botoesDescricao');
+            modalHeight = 160;
           }
 
           const padding = 10;
@@ -408,11 +409,11 @@
 
           if (rect.right + modalWidth + padding <= window.innerWidth) {
             modal.classList.add('opened-right');
-            left = rect.left + rect.width + padding + modalWidth - 171;
+            left = rect.left + rect.width + padding + modalWidth - 167;
             top = rect.top;
           } else if (rect.left - modalWidth - padding >= 0) {
             modal.classList.add('opened-left');
-            left = rect.left - modalWidth - padding + 170;
+            left = rect.left - modalWidth - padding + 166;
             top = rect.top;
           } else {
             left = (window.innerWidth - modalWidth) / 2;
@@ -421,8 +422,8 @@
 
           if (rect.top < 200) {
             modal.classList.add('opened-top');
-            top = 230;
-          } else if (rect.top > 750) {
+            top = 250;
+          } else if (rect.top > 700) {
             modal.classList.add('opened-bottom');
             top = 770;
           }
