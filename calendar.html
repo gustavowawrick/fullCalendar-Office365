@@ -419,15 +419,15 @@
             top = (window.innerHeight - modalHeight) / 2;
           }
 
-          if (rect.top < 200) {
+          console.log(rect.top + " " + modalHeight);
+
+          if (rect.top < modalHeight / 2) {
             modal.classList.add('opened-top');
             top = 230;
-          } else if (rect.top > 750) {
+          } else if (rect.bottom > window.innerHeight - modalHeight / 2) {
             modal.classList.add('opened-bottom');
-            top = 770;
+            top = rect.top - 68;
           }
-
-          const minHeight = 200;
 
           modal.style.top = top + 'px';
           modal.style.left = left + 'px';
