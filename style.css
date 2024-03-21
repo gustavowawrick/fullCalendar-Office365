@@ -202,9 +202,9 @@ div.fc-content-week>.fc-title-container>img {
 .modal {
     height: 37.5vh;
     width: 20.5vw !important;
-    position: fixed !important;
-    top: 50%;
-    left: 50%;
+    position: absolute !important;
+    /*top: 50%;
+    left: 50%;*/
     transform: translate(-50%, -50%) !important;
     background-color: rgb(255, 255, 255) !important;
     border: 1px solid #ccc !important;
@@ -232,7 +232,7 @@ div.fc-content-week>.fc-title-container>img {
     position: absolute !important;
     content: "" !important;
     border-top: 7px solid transparent !important;
-    border-right: 7px solid rgb(255, 255, 255) !important;
+    border-right: 7px solid rgb(255, 0, 0) !important;
     border-bottom: 7px solid transparent !important;
     top: 51.9%;
     left: -0.8vh;
@@ -243,7 +243,7 @@ div.fc-content-week>.fc-title-container>img {
     position: absolute !important;
     content: "";
     border-top: 7px solid transparent;
-    border-left: 7px solid rgb(255, 255, 255);
+    border-left: 7px solid rgb(255, 0, 0);
     border-bottom: 7px solid transparent;
     top: 51.9%;
     right: -7px;
@@ -414,18 +414,6 @@ div.fc-content-week>.fc-title-container>img {
     color: rgb(77, 38, 168);
 }
 
-.ui-dialog-title,
-.ui-dialog-content.ui-widget-content {
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
-    font-size: 1.1rem;
-    color: #000000;
-}
-
-.ui-dialog-content.ui-widget-content {
-    font-size: 0.9rem;
-    color: #424242;
-}
-
 .ui-button.ui-corner-all.ui-widget {
     font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
     padding-bottom: 0.8vh !important;
@@ -451,10 +439,63 @@ div.fc-content-week>.fc-title-container>img {
     border: none !important;
 }
 
-.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
-    display: none;
-}
-
 .fc-mais-button>.fc-icon.fc-icon-chevron-right {
     transform: rotate(90deg);
+}
+
+.calendar-buttons {
+    position: absolute;
+    right: 16.2vw;
+    top: 2.6vh;
+    height: 4.3vh;
+}
+
+.calendar-buttons>.btn-primary,
+.calendar-buttons>.btn-group>.dropdown-toggle {
+    background-color: #2c3e50;
+    border-color: #2c3e50 !important;
+    box-shadow: none !important;
+}
+
+.calendar-buttons>.btn-primary:hover,
+.calendar-buttons>.btn-group>.dropdown-toggle:hover {
+    background-color: #1e2b37;
+}
+
+.calendar-buttons>.btn-primary:active,
+.calendar-buttons>.btn-group>.dropdown-toggle:active {
+    background-color: #1a252f;
+}
+
+.btn-primary>.fa-solid {
+    margin-right: 0.3vw;
+}
+
+.dropdown-menu {
+    transform: translate(-6px, 43px) !important;
+    min-width: 8.5rem !important;
+    border: 1px solid #ccc !important;
+    padding: 0;
+    cursor: pointer;
+}
+
+.dropdown-item {
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item:active {
+    background-color: #e9ecef;
+    color: #1e2125;
+}
+
+.dropdown-toggle::after{
+    margin-left: 0.5em;
+}
+
+.iconeDropdown {
+    position: relative;
+    width: 2.2vh;
+    right: 0.3vw;
+    top: -0.15vh;
 }
