@@ -98,7 +98,7 @@ div.fc-content-week>.fc-title-container>img {
 
 #tooltip {
     position: absolute;
-    z-index: 1000;
+    z-index: 99000;
     background: #FFFFFF;
     border: 1px solid #CCCCCC;
     padding: 5px;
@@ -107,6 +107,8 @@ div.fc-content-week>.fc-title-container>img {
     pointer-events: none;
     display: block;
     opacity: 1;
+    left: -99999vw;
+    top: -99999vh;
 }
 
 #tooltip.hidden {
@@ -232,10 +234,10 @@ div.fc-content-week>.fc-title-container>img {
     position: absolute !important;
     content: "" !important;
     border-top: 7px solid transparent !important;
-    border-right: 7px solid rgb(255, 0, 0) !important;
+    border-right: 7px solid rgb(255, 255, 255) !important;
     border-bottom: 7px solid transparent !important;
     top: 51.9%;
-    left: -0.8vh;
+    left: -0.94vh;
     overflow: visible !important;
 }
 
@@ -243,7 +245,7 @@ div.fc-content-week>.fc-title-container>img {
     position: absolute !important;
     content: "";
     border-top: 7px solid transparent;
-    border-left: 7px solid rgb(255, 0, 0);
+    border-left: 7px solid rgb(255, 255, 255);
     border-bottom: 7px solid transparent;
     top: 51.9%;
     right: -7px;
@@ -405,9 +407,14 @@ div.fc-content-week>.fc-title-container>img {
     margin-right: 5px;
 }
 
-.link a {
+.link a,
+.fc-daygrid-more-link {
     text-decoration: none;
     color: inherit;
+}
+
+a:hover {
+    color: #000000;
 }
 
 .link a:hover {
@@ -489,7 +496,7 @@ div.fc-content-week>.fc-title-container>img {
     color: #1e2125;
 }
 
-.dropdown-toggle::after{
+.dropdown-toggle::after {
     margin-left: 0.5em;
 }
 
