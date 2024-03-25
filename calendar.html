@@ -160,7 +160,7 @@
           </div>
           
           <div class="modal-body">
-            <h2 class="tituloEvento">${truncateText(event.title, 30)}</h2>
+            <h2 class="tituloEvento">${truncateText(event.title, 26)}</h2>
 
             <p class="data"><i class="fa-regular fa-clock icone iconeHora"></i>${event.end.toLocaleString()}</p>
             <hr class="line">
@@ -261,7 +261,7 @@
           icon = compareEventType(arg.event);
 
           if (viewType === 'dayGridMonth') {
-            truncatedTitle = truncateText(arg.event.title, 30);
+            truncatedTitle = truncateText(arg.event.title, 26);
             content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
             content += '">'; // Fecha a declaração da classe
             content += '<div class="fc-bar ' + classColor + '"></div>';
