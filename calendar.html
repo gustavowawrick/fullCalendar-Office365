@@ -17,11 +17,11 @@
 
   <!-- Estilos e scripts para o jQuery UI Dialog -->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-  <!-- script removido: <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
   <!-- Biblioteca Bootstrap JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
   <title>Calendário</title>
 
@@ -209,6 +209,14 @@
                 width: 400,
                 modal: true,
                 draggable: false,
+                show: {
+                  effect: "blind",
+                  duration: 500
+                },
+                hide: {
+                  effect: "blind",
+                  duration: 200
+                },
                 buttons: {
                   "Excluir": function () {
                     $(this).dialog("close");
@@ -234,6 +242,9 @@
                   Cancelar: function () {
                     $(this).dialog("close");
                   }
+                }, create: function (event, ui) {
+                  // Adiciona o ícone de fechar ao botão de fechar
+                  $(this).closest('.ui-dialog').find('.ui-dialog-titlebar-close').html('<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>');
                 }
               });
             });

@@ -421,31 +421,6 @@ a:hover {
     color: rgb(77, 38, 168);
 }
 
-.ui-button.ui-corner-all.ui-widget {
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
-    padding-bottom: 0.8vh !important;
-    background-color: rgb(255, 255, 255);
-}
-
-.ui-widget-header {
-    border: none !important;
-    background: #FFFFFF !important;
-}
-
-.ui-button:first-of-type {
-    background: #2c3e50 !important;
-    color: #FFFFFF !important;
-}
-
-.ui-button:first-of-type:hover {
-    background: #3a5268 !important;
-}
-
-.ui-button:active {
-    background: #cccccc !important;
-    border: none !important;
-}
-
 .fc-mais-button>.fc-icon.fc-icon-chevron-right {
     transform: rotate(90deg);
 }
@@ -505,4 +480,49 @@ a:hover {
     width: 2.2vh;
     right: 0.3vw;
     top: -0.15vh;
+}
+
+.ui-widget-header {
+    border: none !important;
+    background: #FFFFFF !important;
+}
+
+.ui-button.ui-corner-all.ui-widget {
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
+    padding-bottom: 0.8vh !important;
+    background-color: rgb(255, 255, 255);
+}
+
+.ui-dialog-titlebar-close {
+    background-color: #ffffff00;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.ui-icon {
+    margin-top: -0.6em !important;
+}
+
+.ui-dialog-buttonset>button {
+    background-color: #ffffff00;
+    border: 1px solid #ccc;
+    height: 3.5vh;
+    width: 4.5vw;
+    border-radius: 5px;
+    font-size: 0.92rem;
+
+}
+
+.ui-dialog-buttonset>button:hover,
+.ui-dialog-titlebar-close:hover {
+    background-color: #69696915;
+}
+
+.ui-dialog-buttonset>button:first-of-type {
+    background: #2c3e50;
+    color: #FFFFFF;
+}
+
+.ui-dialog-buttonset>button:first-of-type:hover {
+    background-color: #1e2b37;
 }
