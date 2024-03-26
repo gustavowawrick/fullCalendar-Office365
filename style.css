@@ -426,10 +426,7 @@ a:hover {
 }
 
 .calendar-buttons {
-    position: absolute;
-    right: 16.2vw;
-    top: 2.6vh;
-    height: 4.3vh;
+    margin-right: 2em;
 }
 
 .calendar-buttons>.btn-primary,
@@ -480,6 +477,10 @@ a:hover {
     width: 2.2vh;
     right: 0.3vw;
     top: -0.15vh;
+}
+
+.fc-dayGridMonth-button {
+    border-radius: 0.25em 0 0 0.25em !important;
 }
 
 .ui-widget-header {
