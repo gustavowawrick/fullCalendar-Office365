@@ -32,28 +32,15 @@
   <!-- Elemento para exibir o calendário -->
   <div id='calendar'></div>
 
-  <!-- Elemento para exibir botão de adicionar no cabeçalho -->
-  <div class="btn-group calendar-buttons" role="group">
-    <div class="btn-group" role="group">
-      <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
-          class="fa-solid fa-plus" style="color: #ffffff;"></i>Adicionar</button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item"><img src="img/iconeTeams.png" class="iconeDropdown" alt="Ícone Teams">Reunião</a>
-        </li>
-        <li><a class="dropdown-item"><img src="img/iconeNota.png" class="iconeDropdown"
-              alt="Ícone Anotação">Anotação</a></li>
-        <li><a class="dropdown-item"><img src="img/iconeFeriado.png" class="iconeDropdown"
-              alt="Ícone Feriado">Feriado</a></li>
-      </ul>
-    </div>
-  </div>
-
   <!-- Elemento para exibir tooltips -->
   <div id="tooltip" class="tooltip"></div>
 
   <!-- Elemento para exibir a confirmação da exclusão do evento -->
   <div id="dialog-confirm" title="Excluir evento" style="display: none;">
     <p>Tem certeza de que deseja excluir este evento?</p>
+  </div>
+
+  <div id="modal-edit" style="display: none;">
   </div>
 
   <script>
@@ -90,7 +77,7 @@
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
         },
-        eventMaxStack: 2,
+        eventMaxStack: 1,
         navLinks: false,
         nowIndicator: true,
         weekNumberCalculation: 'ISO',
@@ -155,12 +142,6 @@
           }
 
           const modalContent = `
-          <div class="modal-header">
-            <span class="meuCalendario">Meu Calendário</span>
-            <i class="fa-solid fa-xmark fa-lg icone iconeFechar"></i>
-          </div>
-          
-          <div class="modal-body">
             <h2 class="tituloEvento">${truncateText(event.title, 26)}</h2>
 
             <p class="data"><i class="fa-regular fa-clock icone iconeHora"></i>${event.end.toLocaleString()}</p>
@@ -322,6 +303,21 @@
       });
 
       calendar.render();
+      onButtonAdd();
+
+      function onButtonAdd() {
+
+        let div = '<div class="btn-group calendar-buttons" role="group">' +
+          '<div class="btn-group" role = "group" >' +
+          '<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-plus" style="color: #ffffff;"></i>Adicionar</button>' +
+          '<ul class="dropdown-menu">' +
+          '<li><a class="dropdown-item"><img src="img/iconeTeams.png" class="iconeDropdown" alt="Ícone Teams">Reunião</a></li>' +
+          '<li><a class="dropdown-item"><img src="img/iconeNota.png" class="iconeDropdown" alt="Ícone Anotação">Anotação</a></li>' +
+          '<li><a class="dropdown-item"><img src="img/iconeFeriado.png" class="iconeDropdown" alt="Ícone Feriado">Feriado</a></li>' +
+          '</ul></div ></div > ';
+
+        $(div).insertBefore($('.fc-button-group:last button:first'));
+      }
 
       // Função para formatar a data no formato "HH:MM"
       function formatDate(date) {
@@ -406,95 +402,24 @@
           eventTimeRange;
       }
 
-
       // Função para abrir o modal
       function openModal(content, eventElement) {
-        closeModal();
-
-        if (!modalOpen) {
-          const modal = document.createElement('div');
-          modal.classList.add('modal');
-          modal.innerHTML = content;
-
-          const rect = eventElement.getBoundingClientRect();
-
-          let modalHeight;
-
-          // Verifica se o evento é uma Reunião ou Anotação
-          if (eventElement.classList.contains('estiloTeams')) {
-            modalHeight = 360;
-          } else if (content.includes('descricao')) {
-            modalHeight = 256;
-            const botoesContainer = modal.querySelector('.botoes-container').classList.add('botoesDescricao');
-          } else {
-            modalHeight = 210;
-            const botoesContainer = modal.querySelector('.botoes-container').classList.add('botoesDescricao');
-          }
-
-          const padding = 15;
-
-          let left;
-          let top;
-
-          modal.style.top = top + 'px';
-          modal.style.left = left + 'px';
-          //modal.style.width = modalWidth + 'px';
-          modal.style.height = modalHeight + 'px';
-
-          const iconFechar = modal.querySelector('.iconeFechar');
-          iconFechar.addEventListener('click', function () {
-            modal.remove();
-            modalOpen = false;
-          });
-
-          document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape' && modalOpen) {
-              const modal = document.querySelector('.modal');
-              modal.remove();
-              modalOpen = false;
-            }
-          });
-
-          const iconExcluir = modal.querySelector('.excluirBotao');
-          iconExcluir.addEventListener('click', function () {
-            modal.remove();
-            modalOpen = false;
-          });
-
-          document.body.appendChild(modal);
-          modalOpen = true;
-
-          let modalWidth = $('.modal').innerWidth();
-
-          let comp = (window.innerWidth - $('#calendar').css('width').replace('px', '')) / 2;
-
-          if (window.innerWidth <= 1024) {
-            comp = comp + 3;
-          }
-
-          console.log(comp);
-
-          if (rect.right + modalWidth + padding <= window.innerWidth) {
-            modal.classList.add('opened-right');
-            left = rect.left + modalWidth + comp + padding;
-            top = rect.top;
-          } else if (rect.left - modalWidth - padding >= 0) {
-            modal.classList.add('opened-left');
-            left = rect.left - rect.width + comp;
-            top = rect.top;
-          }
-
-          if (rect.top < modalHeight / 2) {
-            modal.classList.add('opened-top');
-            top = 230;
-          } else if (rect.bottom > window.innerHeight - modalHeight) {
-            modal.classList.add('opened-bottom');
-            top = rect.top - 68;
-          }
-
-          $('.modal').css('left', left);
-          $('.modal').css('top', top);
-        }
+        $("#modal-edit").html(content).dialog({
+          resizable: false,
+          height: "auto",
+          width: 400,
+          modal: true,
+          draggable: false,
+          show: {
+            effect: "blind",
+            duration: 500
+          },
+          hide: {
+            effect: "blind",
+            duration: 200
+          },
+          buttons: {}
+        })
       }
 
       function closeModal() {
