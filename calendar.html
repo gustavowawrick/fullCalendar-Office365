@@ -40,8 +40,7 @@
     <p>Tem certeza de que deseja excluir este evento?</p>
   </div>
 
-  <div id="modal-edit" style="display: none;">
-  </div>
+  <div id="modal-view" title="Reunião Teste - gustavo.wawrick@itsgroup.com.br" style="display: none;"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -133,32 +132,11 @@
           let linkSection = '';
           let descricao = '';
 
-          if (event.extendedProps.type) {
-            linkSection = `<p class="link"><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')"><img src="img/iconeLink.png" class="icone iconeLink" alt="Ícone Link"></a><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')">${truncateText(fullUrl, 43)}</a><i class="fa-regular fa-copy iconeCopiar" style="color: #5b5fc7;"></i>`;
-          }
-
-          if (!event.extendedProps.type && event.extendedProps.bodyPreview !== '') {
-            descricao = `<p class="descricao"><i class="fa-regular fa-file-lines icone iconeDescricao"></i>${truncateText(event.extendedProps.bodyPreview, 40)}</p> <hr class="line">`;
-          }
-
           const modalContent = `
-            <h2 class="tituloEvento">${truncateText(event.title, 26)}</h2>
-
-            <p class="data"><i class="fa-regular fa-clock icone iconeHora"></i>${event.end.toLocaleString()}</p>
-            <hr class="line">
-            
-            ${linkSection || event.extendedProps.type ? '<p class="reuniao"><img src="img/iconeLocalizacao.png" class="icone iconeLoc" alt="Ícone Localização">Reunião Microsoft Teams</p>' : ''}
-            ${linkSection || event.extendedProps.type ? '<hr class="line">' : ''}
-            ${linkSection}
-            ${linkSection ? '<hr class="line">' : ''}
-            ${linkSection || event.extendedProps.type ? `<p class="author"><i class="fa-regular fa-user icone iconePessoa"></i>${event.extendedProps.author}</p>` : ''}
-            ${linkSection || event.extendedProps.type ? '<p class="organizador">Organizador</p>' : ''}
-            ${linkSection || event.extendedProps.type ? '<hr class="ultimaLinha">' : ''}
-            ${descricao}
-            
-          <div class="botoes-container">
-            <button class="editarBotao"><i class="fa-solid fa-pen-to-square iconeEditar" style="color: #0091ff;"></i>Editar</button>
-            <button class="excluirBotao"><i class="fa-solid fa-trash iconeExcluir" style="color: #ff0000;"></i>Excluir</button>
+          <div id="toolbar" class="toolbar">
+            <button><i class="fa-regular fa-pen-to-square"></i> Editar</button>
+            <button><i class="fa-regular fa-trash-can"></i> Excluir</button>
+            <button><img src="img/iconeTeams.png" class="iconeTeamsView" alt="Ícone Teams"> Ingressar</button>
           </div>`;
 
           openModal(modalContent, info.el);
@@ -404,10 +382,10 @@
 
       // Função para abrir o modal
       function openModal(content, eventElement) {
-        $("#modal-edit").html(content).dialog({
+        $("#modal-view").html(content).dialog({
           resizable: false,
-          height: "auto",
-          width: 400,
+          height: 800,
+          width: 900,
           modal: true,
           draggable: false,
           show: {
@@ -418,7 +396,11 @@
             effect: "blind",
             duration: 200
           },
-          buttons: {}
+          buttons: {
+          }
+          , create: function (event, ui) {
+            $(this).closest('.ui-dialog').find('.ui-dialog-titlebar-close').html('<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>');
+          }
         })
       }
 

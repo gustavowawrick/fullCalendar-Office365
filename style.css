@@ -527,3 +527,43 @@ a:hover {
 .ui-dialog-buttonset>button:first-of-type:hover {
     background-color: #1e2b37;
 }
+
+/* ----- Modal de visualização do evento ----- */
+.ui-dialog {
+    padding: 0 !important;
+    box-shadow: rgba(0, 0, 0, 0.22) 0px 25.6px 57.6px 0px, rgba(0, 0, 0, 0.18) 0px 4.8px 14.4px;
+}
+
+/* Div Cabeçalho */
+.ui-dialog-titlebar {
+    background-color: rgb(240, 240, 240) !important;
+}
+
+.ui-dialog-title {
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
+    font-weight: normal;
+}
+
+.ui-dialog-titlebar-close {
+    right: 0.5em !important;
+}
+
+/* Div Body */
+.ui-dialog-content {
+    background-color: rgb(240, 240, 240) !important;
+}
+
+.toolbar {
+    width: 100%;
+    height: 4.5vh;
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+}
+
+.toolbar>button{
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
+    font-weight: normal;
+    background-color: transparent;
+    border: none;
+}
