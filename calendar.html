@@ -132,12 +132,37 @@
           let linkSection = '';
           let descricao = '';
 
+
+          if (!event.extendedProps.type && event.extendedProps.bodyPreview !== '') {
+            descricao = `<p class="descricao"><i class="fa-regular fa-file-lines icone iconeDescricao"></i>${truncateText(event.extendedProps.bodyPreview, 40)}</p> <hr class="line">`;
+          } else {
+            descricao = `<p class="descricao"><i class="fa-regular fa-file-lines icone iconeDescricao"></i></p><hr class="linha">`;
+          }
+
+          if (event.extendedProps.type) {
+            linkSection = `<p class="link"><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')"><img src="img/iconeLink.png" class="icone iconeLink" alt="Ícone Link"></a><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')">${truncateText(fullUrl, 43)}</a><i class="fa-regular fa-copy iconeCopiar" style="color: #5b5fc7;"></i>`;
+          }
+
           const modalContent = `
-          <div id="toolbar" class="toolbar">
+          <div class="headerToolbar">
             <button><i class="fa-regular fa-pen-to-square"></i> Editar</button>
             <button><i class="fa-regular fa-trash-can"></i> Excluir</button>
             <button><img src="img/iconeTeams.png" class="iconeTeamsView" alt="Ícone Teams"> Ingressar</button>
-          </div>`;
+          </div>
+          
+          <div class="bodyToolbar">
+            <h2 class="tituloEvento">${truncateText(event.title, 155)}</h2>
+            <p class="data"><i class="fa-regular fa-clock icone iconeHora"></i>${event.end.toLocaleString()}</p>
+            <hr class = "linha">
+            <p class="reuniao"><img src="img/iconeLocalizacao.png" class="icone iconeLoc" alt="Ícone Localização">Reunião Microsoft Teams</p>
+            <hr class = "linha">
+            ${linkSection}
+            <hr class = "linha">
+            <p class="author"><i class="fa-regular fa-user icone iconePessoa"></i>${event.extendedProps.author}</p><p class="organizador">Organizador</p>
+            <hr class="ultimaLinha">
+            ${descricao}
+          </div>  
+          `;
 
           openModal(modalContent, info.el);
 
