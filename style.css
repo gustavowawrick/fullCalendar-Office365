@@ -267,21 +267,6 @@ div.fc-content-week>.fc-title-container>img {
     cursor: pointer !important;
 }
 
-.line,
-.ultimaLinha {
-    position: relative !important;
-    border: 0 !important;
-    border-top: 1px solid #CCC !important;
-    width: 18.5vw !important;
-    margin-right: 2px !important;
-    margin-bottom: 5px !important;
-    top: -7px;
-}
-
-.ultimaLinha {
-    top: -2.1vh;
-}
-
 .icone {
     width: 20px;
     height: 100%;
@@ -329,36 +314,11 @@ div.fc-content-week>.fc-title-container>img {
     cursor: pointer;
 }
 
-.data,
-.reuniao,
-.link,
-.author,
-.descricao {
-    display: flex;
-    align-items: center;
-    margin-top: 0;
-    font-size: 0.92rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
-}
-
 .meuCalendario {
     position: relative;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
     font-size: 0.9rem;
     color: rgb(96, 94, 92);
-}
-
-.tituloEvento {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
-    margin-bottom: 3vh;
-}
-
-.organizador {
-    position: relative;
-    top: -1.4vh;
-    left: 1.5vw;
-    font-size: 0.6rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
 }
 
 .botoes-container {
@@ -546,24 +506,101 @@ a:hover {
 
 .ui-dialog-titlebar-close {
     right: 0.5em !important;
+    background-color: #FFFFFF;
 }
 
-/* Div Body */
+/* Div Header Toolbar */
 .ui-dialog-content {
     background-color: rgb(240, 240, 240) !important;
 }
 
-.toolbar {
+.headerToolbar {
     width: 100%;
-    height: 4.5vh;
+    height: 5vh;
     background-color: #FFFFFF;
-    border: 1px solid #CCCCCC;
+    border: 1px solid #dbd8d8;
     border-radius: 5px;
+    padding-left: 0.4vw;
 }
 
-.toolbar>button{
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
+.headerToolbar>button {
+    height: 3.5vh;
     font-weight: normal;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
     background-color: transparent;
-    border: none;
+    color: #2e2e2e;
+    border: 1px solid #c4c3c3;
+    border-radius: 5px;
+    margin-top: 0.6vh;
+}
+
+.headerToolbar>button:hover {
+    background-color: #69696915;
+}
+
+.headerToolbar>button:focus-visible,
+.ui-dialog-titlebar-close:focus-visible {
+    outline: none !important;
+}
+
+.iconeTeamsView {
+    height: 2.1vh;
+    margin-bottom: 0.2vh;
+}
+
+/* Div Body Toolbar */
+
+.bodyToolbar {
+    width: 100%;
+    height: 50vh;
+    background-color: #FFFFFF;
+    border: 1px solid #dbd8d8;
+    border-radius: 5px;
+    margin-top: 1vh;
+    padding-left: 2vw;
+    padding-top: 2vh;
+}
+
+.tituloEvento {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
+    margin-bottom: 2.5vh;
+}
+
+.linha,
+.ultimaLinha {
+    position: relative;
+    border: 0;
+    border-top: 1px solid #adadad;
+    width: 20.5vw;
+    margin-left: -0.5vh;
+    margin-bottom: 0.8vh;
+    top: -1.2vh;
+}
+
+.ultimaLinha {
+    top: -2.1vh;
+}
+
+.data,
+.reuniao,
+.link,
+.author,
+.descricao {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2vh;
+    font-size: 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
+}
+
+.data{
+    margin-top: 4vh;
+}
+
+.organizador {
+    position: relative;
+    top: -1.4vh;
+    margin-left: 1.5vw;
+    font-size: 0.6rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
 }
