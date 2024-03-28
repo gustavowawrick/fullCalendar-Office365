@@ -307,13 +307,6 @@ div.fc-content-week>.fc-title-container>img {
     top: 0.9vh;
 }
 
-.link,
-.iconeLink,
-.iconeCopiar {
-    color: rgb(91, 95, 199);
-    cursor: pointer;
-}
-
 .meuCalendario {
     position: relative;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
@@ -365,20 +358,6 @@ div.fc-content-week>.fc-title-container>img {
     width: 1vw;
     height: 2vh;
     margin-right: 5px;
-}
-
-.link a,
-.fc-daygrid-more-link {
-    text-decoration: none;
-    color: inherit;
-}
-
-a:hover {
-    color: #000000;
-}
-
-.link a:hover {
-    color: rgb(77, 38, 168);
 }
 
 .fc-mais-button>.fc-icon.fc-icon-chevron-right {
@@ -550,9 +529,13 @@ a:hover {
 
 /* Div Body Toolbar */
 
+#dialog-confirm {
+    background-color: #FFFFFF !important;
+}
+
 .bodyToolbar {
     width: 100%;
-    height: 50vh;
+    height: 71vh;
     background-color: #FFFFFF;
     border: 1px solid #dbd8d8;
     border-radius: 5px;
@@ -571,7 +554,7 @@ a:hover {
     position: relative;
     border: 0;
     border-top: 1px solid #adadad;
-    width: 20.5vw;
+    width: 25.5vw;
     margin-left: -0.5vh;
     margin-bottom: 0.8vh;
     top: -1.2vh;
@@ -589,11 +572,11 @@ a:hover {
     display: flex;
     align-items: center;
     margin-bottom: 2vh;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
 }
 
-.data{
+.data {
     margin-top: 4vh;
 }
 
@@ -603,4 +586,26 @@ a:hover {
     margin-left: 1.5vw;
     font-size: 0.6rem;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
+}
+
+.link a,
+.fc-daygrid-more-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.link,
+.iconeLink,
+.iconeCopiar {
+    color: rgb(91, 95, 199);
+    cursor: pointer;
+}
+
+.link a {
+    color: rgb(91, 95, 199) !important;
+}
+
+.link a:hover,
+.iconeCopiar:hover {
+    color: rgb(64, 67, 151) !important;
 }
