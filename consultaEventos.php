@@ -86,6 +86,8 @@ if (isset($_POST['eventId'])) {
 
         $item->extendedProps->id = $itemCalendar->id;
 
+        $item->extendedProps->isOrganizer = $itemCalendar->isOrganizer;
+
         $arrayItens[] = $item;
     }
 
