@@ -547,6 +547,7 @@ div.fc-content-week>.fc-title-container>img {
 .tituloEvento {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
     margin-bottom: 2.5vh;
+    margin-right: 2vh;
 }
 
 .linha,
@@ -589,9 +590,23 @@ div.fc-content-week>.fc-title-container>img {
 }
 
 .link a,
-.fc-daygrid-more-link {
+.fc-daygrid-more-link,
+.fc-timegrid-more-link {
     text-decoration: none;
     color: inherit;
+}
+
+.fc-timegrid-more-link {
+    background: #dfdfdf;
+}
+
+.fc-daygrid-more-link:hover,
+.fc-timegrid-more-link:hover {
+    color: #000000 !important;
+}
+
+.fc-timegrid-more-link:hover{
+    background: #cdcdcd;
 }
 
 .link,

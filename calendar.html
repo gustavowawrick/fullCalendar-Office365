@@ -40,7 +40,7 @@
     <p>Tem certeza de que deseja excluir este evento?</p>
   </div>
 
-  <div id="modal-view" title="Reunião Teste - gustavo.wawrick@itsgroup.com.br" style="display: none;"></div>
+  <div id="modal-view" title="Reunião Teste" style="display: none;"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -142,14 +142,16 @@
           }
 
           if (event.extendedProps.isOrganizer) {
-            isOrganizer = '<button class="botaoEditar"><i class="fa-regular fa-pen-to-square"></i> Editar</button>';
+            isOrganizer = '<button class="botaoEditar" ><i class="fa-regular fa-pen-to-square"></i> Editar</button>';
           }
 
           const modalContent = `
           <div class="headerToolbar">
             ${isOrganizer}
             <button class="botaoExcluir"><i class="fa-regular fa-trash-can"></i> Excluir</button>
-            <button class="botaoIngressar"><img src="img/iconeTeams.png" class="iconeTeamsView" alt="Ícone Teams"> Ingressar</button>
+            <button class="botaoIngressar" onclick="window.open('${fullUrl}', '_blank')"><img src="img/iconeTeams.png" class="iconeTeamsView" alt="Ícone Teams"> Ingressar</button>
+
+
           </div>
           
           <div class="bodyToolbar">
@@ -247,7 +249,7 @@
           icon = compareEventType(arg.event);
 
           if (viewType === 'dayGridMonth') {
-            truncatedTitle = truncateText(arg.event.title, 25);
+            truncatedTitle = truncateText(arg.event.title, 22);
             content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
             content += '">'; // Fecha a declaração da classe
             content += '<div class="fc-bar ' + classColor + '"></div>';
@@ -295,7 +297,7 @@
           toolbarTitle.textContent = month;
 
           // Remove o atributo 'title' dos botões
-          $('.fc-today-button, .fc-prev-button, .fc-next-button, .fc-month-button, .fc-week-button, .fc-day-button, .fc-list-button').removeAttr('title');
+          $('.fc-today-button, .fc-prev-button, .fc-next-button, .fc-dayGridMonth-button, .fc-timeGridWeek-button, .fc-timeGridDay-button, .fc-listWeek-button').removeAttr('title');
         },
         eventClassNames: function (arg) {
           if (arg.event.extendedProps.type) {
