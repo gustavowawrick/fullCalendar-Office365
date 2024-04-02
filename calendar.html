@@ -42,6 +42,8 @@
 
   <div id="modal-view" title=" " style="display: none;"></div>
 
+  <div id="modal-edit" title=" " style="display: none;"></div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const calendarEl = document.getElementById('calendar');
@@ -134,7 +136,7 @@
           let isOrganizer = '';
           let buttonJoin = '';
 
-          $('#modal-view').attr('title', event.title);
+          $('#modal-view, #modal-edit').attr('title', event.title);
           $('.ui-dialog-title').text(event.title);
 
           if (!event.extendedProps.type && event.extendedProps.bodyPreview !== '') {
@@ -150,7 +152,7 @@
             isOrganizer = '<button class="botaoEditar" ><i class="fa-regular fa-pen-to-square"></i> Editar</button>';
           }
 
-          const modalContent = `
+          const modalContentView = `
           <div class="headerToolbar">
             ${isOrganizer}
             <button class="botaoExcluir"><i class="fa-regular fa-trash-can"></i> Excluir</button>
@@ -169,7 +171,25 @@
             ${descricao}
           </div>`;
 
-          openModal(modalContent, info.el);
+          const modalContentEdit = `
+          <div class="headerToolbar">
+            <button class="botaoSalvar"><i class="fa-regular fa-floppy-disk"></i> Salvar</button>
+            <button class="botaoExcluir"><i class="fa-regular fa-trash-can"></i> Excluir</button>
+            ${buttonJoin}
+          </div>
+          
+          <div class="bodyToolbar">
+              <input type="text" class="tituloEvento" value="${event.title}" maxlength="280">
+              <hr class="linha">
+              <input type="datetime-local" class="data" value="${event.start.toLocaleString()}">
+              <hr class="linha">
+              <input type="datetime-local" class="data" value="${event.end.toLocaleString()}">
+              <hr class="linha">
+              <input type="text" class="descricao" value="${event.extendedProps.bodyPreview}">
+              <hr class="linha">
+          </div>`;
+
+          openModal(modalContentView, info.el);
 
           $('.truncate-link').on('click', function (event) {
             event.preventDefault();
@@ -188,6 +208,11 @@
                   $this.removeClass('fa-solid fa-check').addClass('fa-regular fa-copy iconeCopiar').css('color', '#5b5fc7');
                 }, 1500);
               });
+          });
+
+          $('.botaoEditar').on('click', function () {
+            $('.buttonCloseView').click();
+            openModalEdit(modalContentEdit, info.el);
           });
 
           $(function () {
@@ -437,11 +462,34 @@
           eventTimeRange;
       }
 
+      function openModalEdit(content, eventElement) {
+        let modalWidth;
+
+        $("#modal-edit").html(content).dialog({
+          resizable: false,
+          height: 800,
+          width: 800,
+          modal: true,
+          draggable: false,
+          show: {
+            effect: "blind",
+            duration: 500
+          },
+          hide: {
+            effect: "blind",
+            duration: 200
+          },
+          buttons: {
+          }
+          , create: function (event, ui) {
+            $(this).closest('.ui-dialog').find('.ui-dialog-titlebar-close').html('<span class="ui-button-icon-primary ui-icon ui-icon-closethick buttonCloseEdit"></span>');
+          }
+        })
+      }
+
       // Função para abrir o modal
       function openModal(content, eventElement) {
         let modalWidth;
-
-
 
         $("#modal-view").html(content).dialog({
           resizable: false,
@@ -460,7 +508,7 @@
           buttons: {
           }
           , create: function (event, ui) {
-            $(this).closest('.ui-dialog').find('.ui-dialog-titlebar-close').html('<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>');
+            $(this).closest('.ui-dialog').find('.ui-dialog-titlebar-close').html('<span class="ui-button-icon-primary ui-icon ui-icon-closethick buttonCloseView"></span>');
           }
         })
       }
