@@ -134,7 +134,7 @@
           let isOrganizer = '';
 
           if (!event.extendedProps.type && event.extendedProps.bodyPreview !== '') {
-            descricao = `<p class="descricao"><i class="fa-regular fa-file-lines icone iconeDescricao"></i>${truncateText(event.extendedProps.bodyPreview, 40)}</p><hr class="linha">`;
+            descricao = `<p class="descricao"><i class="fa-regular fa-file-lines icone iconeDescricao"></i>${truncateText(event.extendedProps.bodyPreview, 400)}</p><hr class="linha">`;
           }
 
           if (event.extendedProps.type) {
@@ -155,7 +155,7 @@
           </div>
           
           <div class="bodyToolbar">
-            <h2 class="tituloEvento">${event.title}</h2>
+            <h2 class="tituloEvento">${truncateText(event.title, 280)}</h2>
             <p class="data"><i class="fa-regular fa-clock icone iconeHora"></i>${event.end.toLocaleString()}</p>
             <hr class = "linha">
             <p class="reuniao"><img src="img/iconeLocalizacao.png" class="icone iconeLoc" alt="Ícone Localização">Reunião Microsoft Teams</p>
@@ -256,8 +256,8 @@
             content += '<span class="fc-time ' + classColor + '">' + formatDate(arg.event.start) + '</span>';
             content += '<img src="img/' + icon + '" alt="Ícone">';
             content += '<span class="fc-title ' + classColor + '" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
-          } else if (viewType === 'timeGridWeek' || viewType === 'timeGridDay') {
-            truncatedTitle = truncateText(arg.event.title, viewType === 'timeGridWeek' ? 30 : 40);
+          } else if (viewType === 'timeGridWeek') {
+            truncatedTitle = truncateText(arg.event.title, 25);
             content += 'fc-content-week ';
             content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
             content += '">'; // Fecha a declaração da classe
@@ -267,14 +267,38 @@
             content += '<span class="fc-title ' + classColor + '" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
             content += '</span>';
             content += '</div>';
+          } else if (viewType === 'timeGridDay') {
+            truncatedTitle = truncateText(arg.event.title, 60);
+            content += 'fc-content-week ';
+
+            // Adicione a classe 'fc-event-teams' se o tipo for 'teams', caso contrário, adicione 'fc-event-nota'
+            content += 'fc-event-' + (arg.event.extendedProps.type === 'teams' ? 'teams' : 'nota');
+            content += '">'; // Fecha a declaração da classe
+            content += '<div class="fc-bar ' + classColor + '"></div>';
+            content += '<span class="fc-title-container">';
+            content += '<img src="img/' + icon + '" alt="Ícone">';
+
+            // Verifique se o tipo é 'teams'
+            if (arg.event.extendedProps.type) {
+              content += '<span class="fc-title ' + classColor + '" title="' + arg.event.title + '">' + truncatedTitle + ' - ' + arg.event.extendedProps.author + '; Reunião Microsoft Teams' + '</span>';
+            } else {
+              content += '<span class="fc-title ' + classColor + '" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
+            }
+
+            content += '</span>';
+            content += '</div>';
           } else if (viewType === 'listWeek') {
             truncatedTitle = truncateText(arg.event.title, 50);
+            content += 'fc-content-week ';
             content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
             content += '">'; // Fecha a declaração da classe
             content += '<img src="img/' + icon + '" alt="Ícone">';
-            content += '<span class="fc-title">' + truncatedTitle + ' - </span>';
-            content += '<span class="fc-author">' + arg.event.extendedProps.author + '; </span>';
-            content += '<span class="fc-type">Reunião Microsoft Teams</span>';
+            if (arg.event.extendedProps.type) {
+              content += '<span class="fc-title">' + truncatedTitle + ' - ' + arg.event.extendedProps.author + '; Reunião Microsoft Teams' + '</span>';
+            } else {
+              content += '<span class="fc-title">' + truncatedTitle + '</span>';
+            }
+            content += '</div>';
           }
           content += '</div>';
 
