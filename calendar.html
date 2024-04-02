@@ -40,7 +40,7 @@
     <p>Tem certeza de que deseja excluir este evento?</p>
   </div>
 
-  <div id="modal-view" title="Reunião Teste" style="display: none;"></div>
+  <div id="modal-view" title=" " style="display: none;"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -132,6 +132,10 @@
           let linkSection = '';
           let descricao = '';
           let isOrganizer = '';
+          let buttonJoin = '';
+
+          $('#modal-view').attr('title', event.title);
+          $('.ui-dialog-title').text(event.title);
 
           if (!event.extendedProps.type && event.extendedProps.bodyPreview !== '') {
             descricao = `<p class="descricao"><i class="fa-regular fa-file-lines icone iconeDescricao"></i>${truncateText(event.extendedProps.bodyPreview, 400)}</p><hr class="linha">`;
@@ -139,6 +143,7 @@
 
           if (event.extendedProps.type) {
             linkSection = `<p class="link"><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')"><img src="img/iconeLink.png" class="icone iconeLink" alt="Ícone Link"></a><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')">${truncateText(fullUrl, 43)}</a><i class="fa-regular fa-copy iconeCopiar" style="color: #5b5fc7;"></i><hr class="linha">`;
+            buttonJoin = `<button class="botaoIngressar" onclick="window.open('${fullUrl}', '_blank')"><img src="img/iconeTeams.png" class="iconeTeamsView" alt="Ícone Teams"> Ingressar</button>`;
           }
 
           if (event.extendedProps.isOrganizer) {
@@ -149,9 +154,7 @@
           <div class="headerToolbar">
             ${isOrganizer}
             <button class="botaoExcluir"><i class="fa-regular fa-trash-can"></i> Excluir</button>
-            <button class="botaoIngressar" onclick="window.open('${fullUrl}', '_blank')"><img src="img/iconeTeams.png" class="iconeTeamsView" alt="Ícone Teams"> Ingressar</button>
-
-
+            ${buttonJoin}
           </div>
           
           <div class="bodyToolbar">
@@ -268,7 +271,7 @@
             content += '</span>';
             content += '</div>';
           } else if (viewType === 'timeGridDay') {
-            truncatedTitle = truncateText(arg.event.title, 60);
+            truncatedTitle = truncateText(arg.event.title, 70);
             content += 'fc-content-week ';
 
             // Adicione a classe 'fc-event-teams' se o tipo for 'teams', caso contrário, adicione 'fc-event-nota'
@@ -288,7 +291,7 @@
             content += '</span>';
             content += '</div>';
           } else if (viewType === 'listWeek') {
-            truncatedTitle = truncateText(arg.event.title, 50);
+            truncatedTitle = truncateText(arg.event.title, 170);
             content += 'fc-content-week ';
             content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
             content += '">'; // Fecha a declaração da classe
@@ -322,6 +325,8 @@
 
           // Remove o atributo 'title' dos botões
           $('.fc-today-button, .fc-prev-button, .fc-next-button, .fc-dayGridMonth-button, .fc-timeGridWeek-button, .fc-timeGridDay-button, .fc-listWeek-button').removeAttr('title');
+
+
         },
         eventClassNames: function (arg) {
           if (arg.event.extendedProps.type) {

@@ -296,7 +296,7 @@ div.fc-content-week>.fc-title-container>img {
     height: 100%;
 }
 
-.iconeDescricao{
+.iconeDescricao {
     margin-right: 0.9vw;
 }
 
@@ -490,6 +490,7 @@ div.fc-content-week>.fc-title-container>img {
 .ui-dialog-title {
     font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
     font-weight: normal;
+    color: #555555;
 }
 
 .ui-dialog-titlebar-close {
