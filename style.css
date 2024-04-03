@@ -296,6 +296,10 @@ div.fc-content-week>.fc-title-container>img {
     height: 100%;
 }
 
+.iconeLoc {
+    width: 20px;
+}
+
 .iconeDescricao {
     margin-right: 0.9vw;
 }
@@ -639,4 +643,66 @@ div.fc-content-week>.fc-title-container>img {
 .link a:hover,
 .iconeCopiar:hover {
     color: rgb(64, 67, 151) !important;
+}
+
+
+/* ----- Modal de edição do evento ----- */
+
+#modal-edit>.bodyToolbar{
+    height: 51vh;
+}
+
+/* Cabeçalho */
+.botaoSalvar {
+    background-color: rgb(0, 120, 212) !important;
+    color: #FFFFFF !important;
+}
+
+.botaoSalvar:hover {
+    background-color: rgb(0, 108, 191) !important;
+}
+
+/* Body */
+
+.titleEdit,
+.startEdit,
+.endEdit,
+.descEdit {
+    width: 38vw;
+}
+
+.iconeEdit {
+    text-align: center;
+    margin-right: 10px;
+    width: 18px;
+    height: 100%;
+}
+
+.tituloEventoEdit,.dataEdit,.descricaoEdit{
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    padding-left: 0.5vw;
+}
+
+.tituloEventoEdit{
+    width: 34.5vw;
+    height: 4vh;
+}
+
+.dataEdit{
+    height: 4vh;
+}
+
+.dataEdit:first-of-type{
+    margin-right: 0.3vw;
+}
+
+.descricaoEdit{
+    width: 34.5vw;
+    height: 30vh;
+    padding-top: 1vh;
+}
+
+.linhaEdit {
+    width: 71.5vh;
 }

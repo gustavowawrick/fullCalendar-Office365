@@ -179,14 +179,15 @@
           </div>
           
           <div class="bodyToolbar">
-              <input type="text" class="tituloEvento" value="${event.title}" maxlength="280">
-              <hr class="linha">
-              <input type="datetime-local" class="data" value="${event.start.toLocaleString()}">
-              <hr class="linha">
-              <input type="datetime-local" class="data" value="${event.end.toLocaleString()}">
-              <hr class="linha">
-              <input type="text" class="descricao" value="${event.extendedProps.bodyPreview}">
-              <hr class="linha">
+              <p class="tituloEdit">Título</p>
+              <p class="titleEdit"><i class="fa-regular fa-pen-to-square icone iconeEdit"></i><input type="text" class="tituloEventoEdit" value="${event.title}" maxlength="280"></p>
+              <hr class="linhaEdit">
+              <p class="startEdit">Hora de Início</p><p class="endEdit">Hora de Término</p>
+              <p class="dateEdit"><i class="fa-regular fa-clock icone iconeEdit"></i><input type="datetime-local" class="dataEdit" value="${event.start.toLocaleString()}"><input type="datetime-local" class="dataEdit" value="${event.end.toLocaleString()}"></p>
+              <hr class="linhaEdit">
+              <p class="textEdit">Descrição</p>
+              <p class="descEdit"><i class="fa-regular fa-file-lines icone iconeEdit"></i><textarea class="descricaoEdit">${event.extendedProps.bodyPreview}</textarea></p>
+              <hr class="linhaEdit">
           </div>`;
 
           openModal(modalContentView, info.el);
