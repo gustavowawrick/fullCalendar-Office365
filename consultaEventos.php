@@ -82,7 +82,7 @@ if (isset($_POST['eventId'])) {
 
         $item->extendedProps->url = $itemCalendar->onlineMeeting->joinUrl;
 
-        $item->extendedProps->bodyPreview = $itemCalendar->bodyPreview;
+        $item->extendedProps->bodyPreview = $itemCalendar->body->content;
 
         $item->extendedProps->id = $itemCalendar->id;
 
