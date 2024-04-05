@@ -272,11 +272,6 @@ div.fc-content-week>.fc-title-container>img {
     cursor: pointer !important;
 }
 
-.icone {
-    width: 20px;
-    height: 100%;
-}
-
 .iconeFechar {
     position: relative;
     left: 15px;
@@ -549,15 +544,40 @@ div.fc-content-week>.fc-title-container>img {
     background-color: #FFFFFF !important;
 }
 
-.bodyToolbar {
-    width: 100%;
-    height: 71vh;
+.bodyToolbarLeft {
     background-color: #FFFFFF;
     border: 1px solid #dbd8d8;
     border-radius: 5px;
     margin-top: 1vh;
-    padding-left: 2vw;
     padding-top: 2vh;
+    padding-left: 1.2vw;
+}
+
+.bodyToolbarRight{
+    padding-top: 1vh;
+    
+}
+
+.bodyToolbarRight2 {
+    background-color: #FFFFFF;
+    border: 1px solid #dbd8d8;
+    border-radius: 5px;
+    height: 71vh;
+}
+
+.detailText {
+    position: relative;
+    width: 28vw;
+    height: 37vh;
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-left: 2vh;
+    top: -4vh;
+}
+
+.row {
+    padding-left: 1.2vh;
 }
 
 .tituloEdit {
@@ -568,7 +588,7 @@ div.fc-content-week>.fc-title-container>img {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
     font-size: 1.5rem;
     margin-bottom: 2.5vh;
-    width: 50vh;
+    width: 28vw;
 }
 
 .linha,
@@ -580,6 +600,7 @@ div.fc-content-week>.fc-title-container>img {
     margin-left: -0.5vh;
     margin-bottom: 0.8vh;
     top: -1.2vh;
+    width: 28vw;
 }
 
 .ultimaLinha {
@@ -593,6 +614,7 @@ div.fc-content-week>.fc-title-container>img {
 .descricao {
     display: flex;
     align-items: center;
+    width: 28vw;
     margin-bottom: 2vh;
     font-size: 1.2rem;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
@@ -608,6 +630,7 @@ div.fc-content-week>.fc-title-container>img {
 
 .organizador {
     position: relative;
+    width: 26vw;
     top: -1.4vh;
     margin-left: 1.5vw;
     font-size: 0.6rem;
@@ -670,18 +693,9 @@ div.fc-content-week>.fc-title-container>img {
 
 /* Body */
 
-.titleEdit,
-.startEdit,
-.endEdit,
-.descEdit {
-    width: 25vw;
-}
-
 .iconeEdit {
     text-align: center;
     margin-right: 10px;
-    width: 18px;
-    height: 100%;
 }
 
 .tituloEventoEdit,
@@ -713,25 +727,4 @@ div.fc-content-week>.fc-title-container>img {
 
 .linhaEdit {
     width: 71.5vh;
-}
-
-.bodyTypeFalse {
-    position: relative;
-    width: 24.3vw !important;
-    margin-left: 1.5vw !important;
-    bottom: 5vh;
-}
-
-.bodyTypeFalse2{
-    position: relative;
-    width: 24.3vw !important;
-    margin-left: 1.5vw !important;
-    bottom: 7.5vh;
-}
-
-.bodyTypeFalse3{
-    position: relative;
-    width: 24.3vw !important;
-    margin-left: 1.5vw !important;
-    bottom: 4.2vh;
 }

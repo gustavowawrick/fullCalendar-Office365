@@ -141,7 +141,7 @@
           $('.ui-dialog-title').text(event.title);
 
           if (event.extendedProps.bodyPreview !== '') {
-            descricao = `<p class="descEdit"><i class="fa-regular fa-file-lines icone iconeEdit"></i>${event.extendedProps.bodyPreview}</p>`;
+            descricao = `<p class="descEdit"><i class="fa-regular fa-file-lines icone iconeEdit"></i><div class="detailText">${event.extendedProps.bodyPreview}</p></div>`;
           }
 
           if (event.extendedProps.type) {
@@ -160,7 +160,9 @@
             ${buttonJoin}
           </div>
           
-          <div class="bodyToolbar">
+
+          <div class="row">
+          <div class="bodyToolbarLeft col-md-8">
             <h2 class="tituloEvento">${truncateText(event.title, 280)}</h2>
             <p class="data"><i class="fa-regular fa-clock icone iconeHora"></i>${event.end.toLocaleString()}</p>
             <hr class = "linha">
@@ -168,6 +170,13 @@
             <p class="author"><i class="fa-regular fa-user icone iconePessoa"></i>${event.extendedProps.author}</p><p class="organizador">Organizador</p>
             <hr class="ultimaLinha">
             ${descricao}
+          </div>
+          
+          <div class="bodyToolbarRight col-md-4">
+            <div class="bodyToolbarRight2 col-md-12">
+              ${event.title}
+            </div>
+          </div>
           </div>`;
 
           const modalContentEdit = `
@@ -182,19 +191,11 @@
               <hr class="linhaEdit">
               <p class="dateEdit"><i class="fa-regular fa-clock icone iconeEdit"></i><input type="datetime-local" class="dataEdit" value="${event.start.toLocaleString()}"><input type="datetime-local" class="dataEdit" value="${event.end.toLocaleString()}"></p>
               <hr class="linhaEdit">
-              <p class="descEdit"><i class="fa-regular fa-file-lines icone iconeEdit"></i>${event.extendedProps.bodyPreview}</p>
+              <div class="detailText"><p class="descEdit"><i class="fa-regular fa-file-lines icone iconeEdit"></i>${event.extendedProps.bodyPreview}</p></div>
               <hr class="linhaEdit">
           </div>`;
 
           openModal(modalContentView, info.el);
-
-          $(document).ready(function () {
-            $('.x_me-email-text > div[style="margin-bottom:24px; overflow:hidden; white-space:nowrap"],.me-email-text > div[style="margin-bottom:24px; overflow:hidden; white-space:nowrap"]').remove();
-
-            $('.bodyToolbar > .cal_781f, .bodyToolbar > .me-email-text').addClass('bodyTypeFalse');
-            $('.bodyToolbar > .cal_e40e').addClass('bodyTypeFalse2');
-            $('.cal_b695,.cal_eb98').addClass('bodyTypeFalse3');
-          });
 
           $('.truncate-link').on('click', function (event) {
             event.preventDefault();
@@ -498,7 +499,7 @@
         $("#modal-view").html(content).dialog({
           resizable: false,
           height: 800,
-          width: 800,
+          width: 900,
           modal: true,
           draggable: false,
           show: {

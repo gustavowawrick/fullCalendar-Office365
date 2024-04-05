@@ -18,7 +18,7 @@ function calendarEvents($action = 'GET', $eventId = '', $pageToken = null)
     }
 
     // Configura os parâmetros de consulta para lidar com a paginação
-    $queryParams = ['top' => 50]; // Define o número máximo de eventos por página
+    $queryParams = ['top' => 250]; // Define o número máximo de eventos por página
 
     if (!is_null($pageToken)) {
         $queryParams['$skiptoken'] = $pageToken; // Define o token de página para recuperar a próxima página de eventos
