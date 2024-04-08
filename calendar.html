@@ -136,6 +136,12 @@
           let descricao = '';
           let isOrganizer = '';
           let buttonJoin = '';
+          let attendeesTitle = '';
+          let attendeesType = '';
+          let attendees = '';
+          let attendeesTypeOpcional = '';
+          let attendeesOpcional = '';
+          let status = ''
 
           $('#modal-view, #modal-edit').attr('title', event.title);
           $('.ui-dialog-title').text(event.title);
@@ -153,35 +159,74 @@
             isOrganizer = '<button class="botaoEditar" ><i class="fa-regular fa-pen-to-square"></i> Editar</button>';
           }
 
-          const modalContentView = `
-          <div class="headerToolbar">
-            ${isOrganizer}
-            <button class="botaoExcluir"><i class="fa-regular fa-trash-can"></i> Excluir</button>
-            ${buttonJoin}
-          </div>
-          
+          for (let i = 0; i < event.extendedProps.attendees.length; i++) {
+            attendeesTitle = '<p>Participantes</p>';
 
-          <div class="row">
+            if (event.extendedProps.attendees[i].status.response == 'accepted') {
+              status = 'Aceita';
+            } else if (event.extendedProps.attendees[i].status.response == 'declined') {
+              status = 'Recusada';
+            } else {
+              status = 'Não respondido';
+            }
+
+            if (event.extendedProps.attendees[i].type == 'required') {
+              attendeesType = '<p class="attendeesTypeObrigatorio"><i class="fa-solid fa-angle-down"></i> Obrigatório</p>'
+              attendees += `
+              <div class="attendeesType" title="${event.extendedProps.attendees[i].emailAddress.address}">
+                <span class="badge rounded-pill bg-primary">${event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('')}</span>
+                <div class="attendeeDetails">
+                    <p>${truncateText(event.extendedProps.attendees[i].emailAddress.name, 24)}</p>
+                    <p class="attendeeStatus">${status}</p>
+                </div>
+              </div>`;
+            } else {
+              attendeesTypeOpcional = '<p class="attendeesTypeOpcional"><i class="fa-solid fa-angle-down"></i> Opcional</p>'
+              attendeesOpcional += `
+              <div class="attendeesOpcional" title="${event.extendedProps.attendees[i].emailAddress.address}">
+                <span class="badge rounded-pill bg-primary">${event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('')}</span>
+                <div class="attendeeDetails">
+                    <p>${truncateText(event.extendedProps.attendees[i].emailAddress.name, 24)}</p>
+                    <p class="attendeeStatus">${status}</p>
+                </div>
+              </div>`;
+            }
+          }
+
+          const modalContentView = `
+                <div class= "headerToolbar" >
+                  ${isOrganizer}
+              <button class="botaoExcluir" > <i class="fa-regular fa-trash-can"></i> Excluir</button >
+            ${buttonJoin}
+            </div>
+
+        <div class="row">
           <div class="bodyToolbarLeft col-md-8">
             <h2 class="tituloEvento">${truncateText(event.title, 280)}</h2>
             <p class="data"><i class="fa-regular fa-clock icone iconeHora"></i>${event.end.toLocaleString()}</p>
-            <hr class = "linha">
-            ${linkSection}
-            <p class="author"><i class="fa-regular fa-user icone iconePessoa"></i>${event.extendedProps.author}</p><p class="organizador">Organizador</p>
-            <hr class="ultimaLinha">
-            ${descricao}
-          </div>
-          
-          <div class="bodyToolbarRight col-md-4">
-            <div class="bodyToolbarRight2 col-md-12">
-              <div class="divTitle">Acompanhamento</div>
-              <div class="divOrganizador">
-                <p>Organizador</p>
-                <span class="badge rounded-pill bg-primary">${event.extendedProps.author.split(' ').map(name => name.charAt(0).toUpperCase()).join('')}</span>${event.extendedProps.author}
+            <hr class="linha">
+              ${linkSection}
+              <p class="author"><i class="fa-regular fa-user icone iconePessoa"></i>${event.extendedProps.author}</p><p class="organizador">Organizador</p>
+              <hr class="ultimaLinha">
+                ${descricao}
               </div>
-              <div class="divParticipantes"></div>
-            </div>
-          </div>
+
+              <div class="bodyToolbarRight col-md-4">
+                <div class="bodyToolbarRight2 col-md-12">
+                  <div class="divTitle">Acompanhamento</div>
+                  <div class="divOrganizador">
+                    <p>Organizador</p>
+                    <span class="badge rounded-pill bg-primary">${event.extendedProps.author.split(' ').map(name => name.charAt(0).toUpperCase()).join('')}</span>${event.extendedProps.author}
+                  </div>
+                  <div class="divParticipantes">
+                    ${attendeesTitle}
+                    ${attendeesType}
+                    ${attendees}
+                    ${attendeesTypeOpcional}
+                    ${attendeesOpcional}
+                  </div>
+                </div>
+              </div>
           </div>`;
 
           const modalContentEdit = `
@@ -190,15 +235,15 @@
             <button class="botaoExcluir"><i class="fa-regular fa-trash-can"></i> Excluir</button>
             ${buttonJoin}
           </div>
-          
+
           <div class="bodyToolbar">
-              <p class="titleEdit"><i class="fa-regular fa-pen-to-square icone iconeEdit"></i><input type="text" class="tituloEventoEdit" value="${event.title}" maxlength="280"></p>
-              <hr class="linhaEdit">
+            <p class="titleEdit"><i class="fa-regular fa-pen-to-square icone iconeEdit"></i><input type="text" class="tituloEventoEdit" value="${event.title}" maxlength="280"></p>
+            <hr class="linhaEdit">
               <p class="dateEdit"><i class="fa-regular fa-clock icone iconeEdit"></i><input type="datetime-local" class="dataEdit" value="${event.start.toLocaleString()}"><input type="datetime-local" class="dataEdit" value="${event.end.toLocaleString()}"></p>
-              <hr class="linhaEdit">
-              <div class="detailText"><p class="descEdit"><i class="fa-regular fa-file-lines icone iconeEdit"></i>${event.extendedProps.bodyPreview}</p></div>
-              <hr class="linhaEdit">
-          </div>`;
+                <hr class="linhaEdit">
+                  <div class="detailText"><p class="descEdit"><i class="fa-regular fa-file-lines icone iconeEdit"></i>${event.extendedProps.bodyPreview}</p></div>
+                  <hr class="linhaEdit">
+                  </div>`;
 
           openModal(modalContentView, info.el);
 
@@ -219,6 +264,21 @@
                   $this.removeClass('fa-solid fa-check').addClass('fa-regular fa-copy iconeCopiar').css('color', '#5b5fc7');
                 }, 1500);
               });
+          });
+
+          $('.attendeesTypeObrigatorio, .attendeesTypeOpcional').on('click', function () {
+            var icon = $(this).find('i');
+            if (icon.hasClass('fa-angle-down')) {
+              icon.removeClass('fa-angle-down').addClass('fa-angle-right');
+            } else {
+              icon.removeClass('fa-angle-right').addClass('fa-angle-down');
+            }
+
+            if ($(this).hasClass('attendeesTypeObrigatorio')) {
+              $('.attendeesType').toggle();
+            } else if ($(this).hasClass('attendeesTypeOpcional')) {
+              $('.attendeesOpcional').toggle();
+            }
           });
 
           $('.botaoEditar').on('click', function () {
@@ -378,7 +438,7 @@
       function onButtonAdd() {
 
         let div = '<div class="btn-group calendar-buttons" role="group">' +
-          '<div class="btn-group" role = "group" >' +
+          '<div class="btn-group" role="group" >' +
           '<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-plus" style="color: #ffffff;"></i>Adicionar</button>' +
           '<ul class="dropdown-menu">' +
           '<li><a class="dropdown-item"><img src="img/iconeTeams.png" class="iconeDropdown" alt="Ícone Teams">Reunião</a></li>' +
@@ -503,7 +563,7 @@
 
         $("#modal-view").html(content).dialog({
           resizable: false,
-          height: 800,
+          height: 850,
           width: 900,
           modal: true,
           draggable: false,

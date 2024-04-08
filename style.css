@@ -689,14 +689,28 @@ div.fc-content-week>.fc-title-container>img {
     padding-bottom: 1.5vh;
 }
 
-.divOrganizador>p {
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 12px 12px 0;
-    color: #707070;
+.divParticipantes>div {
+    width: 100%;
+    height: 5vh;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 0.8vh;
 }
 
-.divOrganizador>span {
+.divParticipantes>div:hover {
+    background-color: #95959524;
+}
+
+.divParticipantes>div>p {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.4vh;
+    font-size: 0.9rem;
+}
+
+.divOrganizador>span,
+.divParticipantes>div>span {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -706,6 +720,29 @@ div.fc-content-week>.fc-title-container>img {
     color: #fff;
     font-weight: bold;
     margin: 0 0.4vw 0 0.7vw;
+}
+
+.divOrganizador>p,
+.divParticipantes>p:first-of-type,
+.attendeesTypeObrigatorio,
+.attendeesTypeOpcional {
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 12px 12px 0;
+    color: #707070;
+}
+
+.attendeeDetails>p {
+    margin: 0;
+}
+
+.attendeeStatus {
+    font-size: 0.8rem;
+}
+
+.attendeesTypeObrigatorio,
+.attendeesTypeOpcional {
+    cursor: pointer;
 }
 
 /* ----- Modal de edição do evento ----- */
