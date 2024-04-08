@@ -88,6 +88,12 @@ if (isset($_POST['eventId'])) {
 
         $item->extendedProps->isOrganizer = $itemCalendar->isOrganizer;
 
+        foreach ($itemCalendar->attendees as $attendee) {
+            $attendeeType = $attendee->type;
+            $attendeeStatus = $attendee->status->response;
+            $attendeeName = $attendee->emailAddress->name;
+        }
+
         $arrayItens[] = $item;
     }
 
