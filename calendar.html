@@ -174,7 +174,12 @@
           
           <div class="bodyToolbarRight col-md-4">
             <div class="bodyToolbarRight2 col-md-12">
-              ${event.title}
+              <div class="divTitle">Acompanhamento</div>
+              <div class="divOrganizador">
+                <p>Organizador</p>
+                <span class="badge rounded-pill bg-primary">${event.extendedProps.author.split(' ').map(name => name.charAt(0).toUpperCase()).join('')}</span>${event.extendedProps.author}
+              </div>
+              <div class="divParticipantes"></div>
             </div>
           </div>
           </div>`;
