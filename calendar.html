@@ -136,12 +136,13 @@
           let descricao = '';
           let isOrganizer = '';
           let buttonJoin = '';
+          let tituloEvento = '';
           let attendeesTitle = '';
           let attendeesType = '';
           let attendees = '';
           let attendeesTypeOpcional = '';
           let attendeesOpcional = '';
-          let status = ''
+          let status = '';
 
           $('#modal-view, #modal-edit').attr('title', event.title);
           $('.ui-dialog-title').text(event.title);
@@ -151,8 +152,13 @@
           }
 
           if (event.extendedProps.type) {
-            linkSection = `<p class="link"><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')"><img src="img/iconeLink.png" class="icone iconeLink" alt="Ícone Link"></a><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')">${truncateText(fullUrl, 43)}</a><i class="fa-regular fa-copy iconeCopiar" style="color: #5b5fc7;"></i><hr class="linha">`;
+            linkSection = `<p class="link"><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')"><img src="img/iconeLink.png" class="icone iconeLink" alt="Ícone Link"></a><a href="#" class="truncate-link" data-full-url="${fullUrl}" onclick="redirectToUrl('${fullUrl}')">${truncateText(fullUrl, 43)}</a><i class="fa-regular fa-copy iconeCopiar" style="color: #5b5fc7;"></i><hr class="linha"></p>`;
             buttonJoin = `<button class="botaoIngressar" onclick="window.open('${fullUrl}', '_blank')"><img src="img/iconeTeams.png" class="iconeTeamsView" alt="Ícone Teams"> Ingressar</button>`;
+            tituloEvento = `<h2 class="tituloEvento tituloEventoReuniao">${truncateText(event.title, 85)}</h2>`
+          } else if (!event.extendedProps.type && event.extendedProps.bodyPreview == '') {
+            tituloEvento = `<h2 class="tituloEvento tituloEventoAnotacao">${event.title}</h2>`
+          } else {
+            tituloEvento = `<h2 class="tituloEvento tituloEventoDescricao">${truncateText(event.title, 85)}</h2>`
           }
 
           if (event.extendedProps.isOrganizer) {
@@ -160,14 +166,14 @@
           }
 
           for (let i = 0; i < event.extendedProps.attendees.length; i++) {
-            attendeesTitle = '<p>Participantes</p>';
+            attendeesTitle = '<p class="attendessTitleParticipantes">Participantes</p>';
 
             if (event.extendedProps.attendees[i].status.response == 'accepted') {
-              status = 'Aceita';
+              status = `<p class="attendeeStatus attendeeColorAceita">Aceita</p>`;
             } else if (event.extendedProps.attendees[i].status.response == 'declined') {
-              status = 'Recusada';
+              status = `<p class="attendeeStatus attendeeColorRecusada">Recusada</p>`;
             } else {
-              status = 'Não respondido';
+              status = `<p class="attendeeStatus">Não respondido</p>`;
             }
 
             if (event.extendedProps.attendees[i].type == 'required') {
@@ -176,7 +182,7 @@
               <div class="attendeesType" title="${event.extendedProps.attendees[i].emailAddress.address}">
                 <span class="badge rounded-pill bg-primary">${event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('')}</span>
                 <div class="attendeeDetails">
-                    <p>${truncateText(event.extendedProps.attendees[i].emailAddress.name, 24)}</p>
+                    <p>${truncateText(event.extendedProps.attendees[i].emailAddress.name, 21)}</p>
                     <p class="attendeeStatus">${status}</p>
                 </div>
               </div>`;
@@ -186,8 +192,8 @@
               <div class="attendeesOpcional" title="${event.extendedProps.attendees[i].emailAddress.address}">
                 <span class="badge rounded-pill bg-primary">${event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('')}</span>
                 <div class="attendeeDetails">
-                    <p>${truncateText(event.extendedProps.attendees[i].emailAddress.name, 24)}</p>
-                    <p class="attendeeStatus">${status}</p>
+                    <p>${truncateText(event.extendedProps.attendees[i].emailAddress.name, 21)}</p>
+                    ${status}
                 </div>
               </div>`;
             }
@@ -202,13 +208,11 @@
 
         <div class="row">
           <div class="bodyToolbarLeft col-md-8">
-            <h2 class="tituloEvento">${truncateText(event.title, 280)}</h2>
+            ${tituloEvento}
             <p class="data"><i class="fa-regular fa-clock icone iconeHora"></i>${event.end.toLocaleString()}</p>
             <hr class="linha">
               ${linkSection}
-              <p class="author"><i class="fa-regular fa-user icone iconePessoa"></i>${event.extendedProps.author}</p><p class="organizador">Organizador</p>
-              <hr class="ultimaLinha">
-                ${descricao}
+              ${descricao}
               </div>
 
               <div class="bodyToolbarRight col-md-4">
@@ -216,14 +220,20 @@
                   <div class="divTitle">Acompanhamento</div>
                   <div class="divOrganizador">
                     <p>Organizador</p>
+                    <div class="divNomeOrganizador" title="${event.extendedProps.authorAddress}">
                     <span class="badge rounded-pill bg-primary">${event.extendedProps.author.split(' ').map(name => name.charAt(0).toUpperCase()).join('')}</span>${event.extendedProps.author}
+                    </div>
                   </div>
+                  ${attendeesTitle}
                   <div class="divParticipantes">
-                    ${attendeesTitle}
+                    <div class="divAttendeesObrigatorio">
                     ${attendeesType}
                     ${attendees}
+                    </div>
+                    <div class="divAttendeesOpcional">
                     ${attendeesTypeOpcional}
                     ${attendeesOpcional}
+                  </div>
                   </div>
                 </div>
               </div>

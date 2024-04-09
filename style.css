@@ -283,7 +283,6 @@ div.fc-content-week>.fc-title-container>img {
 .iconeLoc,
 .iconeLink,
 .iconeCopiar,
-.iconePessoa,
 .iconeDescricao {
     text-align: center;
     margin-right: 10px;
@@ -308,11 +307,6 @@ div.fc-content-week>.fc-title-container>img {
 
 .iconeCheck {
     bottom: -0.2vh;
-}
-
-.iconePessoa {
-    position: relative;
-    top: 0.9vh;
 }
 
 .meuCalendario {
@@ -562,13 +556,13 @@ div.fc-content-week>.fc-title-container>img {
     background-color: #FFFFFF;
     border: 1px solid #dbd8d8;
     border-radius: 5px;
-    height: 71vh;
+    height: 74vh;
 }
 
 .detailText {
     position: relative;
     width: 28vw;
-    height: 37vh;
+    height: 46.6vh;
     overflow-wrap: break-word;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -587,12 +581,23 @@ div.fc-content-week>.fc-title-container>img {
 .tituloEvento {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Web', sans-serif;
     font-size: 1.5rem;
-    margin-bottom: 2.5vh;
+    margin-bottom: 1.5vh;
     width: 28vw;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
-.linha,
-.ultimaLinha {
+.tituloEventoReuniao,
+.tituloEventoDescricao {
+    height: 7vh;
+}
+
+.tituloEventoAnotacao {
+    max-height: 50vh;
+    margin-bottom: 2.5vh;
+}
+
+.linha {
     position: relative;
     border: 0;
     border-top: 1px solid #D1D1D1;
@@ -603,14 +608,9 @@ div.fc-content-week>.fc-title-container>img {
     width: 28vw;
 }
 
-.ultimaLinha {
-    top: -2.1vh;
-}
-
 .data,
 .reuniao,
 .link,
-.author,
 .descricao {
     display: flex;
     align-items: center;
@@ -622,10 +622,6 @@ div.fc-content-week>.fc-title-container>img {
 
 .descricao {
     margin-right: 1.4vw;
-}
-
-.data {
-    margin-top: 4vh;
 }
 
 .organizador {
@@ -669,9 +665,14 @@ div.fc-content-week>.fc-title-container>img {
     color: rgb(91, 95, 199) !important;
 }
 
-.link a:hover,
-.iconeCopiar:hover {
-    color: rgb(64, 67, 151) !important;
+.link:hover a,
+.link:hover .iconeCopiar {
+    color: rgb(57, 61, 146) !important;
+}
+
+.link:hover a {
+    font-weight: 500;
+    font-size: 1.17rem;
 }
 
 /* Div Body Toolbar Direita */
@@ -689,7 +690,15 @@ div.fc-content-week>.fc-title-container>img {
     padding-bottom: 1.5vh;
 }
 
-.divParticipantes>div {
+.divNomeOrganizador {
+    width: 100%;
+    height: 5vh;
+    display: inline-flex;
+    align-items: center;
+}
+
+.divParticipantes>.divAttendeesObrigatorio>div,
+.divParticipantes>.divAttendeesOpcional>div {
     width: 100%;
     height: 5vh;
     display: inline-flex;
@@ -697,11 +706,14 @@ div.fc-content-week>.fc-title-container>img {
     margin-bottom: 0.8vh;
 }
 
-.divParticipantes>div:hover {
+.divNomeOrganizador:hover,
+.divParticipantes>.divAttendeesObrigatorio>div:hover,
+.divParticipantes>.divAttendeesOpcional>div:hover {
     background-color: #95959524;
 }
 
-.divParticipantes>div>p {
+.divParticipantes>.divAttendeesObrigatorio>div>p,
+.divParticipantes>.divAttendeesOpcional>div>p {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -709,8 +721,9 @@ div.fc-content-week>.fc-title-container>img {
     font-size: 0.9rem;
 }
 
-.divOrganizador>span,
-.divParticipantes>div>span {
+.divNomeOrganizador>span,
+.divParticipantes>.divAttendeesObrigatorio>.attendeesType>span,
+.divParticipantes>.divAttendeesOpcional>.attendeesOpcional>span {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -723,9 +736,9 @@ div.fc-content-week>.fc-title-container>img {
 }
 
 .divOrganizador>p,
-.divParticipantes>p:first-of-type,
-.attendeesTypeObrigatorio,
-.attendeesTypeOpcional {
+.attendessTitleParticipantes,
+.divAttendeesObrigatorio>.attendeesTypeObrigatorio,
+.divAttendeesOpcional>.attendeesTypeOpcional {
     font-size: 0.9rem;
     font-weight: 600;
     padding: 12px 12px 0;
@@ -740,9 +753,24 @@ div.fc-content-week>.fc-title-container>img {
     font-size: 0.8rem;
 }
 
+.attendeeColorAceita {
+    color: #409240;
+}
+
+.attendeeColorRecusada {
+    color: #fa0000;
+}
+
 .attendeesTypeObrigatorio,
 .attendeesTypeOpcional {
     cursor: pointer;
+}
+
+.divParticipantes {
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 52vh;
 }
 
 /* ----- Modal de edição do evento ----- */
