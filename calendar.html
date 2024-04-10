@@ -358,7 +358,7 @@
           icon = compareEventType(arg.event);
 
           if (viewType === 'dayGridMonth') {
-            truncatedTitle = truncateText(arg.event.title, 22);
+            truncatedTitle = truncateText(arg.event.title, 17);
             content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
             content += '">'; // Fecha a declaração da classe
             content += '<div class="fc-bar ' + classColor + '"></div>';
@@ -366,7 +366,7 @@
             content += '<img src="img/' + icon + '" alt="Ícone">';
             content += '<span class="fc-title ' + classColor + '" title="' + arg.event.title + '">' + truncatedTitle + '</span>';
           } else if (viewType === 'timeGridWeek') {
-            truncatedTitle = truncateText(arg.event.title, 25);
+            truncatedTitle = truncateText(arg.event.title, 20);
             content += 'fc-content-week ';
             content += 'fc-event-' + (compareEventType(arg.event) ? 'teams' : 'nota');
             content += '">'; // Fecha a declaração da classe
