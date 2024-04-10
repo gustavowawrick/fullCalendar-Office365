@@ -770,7 +770,7 @@ div.fc-content-week>.fc-title-container>img {
     overflow-wrap: break-word;
     overflow-y: scroll;
     overflow-x: hidden;
-    max-height: 50.5vh;
+    height: 50.5vh;
 }
 
 /* ----- Modal de edição do evento ----- */
@@ -794,6 +794,7 @@ div.fc-content-week>.fc-title-container>img {
 .iconeEdit {
     text-align: center;
     margin-right: 10px;
+    font-size: 1.2rem;
 }
 
 .tituloEventoEdit,
@@ -805,7 +806,7 @@ div.fc-content-week>.fc-title-container>img {
 }
 
 .tituloEventoEdit {
-    width: 34.5vw;
+    width: 26vw;
     height: 4vh;
 }
 
@@ -824,5 +825,11 @@ div.fc-content-week>.fc-title-container>img {
 }
 
 .linhaEdit {
-    width: 71.5vh;
+    position: relative;
+    border: 0;
+    border-top: 1px solid #D1D1D1;
+    width: 25.5vw;
+    margin-left: -0.5vh;
+    margin-bottom: 1.8vh;
+    width: 28vw;
 }
