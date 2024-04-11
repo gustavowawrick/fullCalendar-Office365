@@ -23,10 +23,9 @@
   <!-- Biblioteca Bootstrap JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Biblioteca Summernote -->
-  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
+  <!-- Biblioteca TinyMCE -->
+  <script src="https://cdn.tiny.cloud/1/ymokhns4tidtet0tcm66dscn76n9jiu1aufut4x6pbpuhng0/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@2/dist/tinymce-jquery.min.js"></script>
 
   <title>Calendário</title>
 
@@ -148,6 +147,7 @@
           let attendeesTypeOpcional = '';
           let attendeesOpcional = '';
           let status = '';
+          let attendeeShow = '';
 
           $('#modal-view, #modal-edit').attr('title', event.title);
           $('.ui-dialog-title').text(event.title);
@@ -168,6 +168,10 @@
 
           if (event.extendedProps.isOrganizer) {
             isOrganizer = '<button class="botaoEditar" ><i class="fa-regular fa-pen-to-square"></i> Editar</button>';
+          }
+
+          if(event.extendedProps.attendees.length == 0){
+            attendeeShow = 'd-none';
           }
 
           for (let i = 0; i < event.extendedProps.attendees.length; i++) {
@@ -230,7 +234,7 @@
                 </div>
               </div>
                 ${attendeesTitle}
-                <div class="divParticipantes">
+                <div class="divParticipantes ${attendeeShow}">
                   <div class="divAttendeesObrigatorio">
                     ${attendeesType}
                     ${attendees}
@@ -257,9 +261,9 @@
               <hr class="linhaEdit">
               <p class="dateEdit"><i class="fa-regular fa-clock icone iconeEdit"></i><input type="datetime-local" class="dataEdit" value="${event.start.toLocaleString()}"><input type="datetime-local" class="dataEdit" value="${event.end.toLocaleString()}"></p>
               <hr class="linhaEdit">
-              <form method="post">
-                <textarea id="summernote" name="editordata"></textarea>
-              </form>
+              <div>
+                <textarea id="tiny">&lt;p&gt;${descricao}&lt;/p&gt;</textarea>
+              </div>  
             </div>
 
             <div class="bodyToolbarRight col-md-4">
@@ -272,7 +276,7 @@
                 </div>
               </div>
                 ${attendeesTitle}
-                <div class="divParticipantes">
+                <div class="divParticipantes ${attendeeShow}">
                   <div class="divAttendeesObrigatorio">
                     ${attendeesType}
                     ${attendees}
@@ -281,14 +285,12 @@
                     ${attendeesTypeOpcional}
                     ${attendeesOpcional}
                   </div>
-                  </div>
+                </div>
                 </div>
               </div>
             </div>`;
 
           openModal(modalContentView, info.el);
-
-          $('#summernote').summernote();
 
           $('.truncate-link').on('click', function (event) {
             event.preventDefault();
@@ -309,17 +311,22 @@
               });
           });
 
+          onBotaoExcluir(info, event);
+          onBotaoOcultarParticipantes();
+
           $('.botaoEditar').on('click', function () {
             $('.buttonCloseView').click();
             openModalEdit(modalContentEdit, info.el);
             onBotaoExcluir(info, event);
-            botaoOcultarParticipantes();
+            onBotaoOcultarParticipantes();
+
+            $('textarea#tiny').tinymce({
+              height: 500,
+              language: 'pt_BR',
+              statusbar: false
+            });
           });
 
-          $(function () {
-            onBotaoExcluir(info, event);
-            botaoOcultarParticipantes(); 
-          });
         },
         eventContent: function (arg) {
           const viewType = arg.view.type;
@@ -628,7 +635,7 @@
         });
       }
 
-      function botaoOcultarParticipantes() {
+      function onBotaoOcultarParticipantes() {
         $('.attendeesTypeObrigatorio, .attendeesTypeOpcional').on('click', function () {
           var icon = $(this).find('i');
           if (icon.hasClass('fa-angle-down')) {

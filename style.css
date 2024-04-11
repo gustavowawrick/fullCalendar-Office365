@@ -539,6 +539,7 @@ div.fc-content-week>.fc-title-container>img {
 }
 
 .bodyToolbarLeft {
+    height: 74vh;
     background-color: #FFFFFF;
     border: 1px solid #dbd8d8;
     border-radius: 5px;
@@ -562,11 +563,11 @@ div.fc-content-week>.fc-title-container>img {
 .detailText {
     position: relative;
     width: 28vw;
-    height: 46.6vh;
+    height: 49.6vh;
     overflow-wrap: break-word;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding-left: 2vh;
+    padding-left: 3vh;
     top: -4vh;
 }
 
