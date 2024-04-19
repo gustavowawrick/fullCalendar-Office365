@@ -1,13 +1,5 @@
 "use strict";
 
-function compareEventTypeColorBar(event) {
-  if (event.extendedProps.type === true) {
-    event.css('background-color', 'black');
-  } else {
-    event.css('background-color', 'red');
-  }
-}
-
 // Class definition
 var KTAppCalendar = function () {
   // Shared variables
@@ -16,7 +8,6 @@ var KTAppCalendar = function () {
   var data = {
     id: '',
     eventName: '',
-    eventDescription: '',
     eventLocation: '',
     startDate: '',
     endDate: '',
@@ -25,7 +16,6 @@ var KTAppCalendar = function () {
 
   // Add event variables
   var eventName;
-  var eventDescription;
   var eventLocation;
   var startDatepicker;
   var startFlatpickr;
@@ -47,14 +37,12 @@ var KTAppCalendar = function () {
   // View event variables
   var viewEventName;
   var viewAllDay;
-  var viewEventDescription;
   var viewEventLocation;
   var viewStartDate;
   var viewEndDate;
   var viewModal;
   var viewEditButton;
   var viewDeleteButton;
-
 
   // Private functions
   var initCalendarApp = function () {
@@ -68,6 +56,7 @@ var KTAppCalendar = function () {
 
     calendar = new FullCalendar.Calendar(calendarEl, {
       locale: 'pt-br',
+      timeZone: 'UTC',
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
@@ -93,11 +82,34 @@ var KTAppCalendar = function () {
         formatArgs(arg);
         handleNewEvent();
       },
+      eventDidMount: function (arg) {
+        let eventColor = '';
+        let barra = document.createElement('div');
+        let iconTeams = '<img src="./img/iconeTeams.png" class="iconTeams">';
+        let iconNote = '<img src="./img/iconeNota.png" class="iconNote">';
+
+        barra.className = 'barra-evento';
+
+        //Verifica o tipo do evento e aplica uma Cor e um Ícone a ele
+        if (arg.event.extendedProps.type === true) {
+          eventColor = 'rgb(197, 203, 250)';
+          barra.style.backgroundColor = 'rgb(103 120 255)';
+          $(arg.el).find('.fc-daygrid-event-dot, .fc-list-event-dot').removeClass('fc-daygrid-event-dot fc-list-event-dot').append(iconTeams);
+          $(arg.el).addClass('divTeams');
+        } else {
+          eventColor = 'rgb(144 209 255)';
+          barra.style.backgroundColor = 'rgb(45 147 219)';
+          $(arg.el).find('.fc-daygrid-event-dot, .fc-list-event-dot').removeClass('fc-daygrid-event-dot fc-list-event-dot').append(iconNote);
+          $(arg.el).addClass('divNote');
+        }
+
+        arg.el.style.backgroundColor = eventColor;
+        arg.el.insertBefore(barra, arg.el.firstChild);
+      },
       eventClick: function (arg) {
         formatArgs({
           id: arg.event.id,
           title: arg.event.title,
-          description: arg.event.extendedProps.description,
           location: arg.event.extendedProps.location,
           startStr: arg.event.startStr,
           endStr: arg.event.endStr,
@@ -192,7 +204,6 @@ var KTAppCalendar = function () {
       data = {
         id: '',
         eventName: '',
-        eventDescription: '',
         startDate: new Date(),
         endDate: new Date(),
         allDay: false
@@ -288,7 +299,6 @@ var KTAppCalendar = function () {
                   calendar.addEvent({
                     id: uid(),
                     title: eventName.value,
-                    description: eventDescription.value,
                     location: eventLocation.value,
                     start: startDateTime,
                     end: endDateTime,
@@ -410,7 +420,6 @@ var KTAppCalendar = function () {
                   calendar.addEvent({
                     id: uid(),
                     title: eventName.value,
-                    description: eventDescription.value,
                     location: eventLocation.value,
                     start: startDateTime,
                     end: endDateTime,
@@ -465,10 +474,10 @@ var KTAppCalendar = function () {
     // Populate view data
     viewEventName.innerText = data.eventName;
     viewAllDay.innerText = eventNameMod;
-    viewEventDescription.innerText = data.eventDescription ? data.eventDescription : '--';
-    viewEventLocation.innerText = data.eventLocation ? data.eventLocation : '--';
     viewStartDate.innerText = startDateMod;
     viewEndDate.innerText = endDateMod;
+    viewEventLocation.innerText = 'Reunião Microsoft Teams';
+
   }
 
   // Handle delete event
@@ -586,10 +595,8 @@ var KTAppCalendar = function () {
   // Populate form 
   const populateForm = () => {
     eventName.value = data.eventName ? data.eventName : '';
-    eventDescription.value = data.eventDescription ? data.eventDescription : '';
     eventLocation.value = data.eventLocation ? data.eventLocation : '';
     startFlatpickr.setDate(data.startDate, true, 'Y-m-d');
-
     // Handle null end dates
     const endDate = data.endDate ? data.endDate : moment(data.startDate).format();
     endFlatpickr.setDate(endDate, true, 'Y-m-d');
@@ -616,7 +623,6 @@ var KTAppCalendar = function () {
   const formatArgs = (res) => {
     data.id = res.id;
     data.eventName = res.title;
-    data.eventDescription = res.description;
     data.eventLocation = res.location;
     data.startDate = res.startStr;
     data.endDate = res.endStr;
@@ -636,7 +642,6 @@ var KTAppCalendar = function () {
       const element = document.getElementById('kt_modal_add_event');
       form = element.querySelector('#kt_modal_add_event_form');
       eventName = form.querySelector('[name="calendar_event_name"]');
-      eventDescription = form.querySelector('[name="calendar_event_description"]');
       eventLocation = form.querySelector('[name="calendar_event_location"]');
       startDatepicker = form.querySelector('#kt_calendar_datepicker_start_date');
       endDatepicker = form.querySelector('#kt_calendar_datepicker_end_date');
@@ -654,7 +659,6 @@ var KTAppCalendar = function () {
       viewModal = new bootstrap.Modal(viewElement);
       viewEventName = viewElement.querySelector('[data-kt-calendar="event_name"]');
       viewAllDay = viewElement.querySelector('[data-kt-calendar="all_day"]');
-      viewEventDescription = viewElement.querySelector('[data-kt-calendar="event_description"]');
       viewEventLocation = viewElement.querySelector('[data-kt-calendar="event_location"]');
       viewStartDate = viewElement.querySelector('[data-kt-calendar="event_start_date"]');
       viewEndDate = viewElement.querySelector('[data-kt-calendar="event_end_date"]');
