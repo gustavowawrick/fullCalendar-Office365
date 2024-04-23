@@ -9,8 +9,18 @@ var KTAppCalendar = function () {
     id: '',
     eventName: '',
     eventLocation: '',
+    eventAuthor: '',
+    eventAuthorAddress: '',
+    eventUrl: '',
+    eventBody: '',
+    eventDescription: '',
+    eventAttendeesName: '',
+    eventAttendeesStatus: '',
+    eventAttendeesType: '',
     startDate: '',
     endDate: '',
+    isOrganizer: false,
+    isOnlineMeeting: false,
     allDay: false
   };
 
@@ -34,6 +44,14 @@ var KTAppCalendar = function () {
   var cancelButton;
   var closeButton;
 
+  var eventAuthor;
+  var eventAuthorAddress;
+  var eventUrl;
+  var eventBody;
+  var startDate;
+  var isOrganizer;
+  var isOnlineMeeting;
+
   // View event variables
   var viewEventName;
   var viewAllDay;
@@ -43,6 +61,17 @@ var KTAppCalendar = function () {
   var viewModal;
   var viewEditButton;
   var viewDeleteButton;
+
+  var viewEventAuthor;
+  var viewEventAuthorAddress;
+  var viewEventUrl;
+  var viewEventBody;
+  var viewIsOrganizer;
+  var viewIsOnlineMeeting;
+  var viewEventDescription;
+  var viewEventAttendeesName;
+  var viewEventAttendeesStatus;
+  var viewEventAttendeesType;
 
   // Private functions
   var initCalendarApp = function () {
@@ -107,14 +136,21 @@ var KTAppCalendar = function () {
         arg.el.insertBefore(barra, arg.el.firstChild);
       },
       eventClick: function (arg) {
+
+        for (var i = 0; i < arg.event.extendedProps.attendees.length; i++) {
+          var attendeeName = arg.event.extendedProps.attendees[i].emailAddress.name;
+        }
+
         formatArgs({
-          id: arg.event.id,
+          id: arg.event.extendedProps.id,
           title: arg.event.title,
           location: arg.event.extendedProps.location,
+          description: arg.event.extendedProps.body,
           startStr: arg.event.startStr,
           endStr: arg.event.endStr,
-          allDay: arg.event.allDay,
-          type: arg.event.extendedProps.type
+          allDay: arg.event.extendedProps.allDay,
+          type: arg.event.extendedProps.type,
+          eventAttendeesName: attendeeName
         });
 
         handleViewEvent();
@@ -463,12 +499,12 @@ var KTAppCalendar = function () {
     // Generate labels
     if (data.allDay) {
       eventNameMod = 'Dia Inteiro';
-      startDateMod = moment(data.startDate).format('Do MMM, YYYY');
-      endDateMod = moment(data.endDate).format('Do MMM, YYYY');
+      startDateMod = moment(data.startDate).format('DD/MM/YYYY');
+      endDateMod = moment(data.endDate).format('DD/MM/YYYY');
     } else {
       eventNameMod = '';
-      startDateMod = moment(data.startDate).format('Do MMM, YYYY - h:mm a');
-      endDateMod = moment(data.endDate).format('Do MMM, YYYY - h:mm a');
+      startDateMod = moment(data.startDate).format('DD/MM/YYYY - HH:mm');
+      endDateMod = moment(data.endDate).format('DD/MM/YYYY - HH:mm');
     }
 
     // Populate view data
@@ -476,8 +512,11 @@ var KTAppCalendar = function () {
     viewAllDay.innerText = eventNameMod;
     viewStartDate.innerText = startDateMod;
     viewEndDate.innerText = endDateMod;
-    viewEventLocation.innerText = 'Reunião Microsoft Teams';
-
+    viewEventDescription.innerHTML = data.eventDescription;
+    viewEventLocation.innerText = data.eventLocation;
+    viewEventAttendeesName.innerText = data.eventAttendeesName;
+    viewEventAttendeesStatus.innerText = data.eventAttendeesStatus;
+    //viewEventAttendeesType.innerText = data.eventAttendeesType;
   }
 
   // Handle delete event
@@ -595,6 +634,7 @@ var KTAppCalendar = function () {
   // Populate form 
   const populateForm = () => {
     eventName.value = data.eventName ? data.eventName : '';
+    eventDescription.value = data.eventDescription ? data.eventDescription : '';
     eventLocation.value = data.eventLocation ? data.eventLocation : '';
     startFlatpickr.setDate(data.startDate, true, 'Y-m-d');
     // Handle null end dates
@@ -624,9 +664,11 @@ var KTAppCalendar = function () {
     data.id = res.id;
     data.eventName = res.title;
     data.eventLocation = res.location;
+    data.eventDescription = res.description;
     data.startDate = res.startStr;
     data.endDate = res.endStr;
     data.allDay = res.allDay;
+    data.eventAttendeesName = res.eventAttendeesName
   }
 
   // Generate unique IDs for events
@@ -638,7 +680,8 @@ var KTAppCalendar = function () {
     // Public Functions
     init: function () {
       // Define variables
-      // Add event modal
+
+      // Modal de Inserção de evento
       const element = document.getElementById('kt_modal_add_event');
       form = element.querySelector('#kt_modal_add_event_form');
       eventName = form.querySelector('[name="calendar_event_name"]');
@@ -654,16 +697,19 @@ var KTAppCalendar = function () {
       modalTitle = form.querySelector('[data-kt-calendar="title"]');
       modal = new bootstrap.Modal(element);
 
-      // View event modal
+      // Modal de Visualização do evento
       const viewElement = document.getElementById('kt_modal_view_event');
       viewModal = new bootstrap.Modal(viewElement);
       viewEventName = viewElement.querySelector('[data-kt-calendar="event_name"]');
       viewAllDay = viewElement.querySelector('[data-kt-calendar="all_day"]');
       viewEventLocation = viewElement.querySelector('[data-kt-calendar="event_location"]');
       viewStartDate = viewElement.querySelector('[data-kt-calendar="event_start_date"]');
+      viewEventDescription = viewElement.querySelector('[data-kt-calendar="event_description"]');
       viewEndDate = viewElement.querySelector('[data-kt-calendar="event_end_date"]');
       viewEditButton = viewElement.querySelector('#kt_modal_view_event_edit');
       viewDeleteButton = viewElement.querySelector('#kt_modal_view_event_delete');
+      viewEventAttendeesName = viewElement.querySelector('[data-kt-calendar="event_attendees_name"]');
+      viewEventAttendeesStatus = viewElement.querySelector('[data-kt-calendar="event_attendees_status"]');
 
       initCalendarApp();
       initValidator();

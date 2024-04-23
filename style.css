@@ -64,10 +64,48 @@
     border-radius: 2px;
 }
 
-.fc-event-main-frame{
+.fc-event-main-frame {
     margin-left: 0.4vw;
 }
 
 .fc-popover {
     max-width: 15vw;
+}
+
+/* Modal de Visualização do evento */
+
+.divLeftView,
+.divRightView {
+    min-height: 55vh;
+    max-height: 70vh;
+}
+
+
+/* Div Esquerda */
+.x_cal_7102 div {
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+}
+
+[data-kt-calendar="event_name"] {
+    max-width: 500px;
+    word-wrap: break-word;
+}
+
+[data-kt-calendar="event_description"] {
+    width: 500px;
+    height: 37vh;
+    padding-right: 0.5vw;
+    word-wrap: break-word;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+
+/* Div Direta */
+.titleAcompanhamentoView {
+    display: flex;
+    font-size: 1.5rem;
+    justify-content: center;
+    width: 14vw;
 }

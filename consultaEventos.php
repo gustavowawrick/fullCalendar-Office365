@@ -82,19 +82,22 @@ if (isset($_POST['eventId'])) {
 
         $item->extendedProps->url = $itemCalendar->onlineMeeting->joinUrl;
 
-        $item->extendedProps->bodyPreview = $itemCalendar->body->content;
+        $item->extendedProps->body = $itemCalendar->body->content;
 
         $item->extendedProps->id = $itemCalendar->id;
 
         $item->extendedProps->isOrganizer = $itemCalendar->isOrganizer;
 
+        $item->extendedProps->allDay = $itemCalendar->isAllDay;
+
+        $item->extendedProps->location = 'Reunião Microsoft Teams';
 
         $item->extendedProps->attendees = [];
 
         if (isset($itemCalendar->attendees)) {
             $item->extendedProps->attendees =  $itemCalendar->attendees;
         }
-        
+
         $arrayItens[] = $item;
     }
 
