@@ -76,7 +76,7 @@
 
 .divLeftView,
 .divRightView {
-    min-height: 55vh;
+    min-height: 56vh;
     max-height: 70vh;
 }
 
@@ -87,6 +87,10 @@
     word-wrap: break-word !important;
 }
 
+.divEventTitulo {
+    margin-top: 0.5vh;
+}
+
 [data-kt-calendar="event_name"] {
     max-width: 500px;
     word-wrap: break-word;
@@ -94,7 +98,7 @@
 
 [data-kt-calendar="event_description"] {
     width: 500px;
-    height: 37vh;
+    height: 37.8vh;
     padding-right: 0.5vw;
     word-wrap: break-word;
     overflow-y: scroll;
@@ -103,9 +107,57 @@
 
 
 /* Div Direta */
+
+.divEventAcompanhamento {
+    min-height: 0.5vh !important;
+}
+
+.divRightView {
+    padding-left: 2vw !important;
+}
+
 .titleAcompanhamentoView {
     display: flex;
     font-size: 1.5rem;
     justify-content: center;
-    width: 14vw;
+    width: 12.5vw;
+}
+
+.titleAuthorView {
+    color: #707070 !important;
+    font-size: 1.2rem;
+}
+
+[data-kt-calendar="event_author"] {
+    color: #4b4848;
+    font-size: 1.15rem;
+}
+
+.divIniciais {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #209ff9;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iniciaisAuthor {
+    font-size: 1rem;
+    color: #fff;
+}
+
+.tituloObrigatorio,
+.tituloOpcional,
+.tituloObrigatorio>i,
+.tituloOpcional>i {
+    color: #858585 !important;
+    font-size: 1.1rem;
+    margin-bottom: 1.5vh;
+}
+
+.attendeeName {
+    white-space: nowrap;
 }

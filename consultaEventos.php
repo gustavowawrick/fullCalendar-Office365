@@ -69,8 +69,8 @@ if (isset($_POST['eventId'])) {
         $item->start = $itemCalendar->start->dateTime;
         $item->end = $itemCalendar->end->dateTime;
         $item->title = $itemCalendar->subject;
-        $item->author = $itemCalendar->organizer->emailAddress->name;
-        $item->authorAddress = $itemCalendar->organizer->emailAddress->address;
+        $item->eventAuthor = $itemCalendar->organizer->emailAddress->name;
+        $item->eventAuthorAddress = $itemCalendar->organizer->emailAddress->address;
 
         $item->extendedProps = new stdClass();
 

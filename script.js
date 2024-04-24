@@ -1,5 +1,85 @@
 "use strict";
 
+class utilitariosCalendario {
+
+  // Adiciona as iniciais do Author na div ao lado do nome do Author
+  getAuthorInitials(event) {
+    var initials = event.extendedProps.eventAuthor.split(' ').map(function (word) {
+      return word.charAt(0).toUpperCase();
+    }).join('');
+
+    return initials;
+  }
+
+  addHtmlParticipantes(event) {
+    var divParticipantes = '';
+    var divParticipantesOpcional = '';
+    var divAttendees = '';
+    var i = 0;
+    var tituloObrigatorio = '';
+    var tituloOpcional = '';
+    var status = '';
+
+    for (i = 0; i < event.extendedProps.attendees.length; i++) {
+      if (event.extendedProps.attendees[i].status.response == 'accepted') {
+        status = 'Aceita';
+      } else if (event.extendedProps.attendees[i].status.response == 'declined') {
+        status = 'Recusada';
+      } else {
+        status = 'Não respondido';
+      }
+
+      divAttendees = '<div title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-6">' +
+        '<div class="divIniciais me-3 w-35px">' +
+        '<div class="iniciaisAuthor"></div>' +
+        '</div>' +
+        '<div class="d-flex align-items-center flex-row-fluid flex-wrap">' +
+        '<div class="flex-grow-1 me-2">' +
+        '<a href="pages/user-profile/overview.html" class="text-gray-700 text-hover-primary fs-6 fw-bold attendeeName">' + event.extendedProps.attendees[i].emailAddress.name + '</a>' +
+        '<span class="text-gray-500 fw-semibold d-block pt-1 eventAccepted">' + status + '</span>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+
+      if (event.extendedProps.attendees[i].type == 'required') {
+        divParticipantes += divAttendees;
+        tituloObrigatorio = '<span class=" tituloObrigatorio"><i class="fas fa-angle-down"></i> Obrigatório</span>';
+      } else {
+        divParticipantesOpcional += divAttendees;
+        tituloOpcional = '<span class=" tituloOpcional"><i class="fas fa-angle-down"></i> Opcional</span>';
+      }
+    }
+
+    if (i > 0) {
+      var bodyDivParticipantes = '<div class="card-body pt-8">' +
+        '<h3 class="card-title align-items-start flex-column mb-6">' +
+        '<span class="fw-bold titleAuthorView">Participantes</span>' +
+        '</h3>' +
+        tituloObrigatorio +
+        divParticipantes +
+        tituloOpcional +
+        divParticipantesOpcional +
+        '</div>';
+
+      $('.divParticipantes').html(bodyDivParticipantes);
+    }
+  }
+
+  formatDate(date) {
+    const localDate = new Date(date);
+    return localDate.toLocaleString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
+  }
+
+  hideDescricao(event) {
+    $('.divDescricao').removeClass('d-none');
+    if (event.extendedProps.body == "") {
+      $('.divDescricao').addClass('d-none');
+    }
+  }
+}
+
+var objUtilitariosCalendario = new utilitariosCalendario();
+
 // Class definition
 var KTAppCalendar = function () {
   // Shared variables
@@ -73,6 +153,8 @@ var KTAppCalendar = function () {
   var viewEventAttendeesStatus;
   var viewEventAttendeesType;
 
+  var initials;
+
   // Private functions
   var initCalendarApp = function () {
     // Define variables
@@ -107,6 +189,12 @@ var KTAppCalendar = function () {
       dayHeaderFormat: {
         weekday: 'long'
       },
+      dayMaxEvents: true,
+      events: {
+        url: 'consultaEventos.php',
+        method: 'GET',
+        extraParams: {},
+      },
       select: function (arg) {
         formatArgs(arg);
         handleNewEvent();
@@ -137,30 +225,36 @@ var KTAppCalendar = function () {
       },
       eventClick: function (arg) {
 
-        for (var i = 0; i < arg.event.extendedProps.attendees.length; i++) {
-          var attendeeName = arg.event.extendedProps.attendees[i].emailAddress.name;
-        }
-
         formatArgs({
           id: arg.event.extendedProps.id,
           title: arg.event.title,
           location: arg.event.extendedProps.location,
           description: arg.event.extendedProps.body,
-          startStr: arg.event.startStr,
+          startStr: arg.event.start,
           endStr: arg.event.endStr,
           allDay: arg.event.extendedProps.allDay,
           type: arg.event.extendedProps.type,
-          eventAttendeesName: attendeeName
+          eventAttendeesName: attendeeName,
+          eventAuthor: arg.event.extendedProps.eventAuthor,
+          eventAuthorAddress: arg.event.extendedProps.eventAuthorAddress
         });
 
+        for (var i = 0; i < arg.event.extendedProps.attendees.length; i++) {
+          var attendeeName = arg.event.extendedProps.attendees[i].emailAddress.name;
+        }
+
+        // Insere o e-mail do organizador no title da div eventOrganizador
+        $('.eventOrganizador').attr('title', arg.event.extendedProps.eventAuthorAddress);
+
+        // Insere na bolinha do lado esquerdo as inicias do nome do Author
+        $('.iniciaisAuthor').text(objUtilitariosCalendario.getAuthorInitials(arg.event));
+
+        console.log(arg);
+
+        objUtilitariosCalendario.hideDescricao(arg.event);
+        objUtilitariosCalendario.addHtmlParticipantes(arg.event);
         handleViewEvent();
-      },
-      dayMaxEvents: true,
-      events: {
-        url: 'consultaEventos.php',
-        method: 'GET',
-        extraParams: {},
-      },
+      }
     });
 
     calendar.render();
@@ -514,9 +608,7 @@ var KTAppCalendar = function () {
     viewEndDate.innerText = endDateMod;
     viewEventDescription.innerHTML = data.eventDescription;
     viewEventLocation.innerText = data.eventLocation;
-    viewEventAttendeesName.innerText = data.eventAttendeesName;
-    viewEventAttendeesStatus.innerText = data.eventAttendeesStatus;
-    //viewEventAttendeesType.innerText = data.eventAttendeesType;
+    viewEventAuthor.innerText = data.eventAuthor;
   }
 
   // Handle delete event
@@ -668,7 +760,8 @@ var KTAppCalendar = function () {
     data.startDate = res.startStr;
     data.endDate = res.endStr;
     data.allDay = res.allDay;
-    data.eventAttendeesName = res.eventAttendeesName
+    data.eventAuthor = res.eventAuthor;
+    data.eventAuthorAddress = res.eventAuthorAddress;
   }
 
   // Generate unique IDs for events
@@ -706,10 +799,9 @@ var KTAppCalendar = function () {
       viewStartDate = viewElement.querySelector('[data-kt-calendar="event_start_date"]');
       viewEventDescription = viewElement.querySelector('[data-kt-calendar="event_description"]');
       viewEndDate = viewElement.querySelector('[data-kt-calendar="event_end_date"]');
+      viewEventAuthor = viewElement.querySelector('[data-kt-calendar="event_author"]');
       viewEditButton = viewElement.querySelector('#kt_modal_view_event_edit');
       viewDeleteButton = viewElement.querySelector('#kt_modal_view_event_delete');
-      viewEventAttendeesName = viewElement.querySelector('[data-kt-calendar="event_attendees_name"]');
-      viewEventAttendeesStatus = viewElement.querySelector('[data-kt-calendar="event_attendees_status"]');
 
       initCalendarApp();
       initValidator();
