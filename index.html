@@ -236,26 +236,43 @@
 								<!-- Início Modal de Visualização do Evento -->
 								<div class="modal fade" id="kt_modal_view_event" tabindex="-1" data-bs-focus="false"
 									aria-hidden="true">
-									<div class="modal-dialog modal-dialog-centered mw-900px">
+									<div class="modal-dialog modal-dialog-centered mw-1000px">
 										<div class="modal-content">
 											<!-- Cabeçalho Modal -->
-											<div class="modal-header border-0 justify-content-end">
-												<!-- Botão Editar -->
-												<div class="btn btn-icon btn-sm btn-color-gray-500 btn-active-icon-primary me-2"
-													data-bs-toggle="tooltip" data-bs-dismiss="click"
-													title="Editar Evento" id="kt_modal_view_event_edit">
-													<i class="ki-outline ki-pencil fs-2"></i>
+											<div class="modal-header border-0">
+												<!-- Div Esquerda -->
+												<div class="divEsquerda">
+													<!-- Botão de resposta do evento -->
+													<div class="buttonResponse">
+														<div class="w-100 mw-120px">
+															<select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Responder Reunião" data-kt-ecommerce-product-filter="status">
+																<option></option>
+																<option value="accepted">Aceitar</option>
+																<option value="declined">Recusar</option>
+																<option value="notAnswered">Provisório</option>
+															</select>
+														</div>	
+													</div>
 												</div>
-												<!-- Botão Excluír -->
-												<div class="btn btn-icon btn-sm btn-color-gray-500 btn-active-icon-danger me-2"
-													data-bs-toggle="tooltip" data-bs-dismiss="click"
-													title="Excluir evento" id="kt_modal_view_event_delete">
-													<i class="ki-outline ki-trash fs-2"></i>
-												</div>
-												<!-- Botão Fechar -->
-												<div class="btn btn-icon btn-sm btn-color-gray-500 btn-active-icon-primary"
-													data-bs-toggle="tooltip" title="Fechar" data-bs-dismiss="modal">
-													<i class="ki-outline ki-cross fs-2x"></i>
+												<!-- Div Direita -->
+												<div class="divDireita justify-content-end">
+													<!-- Botão Editar -->
+													<div class="btn btn-icon btn-sm btn-color-gray-500 btn-active-icon-primary me-2"
+														data-bs-toggle="tooltip" data-bs-dismiss="click"
+														title="Editar Evento" id="kt_modal_view_event_edit">
+														<i class="ki-outline ki-pencil fs-2"></i>
+													</div>
+													<!-- Botão Excluír -->
+													<div class="btn btn-icon btn-sm btn-color-gray-500 btn-active-icon-danger me-2"
+														data-bs-toggle="tooltip" data-bs-dismiss="click"
+														title="Excluir evento" id="kt_modal_view_event_delete">
+														<i class="ki-outline ki-trash fs-2"></i>
+													</div>
+													<!-- Botão Fechar -->
+													<div class="btn btn-icon btn-sm btn-color-gray-500 btn-active-icon-primary"
+														data-bs-toggle="tooltip" title="Fechar" data-bs-dismiss="modal">
+														<i class="ki-outline ki-cross fs-2x"></i>
+													</div>
 												</div>
 											</div>
 											<!-- Body Modal -->
@@ -294,9 +311,9 @@
 															</div>
 														</div>
 														<!-- Div de Localização do evento -->
-														<div class="d-flex align-items-center mb-9">
-															<i
-																class="ki-outline ki-geolocation fs-1 text-muted me-5"></i>
+														<div class="d-flex align-items-center mb-9 divLocalizacao">
+															<i class="ki-outline ki-geolocation fs-1 text-muted me-5"></i>
+															<div class="eventButtonLocation"></div>
 															<div class="fs-6" data-kt-calendar="event_location"></div>
 														</div>
 														<!-- Div de Descrição do evento -->
@@ -318,18 +335,21 @@
 															</div>
 															<!-- Div Organizador -->
 															<div class="card-body pt-8">
-																<h3 class="card-title align-items-start flex-column mb-5">
+																<h3 class="card-title align-items-start flex-column mb-3">
 																	<span class="fw-bold titleAuthorView">Organizador</span>
 																</h3>
-																<div class="d-flex flex-stack mb-6 eventOrganizador">
+																<div class="d-flex flex-stack mb-6 divEventOrganizador">
 																	<div class="divIniciais me-3 w-35px">
 																		<div class="iniciaisAuthor"></div>
 																	</div>
 																	<div class="d-flex align-items-center flex-row-fluid flex-wrap">
 																		<div class="flex-grow-1 me-2">
-																			<a class="text-hover-primary fw-bold" data-kt-calendar="event_author"></a>
+																			<a class="fw-bold" data-kt-calendar="event_author"></a>
 																		</div>
 																	</div>
+																	<a title="Copiar e-mail" class="text-hover-primary iconeCopiarOrganizador">
+																		<i class="ki-outline ki-copy iconeCopiar fs-3 text-gray-900"></i>
+																	</a>
 																</div>
 
 															</div>

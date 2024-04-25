@@ -20,33 +20,38 @@ class utilitariosCalendario {
     var tituloOpcional = '';
     var status = '';
 
+    $('.divParticipantes').html('');
+
     for (i = 0; i < event.extendedProps.attendees.length; i++) {
       if (event.extendedProps.attendees[i].status.response == 'accepted') {
-        status = 'Aceita';
+        status = '<span class="fw-semibold d-block pt-1 eventAccepted">Aceita</span>';
       } else if (event.extendedProps.attendees[i].status.response == 'declined') {
-        status = 'Recusada';
+        status = '<span class="fw-semibold d-block pt-1 eventDeclined">Recusada</span>';
       } else {
-        status = 'Não respondido';
+        status = '<span class="text-gray-500 fw-semibold d-block pt-1">Não respondido</span>';
       }
 
-      divAttendees = '<div title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-6">' +
+      divAttendees = '<div title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-3 divAteendesEvent">' +
         '<div class="divIniciais me-3 w-35px">' +
         '<div class="iniciaisAuthor"></div>' +
         '</div>' +
         '<div class="d-flex align-items-center flex-row-fluid flex-wrap">' +
         '<div class="flex-grow-1 me-2">' +
-        '<a href="pages/user-profile/overview.html" class="text-gray-700 text-hover-primary fs-6 fw-bold attendeeName">' + event.extendedProps.attendees[i].emailAddress.name + '</a>' +
-        '<span class="text-gray-500 fw-semibold d-block pt-1 eventAccepted">' + status + '</span>' +
+        '<a class="text-gray-700 fs-6 fw-bold attendeeName">' + this.truncateText(event.extendedProps.attendees[i].emailAddress.name, 28) + '</a>' +
+        status +
         '</div>' +
         '</div>' +
+        '<a title="Copiar e-mail" class="text-hover-primary iconeCopiarParticipantes">' +
+        '<i class="ki-outline ki-copy fs-3 text-gray-900"></i>' +
+        '</a>' +
         '</div>';
 
       if (event.extendedProps.attendees[i].type == 'required') {
         divParticipantes += divAttendees;
-        tituloObrigatorio = '<span class=" tituloObrigatorio"><i class="fas fa-angle-down"></i> Obrigatório</span>';
-      } else {
+        tituloObrigatorio = '<span class="tituloObrigatorio"><i class="fas fa-angle-down"></i> Obrigatório</span>';
+      } else if (event.extendedProps.attendees[i].type == 'optional') {
         divParticipantesOpcional += divAttendees;
-        tituloOpcional = '<span class=" tituloOpcional"><i class="fas fa-angle-down"></i> Opcional</span>';
+        tituloOpcional = '<span class="tituloOpcional"><i class="fas fa-angle-down"></i> Opcional</span>';
       }
     }
 
@@ -55,14 +60,38 @@ class utilitariosCalendario {
         '<h3 class="card-title align-items-start flex-column mb-6">' +
         '<span class="fw-bold titleAuthorView">Participantes</span>' +
         '</h3>' +
+        '<div class="divScrollParticipantes">' +
+        '<div>' +
         tituloObrigatorio +
+        '<div class="divScrollParticipantesObrigatorios">' +
         divParticipantes +
+        '</div>' +
+        '</div>' +
+        '<div>' +
         tituloOpcional +
+        '<div class="divScrollParticipantesOpcional">' +
         divParticipantesOpcional +
+        '</div>' +
+        '</div>' +
+        '</div>' +
         '</div>';
 
       $('.divParticipantes').html(bodyDivParticipantes);
     }
+  }
+
+  addHtmlButtonTeams(event) {
+    var buttonTeams = '';
+
+    if (event.extendedProps.type == true) {
+      buttonTeams = '<div class="btn btn-icon btn-sm btn-color-gray-500 btn-active-icon-primary me-2"' +
+        'data-bs-toggle="tooltip" data-bs-dismiss="click"' +
+        'title="Editar Evento" id="kt_modal_view_event_edit">' +
+        '<i class="ki-outline ki-pencil fs-2"></i>' +
+        '</div>';
+    }
+
+    $('.eventButtonLocation').html(buttonTeams);
   }
 
   formatDate(date) {
@@ -70,11 +99,84 @@ class utilitariosCalendario {
     return localDate.toLocaleString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
   }
 
+  truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength - 3) + '...';
+    } else {
+      return text;
+    }
+  }
+
+  showButtonResponse(event) {
+    $('.buttonResponse').hide();
+    if (event.extendedProps.type == true && event.extendedProps.isOrganizer == false) {
+      $('.buttonResponse').show();
+
+      $('.buttonResponse select').on('select2:select', function (e) {
+        $(this).next().find('.select2-selection__rendered').removeClass('eventReuniaoAceita eventReuniaoRecusada eventReuniaoProvisoria');
+
+        if (e.params.data.id === 'accepted') {
+          $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoAceita').html('<i class="fas fa-check iconeReuniaoAceita"></i> Reunião Aceita');
+        } else if (e.params.data.id === 'declined') {
+          $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoRecusada').html('<i class="fas fa-times iconeReuniaoRecusada"></i> Reunião Recusada');
+        } else if (e.params.data.id === 'notAnswered') {
+          $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoProvisoria').html('<i class="fas fa-question iconeReuniaoProvisoria"></i> Provisório');
+        }
+      });
+    }
+  }
+
+  hideButtonEdit(event) {
+    $('#kt_modal_view_event_edit').show();
+    if (event.extendedProps.isOrganizer == false) {
+      $('#kt_modal_view_event_edit').hide();
+      console.log("Caiu aqui");
+    }
+  }
+
+  hideLocation(event) {
+    $('.divLocalizacao').removeClass('d-none');
+    if (event.extendedProps.location.length === 0) {
+      $('.divLocalizacao').addClass('d-none');
+    }
+  }
+
   hideDescricao(event) {
     $('.divDescricao').removeClass('d-none');
     if (event.extendedProps.body == "") {
       $('.divDescricao').addClass('d-none');
     }
+  }
+
+  hideParticipantes(selector) {
+    $(selector).on('click', function () {
+      if ($(this).hasClass('tituloObrigatorio')) {
+        $('.divScrollParticipantesObrigatorios').toggle();
+      } else if ($(this).hasClass('tituloOpcional')) {
+        $('.divScrollParticipantesOpcional').toggle();
+      }
+
+      var icon = $(this).find('i');
+      if (icon.hasClass('fa-angle-down')) {
+        icon.removeClass('fa-angle-down').addClass('fa-angle-right');
+      } else {
+        icon.removeClass('fa-angle-right').addClass('fa-angle-down');
+      }
+    });
+  }
+
+  copiarEmail(selector) {
+    $(selector).on('click', function () {
+      const email = $(this).parent().attr('title');
+
+      navigator.clipboard.writeText(email)
+        .then(() => {
+          $(this).find('i').removeClass('ki-outline ki-copy').addClass('ki-outline ki-check iconeCopiar');
+          setTimeout(() => {
+            $(this).find('i').removeClass('ki-outline ki-check').addClass('ki-outline ki-copy');
+          }, 1800)
+        })
+    });
   }
 }
 
@@ -225,6 +327,14 @@ var KTAppCalendar = function () {
       },
       eventClick: function (arg) {
 
+        for (var i = 0; i < arg.event.extendedProps.attendees.length; i++) {
+          var attendeeName = arg.event.extendedProps.attendees[i].emailAddress.name;
+        }
+
+        for (var i = 0; i < arg.event.extendedProps.location.length; i++) {
+          var locationEvent = arg.event.extendedProps.location[i].displayName;
+        }
+
         formatArgs({
           id: arg.event.extendedProps.id,
           title: arg.event.title,
@@ -236,23 +346,26 @@ var KTAppCalendar = function () {
           type: arg.event.extendedProps.type,
           eventAttendeesName: attendeeName,
           eventAuthor: arg.event.extendedProps.eventAuthor,
-          eventAuthorAddress: arg.event.extendedProps.eventAuthorAddress
+          eventAuthorAddress: arg.event.extendedProps.eventAuthorAddress,
+          eventLocation: locationEvent
         });
 
-        for (var i = 0; i < arg.event.extendedProps.attendees.length; i++) {
-          var attendeeName = arg.event.extendedProps.attendees[i].emailAddress.name;
-        }
-
-        // Insere o e-mail do organizador no title da div eventOrganizador
-        $('.eventOrganizador').attr('title', arg.event.extendedProps.eventAuthorAddress);
+        // Insere o e-mail do organizador no title da divEventOrganizador
+        $('.divEventOrganizador').attr('title', arg.event.extendedProps.eventAuthorAddress);
 
         // Insere na bolinha do lado esquerdo as inicias do nome do Author
         $('.iniciaisAuthor').text(objUtilitariosCalendario.getAuthorInitials(arg.event));
 
         console.log(arg);
 
+        objUtilitariosCalendario.showButtonResponse(arg.event);
+        objUtilitariosCalendario.hideButtonEdit(arg.event);
+        objUtilitariosCalendario.hideLocation(arg.event);
         objUtilitariosCalendario.hideDescricao(arg.event);
         objUtilitariosCalendario.addHtmlParticipantes(arg.event);
+        objUtilitariosCalendario.addHtmlButtonTeams(arg.event)
+        objUtilitariosCalendario.copiarEmail('.iconeCopiarOrganizador,.iconeCopiarParticipantes');
+        objUtilitariosCalendario.hideParticipantes('.tituloObrigatorio,.tituloOpcional');
         handleViewEvent();
       }
     });
@@ -755,7 +868,7 @@ var KTAppCalendar = function () {
   const formatArgs = (res) => {
     data.id = res.id;
     data.eventName = res.title;
-    data.eventLocation = res.location;
+    data.eventLocation = res.eventLocation;
     data.eventDescription = res.description;
     data.startDate = res.startStr;
     data.endDate = res.endStr;

@@ -80,6 +80,9 @@
     max-height: 70vh;
 }
 
+.divRightView {
+    padding-left: 0 !important;
+}
 
 /* Div Esquerda */
 .x_cal_7102 div {
@@ -112,9 +115,7 @@
     min-height: 0.5vh !important;
 }
 
-.divRightView {
-    padding-left: 2vw !important;
-}
+
 
 .titleAcompanhamentoView {
     display: flex;
@@ -156,8 +157,68 @@
     color: #858585 !important;
     font-size: 1.1rem;
     margin-bottom: 1.5vh;
+    cursor: pointer;
 }
 
 .attendeeName {
     white-space: nowrap;
+}
+
+.divAteendesEvent,
+.divEventOrganizador {
+    width: 15vw;
+    height: 5vh;
+    padding-left: 0.5vw;
+    border-radius: 5px;
+}
+
+.divScrollParticipantes {
+    width: 15.8vw;
+    height: 45vh;
+    word-wrap: break-word;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.divAteendesEvent:hover,
+.divEventOrganizador:hover {
+    background-color: #00000014;
+}
+
+.eventAccepted {
+    color: #27a92e;
+}
+
+.eventDeclined {
+    color: #ff0000;
+}
+
+.iconeCopiarParticipantes {
+    position: relative;
+    margin-right: 0.3vw;
+    cursor: pointer;
+}
+
+.iconeCopiarOrganizador {
+    margin-right: 0.3vw;
+    cursor: pointer;
+}
+
+.buttonResponse {
+    margin-left: 1.5vw;
+}
+
+.eventReuniaoAceita,
+.iconeReuniaoAceita {
+    color: #27a92e !important;
+}
+
+.eventReuniaoRecusada,
+.iconeReuniaoRecusada {
+    color: #ff0000 !important;
+}
+
+.eventReuniaoProvisoria,
+.iconeReuniaoProvisoria {
+    color: #320cbb !important;
 }

@@ -90,7 +90,7 @@ if (isset($_POST['eventId'])) {
 
         $item->extendedProps->allDay = $itemCalendar->isAllDay;
 
-        $item->extendedProps->location = 'Reunião Microsoft Teams';
+        $item->extendedProps->location = $itemCalendar->locations;
 
         $item->extendedProps->attendees = [];
 
