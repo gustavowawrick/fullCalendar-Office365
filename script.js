@@ -2,13 +2,10 @@
 
 class utilitariosCalendario {
 
-  // Adiciona as iniciais do Author na div ao lado do nome do Author
-  getAuthorInitials(event) {
-    var initials = event.extendedProps.eventAuthor.split(' ').map(function (word) {
-      return word.charAt(0).toUpperCase();
-    }).join('');
+  addTitleAuthor(event) {
+    var iniciais = event.extendedProps.eventAuthor.split(' ').map(name => name.charAt(0).toUpperCase()).join('');
 
-    return initials;
+    $('.iniciaisAuthor').html(iniciais);
   }
 
   addHtmlParticipantes(event) {
@@ -31,9 +28,9 @@ class utilitariosCalendario {
         status = '<span class="text-gray-500 fw-semibold d-block pt-1">Não respondido</span>';
       }
 
-      divAttendees = '<div title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-3 divAteendesEvent">' +
+      divAttendees = '<div data-bs-toggle="tooltip" title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-3 divAteendesEvent">' +
         '<div class="divIniciais me-3 w-35px">' +
-        '<div class="iniciaisAuthor"></div>' +
+        '<div class="iniciaisParticipantes">' + event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('') + '</div>' +
         '</div>' +
         '<div class="d-flex align-items-center flex-row-fluid flex-wrap">' +
         '<div class="flex-grow-1 me-2">' +
@@ -41,7 +38,7 @@ class utilitariosCalendario {
         status +
         '</div>' +
         '</div>' +
-        '<a title="Copiar e-mail" class="text-hover-primary iconeCopiarParticipantes">' +
+        '<a class="text-hover-primary iconeCopiarParticipantes">' +
         '<i class="ki-outline ki-copy fs-3 text-gray-900"></i>' +
         '</a>' +
         '</div>';
@@ -77,22 +74,70 @@ class utilitariosCalendario {
         '</div>';
 
       $('.divParticipantes').html(bodyDivParticipantes);
+      $('[data-bs-toggle="tooltip"]').tooltip();
     }
+  }
+
+  addRandomColor() {
+    var colors = ['#FF5733', '#33FF57', '#5733FF', '#FF33E6', '#33FFE6', '#E633FF', '#FFF233', '#33FFA2', '#F233FF', '#33A2FF'];
+
+    colors = colors.filter(function (color) {
+      var r = parseInt(color.substring(1, 3), 16);
+      var g = parseInt(color.substring(3, 5), 16);
+      var b = parseInt(color.substring(5, 7), 16);
+
+      var luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+      return luminance < 0.7;
+    });
+
+    var divs = document.querySelectorAll('.divIniciais');
+
+    divs.forEach(function (div) {
+      var randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+      div.style.backgroundColor = randomColor;
+    });
   }
 
   addHtmlButtonTeams(event) {
     var buttonTeams = '';
 
     if (event.extendedProps.type == true) {
-      buttonTeams = '<div class="btn btn-icon btn-sm btn-color-gray-500 btn-active-icon-primary me-2"' +
-        'data-bs-toggle="tooltip" data-bs-dismiss="click"' +
-        'title="Editar Evento" id="kt_modal_view_event_edit">' +
-        '<i class="ki-outline ki-pencil fs-2"></i>' +
-        '</div>';
+      buttonTeams =
+        '<button onclick="window.open(\'' + event.extendedProps.url + '\', \'_blank\')" class="btn btn-flex eventButtonTeams">' +
+        '<img src="./img/iconeTeamsBranco.png" class="iconTeamsBranco">Ingressar na reunião</button>';
     }
 
     $('.eventButtonLocation').html(buttonTeams);
   }
+
+  addTitleAndButtonLocation(event) {
+    for (var i = 0; i < event.extendedProps.location.length; i++) {
+      // Limpar o título original
+      $('.eventLocation').eq(i).attr('data-bs-original-title', '');
+
+      // Verificar se o displayName é "Reuniões do Microsoft Teams"
+      if (!event.extendedProps.location[i].displayName === 'Reuniões do Microsoft Teams') {
+        if (event.extendedProps.location[i].displayName.length > 30) {
+          event.extendedProps.location[i].displayName = objUtilitariosCalendario.truncateText(event.extendedProps.location[i].displayName, 30); // Truncar o texto se for maior que 30 caracteres
+        }
+      }
+
+      // Definir o título
+      $('.eventLocation').eq(i).attr('data-bs-original-title', event.extendedProps.location[i].displayName);
+    }
+
+    // Inicializar tooltips do Bootstrap
+    $('[data-bs-toggle="tooltip"]').tooltip();
+  }
+
+  addTitleButtonCopyAuthor(event) {
+    $('.divEventOrganizador').attr('data-bs-original-title', event.extendedProps.eventAuthorAddress);
+    $('.divEventOrganizador').tooltip('dispose'); // Remove o tooltip antigo
+    $('.divEventOrganizador').tooltip(); // Inicializa o novo tooltip
+  }
+
 
   formatDate(date) {
     const localDate = new Date(date);
@@ -116,11 +161,11 @@ class utilitariosCalendario {
         $(this).next().find('.select2-selection__rendered').removeClass('eventReuniaoAceita eventReuniaoRecusada eventReuniaoProvisoria');
 
         if (e.params.data.id === 'accepted') {
-          $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoAceita').html('<i class="fas fa-check iconeReuniaoAceita"></i> Reunião Aceita');
+          $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoAceita').html('<i class="fas fa-check iconeReuniaoAceita"></i>Reunião Aceita');
         } else if (e.params.data.id === 'declined') {
-          $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoRecusada').html('<i class="fas fa-times iconeReuniaoRecusada"></i> Reunião Recusada');
+          $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoRecusada').html('<i class="fas fa-times iconeReuniaoRecusada"></i>Reunião Recusada');
         } else if (e.params.data.id === 'notAnswered') {
-          $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoProvisoria').html('<i class="fas fa-question iconeReuniaoProvisoria"></i> Provisório');
+          $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoProvisoria').html('<i class="fas fa-question iconeReuniaoProvisoria"></i>Provisório');
         }
       });
     }
@@ -130,7 +175,6 @@ class utilitariosCalendario {
     $('#kt_modal_view_event_edit').show();
     if (event.extendedProps.isOrganizer == false) {
       $('#kt_modal_view_event_edit').hide();
-      console.log("Caiu aqui");
     }
   }
 
@@ -167,7 +211,7 @@ class utilitariosCalendario {
 
   copiarEmail(selector) {
     $(selector).on('click', function () {
-      const email = $(this).parent().attr('title');
+      const email = $(this).parent().attr('data-bs-original-title');
 
       navigator.clipboard.writeText(email)
         .then(() => {
@@ -255,8 +299,6 @@ var KTAppCalendar = function () {
   var viewEventAttendeesStatus;
   var viewEventAttendeesType;
 
-  var initials;
-
   // Private functions
   var initCalendarApp = function () {
     // Define variables
@@ -326,13 +368,18 @@ var KTAppCalendar = function () {
         arg.el.insertBefore(barra, arg.el.firstChild);
       },
       eventClick: function (arg) {
-
         for (var i = 0; i < arg.event.extendedProps.attendees.length; i++) {
           var attendeeName = arg.event.extendedProps.attendees[i].emailAddress.name;
         }
 
         for (var i = 0; i < arg.event.extendedProps.location.length; i++) {
-          var locationEvent = arg.event.extendedProps.location[i].displayName;
+          var locationEvent = '';
+
+          if (arg.event.extendedProps.location.length == 0) {
+            locationEvent = arg.event.extendedProps.location[i].displayName;
+          } else {
+            locationEvent = objUtilitariosCalendario.truncateText(arg.event.extendedProps.location[i].displayName, 35);
+          }
         }
 
         formatArgs({
@@ -350,20 +397,18 @@ var KTAppCalendar = function () {
           eventLocation: locationEvent
         });
 
-        // Insere o e-mail do organizador no title da divEventOrganizador
-        $('.divEventOrganizador').attr('title', arg.event.extendedProps.eventAuthorAddress);
-
-        // Insere na bolinha do lado esquerdo as inicias do nome do Author
-        $('.iniciaisAuthor').text(objUtilitariosCalendario.getAuthorInitials(arg.event));
-
         console.log(arg);
 
+        objUtilitariosCalendario.addTitleButtonCopyAuthor(arg.event);
+        objUtilitariosCalendario.addTitleAndButtonLocation(arg.event);
         objUtilitariosCalendario.showButtonResponse(arg.event);
         objUtilitariosCalendario.hideButtonEdit(arg.event);
         objUtilitariosCalendario.hideLocation(arg.event);
         objUtilitariosCalendario.hideDescricao(arg.event);
         objUtilitariosCalendario.addHtmlParticipantes(arg.event);
-        objUtilitariosCalendario.addHtmlButtonTeams(arg.event)
+        objUtilitariosCalendario.addHtmlButtonTeams(arg.event);
+        objUtilitariosCalendario.addTitleAuthor(arg.event);
+        objUtilitariosCalendario.addRandomColor();
         objUtilitariosCalendario.copiarEmail('.iconeCopiarOrganizador,.iconeCopiarParticipantes');
         objUtilitariosCalendario.hideParticipantes('.tituloObrigatorio,.tituloOpcional');
         handleViewEvent();
