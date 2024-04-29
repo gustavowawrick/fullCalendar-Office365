@@ -117,11 +117,8 @@ class utilitariosCalendario {
       // Limpar o título original
       $('.eventLocation').eq(i).attr('data-bs-original-title', '');
 
-      // Verificar se o displayName é "Reuniões do Microsoft Teams"
-      if (!event.extendedProps.location[i].displayName === 'Reuniões do Microsoft Teams') {
-        if (event.extendedProps.location[i].displayName.length > 30) {
-          event.extendedProps.location[i].displayName = objUtilitariosCalendario.truncateText(event.extendedProps.location[i].displayName, 30); // Truncar o texto se for maior que 30 caracteres
-        }
+      if (event.extendedProps.location[i].displayName.length > 30) {
+        event.extendedProps.location[i].displayName = objUtilitariosCalendario.truncateText(event.extendedProps.location[i].displayName, 30); // Truncar o texto se for maior que 30 caracteres
       }
 
       // Definir o título
