@@ -186,9 +186,7 @@ function calendarEvents($action = 'GET', $eventId = '', $pageToken = null)
     }
 }
 
-$action = filter_input('PATCH', 'action');
-
-echo "ACTION: " . $action . "<br/>";
+$action = $_POST['action'];
 
 // Verifica se foi enviada uma solicitação de exclusão de evento
 if (isset($_POST['eventId']) && $action == 'DELETE') {
@@ -196,9 +194,9 @@ if (isset($_POST['eventId']) && $action == 'DELETE') {
     $response = calendarEvents('DELETE', $eventId);
 
     echo json_encode($response);
-} else if (isset($_GET['eventId']) && $action == 'RESPONSE') {
-    $eventId = $_GET['eventId'];
-    $response = responseStatus($eventId, $_GET['response']);
+} else if (isset($_POST['eventId']) && $action == 'RESPONSE') {
+    $eventId = $_POST['eventId'];
+    $response = responseStatus($eventId, $_POST['response']);
     echo json_encode($response);
 } else {
     // Se não foi enviada uma solicitação de exclusão, retorna os eventos normais
