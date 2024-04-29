@@ -103,7 +103,7 @@ class utilitariosCalendario {
   addHtmlButtonTeams(event) {
     var buttonTeams = '';
 
-    if (event.extendedProps.type == true) {
+    if (event.extendedProps.type) {
       buttonTeams =
         '<button onclick="window.open(\'' + event.extendedProps.url + '\', \'_blank\')" class="btn btn-flex eventButtonTeams">' +
         '<img src="./img/iconeTeamsBranco.png" class="iconTeamsBranco">Ingressar na reunião</button>';
@@ -158,7 +158,7 @@ class utilitariosCalendario {
 
   showButtonResponse(event) {
     $('.buttonResponse').hide();
-    if (event.extendedProps.type == true && event.extendedProps.isOrganizer == false) {
+    if (event.extendedProps.type && event.extendedProps.isOrganizer == false) {
       $('.buttonResponse').show();
 
       $('.buttonResponse select').on('select2:select', function (e) {
@@ -224,6 +224,39 @@ class utilitariosCalendario {
             $(this).find('i').removeClass('ki-outline ki-check').addClass('ki-outline ki-copy');
           }, 1800)
         })
+    });
+  }
+
+  // Funcão para excluír o Evento
+  handleDeleteEvent = (viewModal, deleteButton, event) => {
+    deleteButton.addEventListener('click', e => {
+      e.preventDefault();
+
+      Swal.fire({
+        text: "Tem certeza de que deseja excluir este evento?",
+        icon: "warning",
+        showCancelButton: true,
+        buttonsStyling: false,
+        confirmButtonText: "Sim",
+        cancelButtonText: "Não",
+        customClass: {
+          confirmButton: "btn btn-primary",
+          cancelButton: "btn btn-active-light"
+        }
+      }).then(function (result) {
+        if (result.value) {
+          // Remove o evento do calendário
+          event.remove();
+          // Remove o evento do Office 365
+          $.ajax({
+            url: 'consultaEventos.php',
+            type: 'POST',
+            data: 'eventId=' + event.extendedProps.id,
+          });
+
+          viewModal.hide(); // Hide modal				
+        }
+      });
     });
   }
 }
@@ -356,7 +389,7 @@ var KTAppCalendar = function () {
         barra.className = 'barra-evento';
 
         //Verifica o tipo do evento e aplica uma Cor e um Ícone a ele
-        if (arg.event.extendedProps.type === true) {
+        if (arg.event.extendedProps.type) {
           eventColor = 'rgb(197, 203, 250)';
           barra.style.backgroundColor = 'rgb(103 120 255)';
           $(arg.el).find('.fc-daygrid-event-dot, .fc-list-event-dot').removeClass('fc-daygrid-event-dot fc-list-event-dot').append(iconTeams);
@@ -415,6 +448,7 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.addRandomColor();
         objUtilitariosCalendario.copiarEmail('.iconeCopiarOrganizador,.iconeCopiarParticipantes');
         objUtilitariosCalendario.hideParticipantes('.tituloObrigatorio,.tituloOpcional');
+        objUtilitariosCalendario.handleDeleteEvent(viewModal, viewDeleteButton, arg.event);
         handleViewEvent();
       }
     });
@@ -773,32 +807,6 @@ var KTAppCalendar = function () {
     viewEventAuthor.innerText = data.eventAuthor;
   }
 
-  // Handle delete event
-  const handleDeleteEvent = () => {
-    viewDeleteButton.addEventListener('click', e => {
-      e.preventDefault();
-
-      Swal.fire({
-        text: "Tem certeza de que deseja excluir este evento?",
-        icon: "warning",
-        showCancelButton: true,
-        buttonsStyling: false,
-        confirmButtonText: "Sim",
-        cancelButtonText: "Não",
-        customClass: {
-          confirmButton: "btn btn-primary",
-          cancelButton: "btn btn-active-light"
-        }
-      }).then(function (result) {
-        if (result.value) {
-          calendar.getEventById(data.id).remove();
-
-          viewModal.hide(); // Hide modal				
-        }
-      });
-    });
-  }
-
   // Handle edit button
   const handleEditButton = () => {
     viewEditButton.addEventListener('click', e => {
@@ -970,7 +978,6 @@ var KTAppCalendar = function () {
       initDatepickers();
       handleEditButton();
       handleAddButton();
-      handleDeleteEvent();
       handleCancelButton();
       handleCloseButton();
       resetFormValidator(element);
