@@ -251,7 +251,7 @@ class utilitariosCalendario {
           $.ajax({
             url: 'consultaEventos.php',
             type: 'POST',
-            data: 'eventId=' + event.extendedProps.id,
+            data: 'eventId=' + event.extendedProps.id + '&action=DELETE',
           });
 
           viewModal.hide(); // Hide modal				
@@ -259,6 +259,34 @@ class utilitariosCalendario {
       });
     });
   }
+
+  handleResponseEvent = (responseButton, event) => {
+
+    $(responseButton).on('change', function (e) {
+      console.log($(responseButton).find('option'));
+      e.preventDefault();
+
+      // Capturar a resposta selecionada pelo usuário
+      const selectedResponse = document.querySelector('[data-control="select2"]').value;
+
+      // Enviar as atualizações para o Office 365
+      $.ajax({
+        url: 'consultaEventos.php',
+        type: 'POST',
+        data: 'eventId=' + event.extendedProps.id + '&action=RESPONSE&response=' + selectedResponse,
+
+        success: function (response) {
+          // Lógica de manipulação de sucesso, se necessário
+          console.log('Resposta enviada com sucesso!');
+        },
+        error: function (error) {
+          // Lógica de manipulação de erro, se necessário
+          console.error('Erro ao enviar resposta:', error);
+        }
+      });
+    });
+  }
+
 }
 
 var objUtilitariosCalendario = new utilitariosCalendario();
@@ -324,6 +352,7 @@ var KTAppCalendar = function () {
   var viewModal;
   var viewEditButton;
   var viewDeleteButton;
+  var viewResponseButton;
 
   var viewEventAuthor;
   var viewEventAuthorAddress;
@@ -449,6 +478,7 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.copiarEmail('.iconeCopiarOrganizador,.iconeCopiarParticipantes');
         objUtilitariosCalendario.hideParticipantes('.tituloObrigatorio,.tituloOpcional');
         objUtilitariosCalendario.handleDeleteEvent(viewModal, viewDeleteButton, arg.event);
+        objUtilitariosCalendario.handleResponseEvent(viewResponseButton, arg.event);
         handleViewEvent();
       }
     });
@@ -972,6 +1002,7 @@ var KTAppCalendar = function () {
       viewEventAuthor = viewElement.querySelector('[data-kt-calendar="event_author"]');
       viewEditButton = viewElement.querySelector('#kt_modal_view_event_edit');
       viewDeleteButton = viewElement.querySelector('#kt_modal_view_event_delete');
+      viewResponseButton = viewElement.querySelector('.buttonResponse');
 
       initCalendarApp();
       initValidator();

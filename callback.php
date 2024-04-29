@@ -50,7 +50,7 @@ if (isset($authorizationCode)) {
 
             // Endpoint da API do Microsoft Graph para obter os eventos do calendário do usuário
             // Redireciona para a página calendar.html com o token de acesso e os eventos codificados na URL
-            header('Location: calendar.html');
+            header('Location: index.html');
             exit();
         } else {
             // Exibe uma mensagem de erro se não foi possível obter o token de acesso
