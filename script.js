@@ -24,6 +24,8 @@ class utilitariosCalendario {
         status = '<span class="fw-semibold d-block pt-1 eventAccepted">Aceita</span>';
       } else if (event.extendedProps.attendees[i].status.response == 'declined') {
         status = '<span class="fw-semibold d-block pt-1 eventDeclined">Recusada</span>';
+      } else if (event.extendedProps.attendees[i].status.response == 'tentativelyAccepted') {
+        status = '<span class="fw-semibold d-block pt-1 eventTentativelyAccepted">Provisório</span>';
       } else {
         status = '<span class="text-gray-500 fw-semibold d-block pt-1">Não respondido</span>';
       }
@@ -168,7 +170,7 @@ class utilitariosCalendario {
           $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoAceita').html('<i class="fas fa-check iconeReuniaoAceita"></i>Reunião Aceita');
         } else if (e.params.data.id === 'declined') {
           $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoRecusada').html('<i class="fas fa-times iconeReuniaoRecusada"></i>Reunião Recusada');
-        } else if (e.params.data.id === 'notAnswered') {
+        } else if (e.params.data.id === 'tentativelyAccepted') {
           $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoProvisoria').html('<i class="fas fa-question iconeReuniaoProvisoria"></i>Provisório');
         }
       });

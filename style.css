@@ -219,7 +219,8 @@
 }
 
 .eventReuniaoProvisoria,
-.iconeReuniaoProvisoria {
+.iconeReuniaoProvisoria,
+.eventTentativelyAccepted {
     color: #320cbb !important;
 }
 
