@@ -117,17 +117,24 @@ class utilitariosCalendario {
       // Limpar o título original
       $('.eventLocation').eq(i).attr('data-bs-original-title', '');
 
-      if (event.extendedProps.location[i].displayName.length > 30) {
-        event.extendedProps.location[i].displayName = objUtilitariosCalendario.truncateText(event.extendedProps.location[i].displayName, 30); // Truncar o texto se for maior que 30 caracteres
+      var title = '';
+
+      // Verificar se existe o atributo address
+      if (event.extendedProps.location[i].address) {
+        title = event.extendedProps.location[i].address.street + ", " + event.extendedProps.location[i].address.city + " - " + event.extendedProps.location[i].address.state + ", " + event.extendedProps.location[i].address.countryOrRegion;
+      } else if (title.length > 30) {
+        title = objUtilitariosCalendario.truncateText(title, 30);
+      } else {
+        title = event.extendedProps.location[i].displayName;
       }
 
-      // Definir o título
-      $('.eventLocation').eq(i).attr('data-bs-original-title', event.extendedProps.location[i].displayName);
+      $('.eventLocation').eq(i).attr('data-bs-original-title', title);
     }
 
     // Inicializar tooltips do Bootstrap
     $('[data-bs-toggle="tooltip"]').tooltip();
   }
+
 
   addTitleButtonCopyAuthor(event) {
     $('.divEventOrganizador').attr('data-bs-original-title', event.extendedProps.eventAuthorAddress);
