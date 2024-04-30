@@ -123,7 +123,10 @@ class Calendar{
                 $item->extendedProps->type = false;
             }
     
-            $item->extendedProps->url = $itemCalendar->onlineMeeting->joinUrl;
+            $item->extendedProps->url = '';
+            if (is_null($itemCalendar->onlineMeeting->joinUrl)){
+                $item->extendedProps->url = $itemCalendar->onlineMeeting->joinUrl;
+            }
             $item->extendedProps->body = $itemCalendar->body->content;
             $item->extendedProps->id = $itemCalendar->id;
             $item->extendedProps->isOrganizer = $itemCalendar->isOrganizer;
