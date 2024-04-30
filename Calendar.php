@@ -124,7 +124,7 @@ class Calendar{
             }
     
             $item->extendedProps->url = '';
-            if (is_null($itemCalendar->onlineMeeting->joinUrl)){
+            if (!is_null($itemCalendar->onlineMeeting->joinUrl)){
                 $item->extendedProps->url = $itemCalendar->onlineMeeting->joinUrl;
             }
             $item->extendedProps->body = $itemCalendar->body->content;
