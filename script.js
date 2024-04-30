@@ -251,7 +251,7 @@ class utilitariosCalendario {
           event.remove();
           // Remove o evento do Office 365
           $.ajax({
-            url: 'consultaEventos.php',
+            url: 'Eventos.php',
             type: 'POST',
             data: 'eventId=' + event.extendedProps.id + '&action=DELETE',
           });
@@ -273,7 +273,7 @@ class utilitariosCalendario {
 
       // Enviar as atualizações para o Office 365
       $.ajax({
-        url: 'consultaEventos.php',
+        url: 'Eventos.php',
         type: 'POST',
         data: 'eventId=' + event.extendedProps.id + '&action=RESPONSE&response=' + selectedResponse,
 
@@ -403,9 +403,9 @@ var KTAppCalendar = function () {
       },
       dayMaxEvents: true,
       events: {
-        url: 'consultaEventos.php',
+        url: 'Eventos.php',
         method: 'GET',
-        extraParams: {},
+        extraParams: {action:'LIST'},
       },
       select: function (arg) {
         formatArgs(arg);
