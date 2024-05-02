@@ -289,9 +289,20 @@ class utilitariosCalendario {
     });
   }
 
+  initializeTinyMCE() {
+    tinymce.init({
+      selector: 'textarea',
+      language: 'pt_BR',
+      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+    });
+  }
+
 }
 
 var objUtilitariosCalendario = new utilitariosCalendario();
+
+
 
 // Class definition
 var KTAppCalendar = function () {
@@ -481,6 +492,7 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.hideParticipantes('.tituloObrigatorio,.tituloOpcional');
         objUtilitariosCalendario.handleDeleteEvent(viewModal, viewDeleteButton, arg.event);
         objUtilitariosCalendario.handleResponseEvent(viewResponseButton, arg.event);
+        objUtilitariosCalendario.initializeTinyMCE();
         handleViewEvent();
       }
     });
@@ -498,21 +510,21 @@ var KTAppCalendar = function () {
           'calendar_event_name': {
             validators: {
               notEmpty: {
-                message: 'Event name is required'
+                message: 'O nome do evento é obrigatório'
               }
             }
           },
           'calendar_event_start_date': {
             validators: {
               notEmpty: {
-                message: 'Start date is required'
+                message: 'A data de início é obrigatória'
               }
             }
           },
           'calendar_event_end_date': {
             validators: {
               notEmpty: {
-                message: 'End date is required'
+                message: 'A data de término é obrigatória'
               }
             }
           }

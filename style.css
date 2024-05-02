@@ -248,6 +248,13 @@
 
 /* Modal de Edição e Novo evento */
 
+.inputEditTitle{
+    width: 10vw;
+}
+
+.divEditEventTitulo>input{
+    width: 58vw;
+}
 .divEditTitleStart,
 .divEditTitleEnd {
     width: 5vw !important;
