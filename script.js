@@ -405,7 +405,7 @@ var KTAppCalendar = function () {
       events: {
         url: 'Eventos.php',
         method: 'GET',
-        extraParams: {action:'LIST'},
+        extraParams: { action: 'LIST' },
       },
       select: function (arg) {
         formatArgs(arg);
@@ -534,24 +534,26 @@ var KTAppCalendar = function () {
   const initDatepickers = () => {
     startFlatpickr = flatpickr(startDatepicker, {
       enableTime: false,
-      dateFormat: "Y-m-d",
+      dateFormat: "d/m/Y",
     });
 
     endFlatpickr = flatpickr(endDatepicker, {
       enableTime: false,
-      dateFormat: "Y-m-d",
+      dateFormat: "d/m/Y"
     });
 
     startTimeFlatpickr = flatpickr(startTimepicker, {
       enableTime: true,
       noCalendar: true,
-      dateFormat: "H:i",
+      time_24hr: true,
+      dateFormat: "H:i"
     });
 
     endTimeFlatpickr = flatpickr(endTimepicker, {
       enableTime: true,
       noCalendar: true,
-      dateFormat: "H:i",
+      time_24hr: true,
+      dateFormat: "H:i"
     });
   }
 
@@ -644,10 +646,11 @@ var KTAppCalendar = function () {
                   var startDateTime = moment(startFlatpickr.selectedDates[0]).format();
                   var endDateTime = moment(endFlatpickr.selectedDates[endFlatpickr.selectedDates.length - 1]).format();
                   if (!allDayEvent) {
-                    const startDate = moment(startFlatpickr.selectedDates[0]).format('YYYY-MM-DD');
+                    const startDate = moment(startFlatpickr.selectedDates[0]).format('DD-MM-YYYY');
                     const endDate = startDate;
-                    const startTime = moment(startTimeFlatpickr.selectedDates[0]).format('HH:mm:ss');
-                    const endTime = moment(endTimeFlatpickr.selectedDates[0]).format('HH:mm:ss');
+                    const startTime = moment(startTimeFlatpickr.selectedDates[0]).format('HH:mm');
+                    const endTime = moment(endTimeFlatpickr.selectedDates[0]).format('HH:mm');
+
 
                     startDateTime = startDate + 'T' + startTime;
                     endDateTime = endDate + 'T' + endTime;
@@ -765,10 +768,11 @@ var KTAppCalendar = function () {
                   var startDateTime = moment(startFlatpickr.selectedDates[0]).format();
                   var endDateTime = moment(endFlatpickr.selectedDates[endFlatpickr.selectedDates.length - 1]).format();
                   if (!allDayEvent) {
-                    const startDate = moment(startFlatpickr.selectedDates[0]).format('YYYY-MM-DD');
+                    const startDate = moment(startFlatpickr.selectedDates[0]).format('DD/MM/YYYY');
                     const endDate = startDate;
-                    const startTime = moment(startTimeFlatpickr.selectedDates[0]).format('HH:mm:ss');
-                    const endTime = moment(endTimeFlatpickr.selectedDates[0]).format('HH:mm:ss');
+                    const startTime = moment(startTimeFlatpickr.selectedDates[0]).format('HH:mm');
+                    const endTime = moment(endTimeFlatpickr.selectedDates[0]).format('HH:mm');
+
 
                     startDateTime = startDate + 'T' + startTime;
                     endDateTime = endDate + 'T' + endTime;

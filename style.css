@@ -245,3 +245,30 @@
     width: 1vw;
     margin-right: 0.4vw;
 }
+
+/* Modal de Edição e Novo evento */
+
+.divEditTitleStart,
+.divEditTitleEnd {
+    width: 5vw !important;
+}
+
+.divEditStartDate,
+.divEditStartTime,
+.divEditEndDate,
+.divEditEndTime {
+    width: 6.4vw !important;
+}
+
+.divColStartDate,
+.divColStartTime,
+.divColEndDate,
+.divColEndTime {
+    width: 8vw !important;
+}
+
+.divEditTitleStart>div,
+.divEditTitleEnd>div,
+.labelEditAllDay {
+    margin-top: 1vh !important;
+}

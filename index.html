@@ -80,61 +80,70 @@
 													<!-- Conteúdo do lado esquerdo -->
 													<div class="col-md-8 divLeftView">
 														<!-- Div de Título do Evento -->
-														<div class="fv-row mb-9">
-															<label class="fs-6 fw-semibold required mb-2">Título</label>
-															<input type="text" class="form-control form-control-solid"
-																placeholder="" name="calendar_event_name" />
+														<div class="d-flex divEditEventTitulo">
+															<div class="fv-row mb-9">
+																<i class="ki-outline ki-calendar-8 fs-1 text-muted me-5"></i>
+																<input type="text" class="form-control form-control-solid"
+																	placeholder="" name="calendar_event_name" />
+															</div>
 														</div>
-														<!-- Div de Select Dia Inteiro do Evento -->
-														<div class="fv-row mb-9">
-															<label class="form-check form-check-custom form-check-solid">
-																<input class="form-check-input" type="checkbox" value=""
-																	id="kt_calendar_datepicker_allday" />
-																<span class="form-check-label fw-semibold"
-																	for="kt_calendar_datepicker_allday">Dia inteiro</span>
-															</label>
-														</div>
-														<!-- Div de Data e Hora de Ínicio do Evento -->
-														<div class="row row-cols-lg-2 g-10">
-															<div class="col">
-																<div class="fv-row mb-9">
-																	<label class="fs-6 fw-semibold mb-2 required">Data de Ínicio</label>
-																	<input class="form-control form-control-solid"
-																		name="calendar_event_start_date"
-																		placeholder="Escolha uma data de início"
-																		id="kt_calendar_datepicker_start_date" />
+														<!-- Div de Data e Hora de Início do Evento -->
+														<div class="row row-cols-lg-3 g-10">
+															<!-- Título Início -->
+															<div class="col divEditTitleStart">
+																<div class="fv-row mb-9 d-flex align-items-center">
+																	<span class="bullet bullet-dot h-10px w-10px bg-success ms-2 me-3"></span>
+																	<span class="fw-bold editTitleInicio">Início: </span>
 																</div>
 															</div>
-															<div class="col" data-kt-calendar="datepicker">
-																<div class="fv-row mb-9">
-																	<label class="fs-6 fw-semibold mb-2 required">Hora de Ínicio</label>
-																	<input class="form-control form-control-solid"
-																		name="calendar_event_start_time"
-																		placeholder="Escolha um horário de início"
-																		id="kt_calendar_datepicker_start_time" />
+															<!-- Data de Início -->
+															<div class="col divColStartDate">
+																<div class="fv-row mb-9 divEditStartDate">
+																	<input class="form-control form-control-solid" name="calendar_event_start_date" placeholder="Data de início" id="kt_calendar_datepicker_start_date" />
 																</div>
+															</div>
+															<!-- Hora de Início -->
+															<div class="col divColStartTime" data-kt-calendar="datepicker">
+																<div class="fv-row mb-9 divEditStartTime">
+																	<input class="form-control form-control-solid" name="calendar_event_start_time" placeholder="Hora de início" id="kt_calendar_datepicker_start_time" />
+																</div>
+															</div>
+															<!-- Botão Dia Inteiro-->
+															<div class="fv-row mb-9">
+																<label class="form-check form-check-custom form-check-solid labelEditAllDay">
+																	<input class="form-check-input" type="checkbox" value="" id="kt_calendar_datepicker_allday" />
+																	<span class="form-check-label fw-semibold" for="kt_calendar_datepicker_allday">Dia inteiro</span>
+																</label>
 															</div>
 														</div>
 														<!-- Div de Data e Hora de Término do Evento -->
-														<div class="row row-cols-lg-2 g-10">
-															<div class="col">
-																<div class="fv-row mb-9">
-																	<label class="fs-6 fw-semibold mb-2 required">Data de Término</label>
-																	<input class="form-control form-control-solid"
-																		name="calendar_event_end_date"
-																		placeholder="Escolha uma data de término"
-																		id="kt_calendar_datepicker_end_date" />
+														<div class="row row-cols-lg-3 g-10">
+															<!-- Título Término -->
+															<div class="col divEditTitleEnd">
+																<div class="fv-row mb-9 d-flex align-items-center">
+																	<span class="bullet bullet-dot h-10px w-10px bg-danger ms-2 me-3"></span>
+																	<span class="fw-bold editTitleInicio">Término: </span>
 																</div>
 															</div>
-															<div class="col" data-kt-calendar="datepicker">
-																<div class="fv-row mb-9">
-																	<label class="fs-6 fw-semibold mb-2 required">Hora de Término</label>
-																	<input class="form-control form-control-solid"
-																		name="calendar_event_end_time"
-																		placeholder="Escolha um horário de término"
-																		id="kt_calendar_datepicker_end_time" />
+															<!-- Data de Término -->
+															<div class="col divColEndDate">
+																<div class="fv-row mb-9 divEditEndDate">
+																	<input class="form-control form-control-solid" name="calendar_event_end_date" placeholder="Data de início" id="kt_calendar_datepicker_end_date" />
 																</div>
 															</div>
+															<!-- Hora de Término -->
+															<div class="col divColEndTime" data-kt-calendar="datepicker">
+																<div class="fv-row mb-9 divEditEndTime">
+																	<input class="form-control form-control-solid" name="calendar_event_end_time" placeholder="Hora de início" id="kt_calendar_datepicker_end_time" />
+																</div>
+															</div>
+														</div>
+														<!-- Div do Botão Localização do evento -->
+														<div class="d-flex justify-content-end divBotaoLocalizacao">
+															<label class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
+																<input class="form-check-input" name="google" type="checkbox" value="1" id="kt_modal_connected_accounts_google" checked="checked" />
+																<span class="form-check-label fw-semibold text-muted" for="kt_modal_connected_accounts_google"></span>
+															</label>
 														</div>
 														<!-- Div de Localização do Evento -->
 														<div class="fv-row mb-9">
