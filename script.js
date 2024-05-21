@@ -293,8 +293,17 @@ class utilitariosCalendario {
     tinymce.init({
       selector: 'textarea',
       language: 'pt_BR',
-      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
-      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+      width: 548,
+      plugins: [
+        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+        'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media',
+        'table', 'emoticons', 'help'
+      ],
+      toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist outdent indent | ' +
+        'forecolor backcolor emoticons',
+      menubar: 'edit insert format',
+      statusbar: false
     });
   }
 
@@ -507,13 +516,6 @@ var KTAppCalendar = function () {
       form,
       {
         fields: {
-          'calendar_event_name': {
-            validators: {
-              notEmpty: {
-                message: 'O nome do evento é obrigatório'
-              }
-            }
-          },
           'calendar_event_start_date': {
             validators: {
               notEmpty: {
