@@ -17,7 +17,7 @@ class utilitariosCalendario {
     var tituloOpcional = '';
     var status = '';
 
-    $('.divParticipantes').html('');
+    $('.divParticipantes, .divParticipantesEdit').html('');
 
     for (i = 0; i < event.extendedProps.attendees.length; i++) {
       if (event.extendedProps.attendees[i].status.response == 'accepted') {
@@ -29,6 +29,12 @@ class utilitariosCalendario {
       } else {
         status = '<span class="text-gray-500 fw-semibold d-block pt-1">Não respondido</span>';
       }
+
+      //if ($('.divParticipantesEdit')) {
+      //iconeParticipantes = '<i class="ki-outline ki-cross fs-1"></i>';
+      //} else {
+      //iconeParticipantes = '<i class="ki-outline ki-copy fs-3 text-gray-900"></i>';
+      //}
 
       divAttendees = '<div data-bs-toggle="tooltip" title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-3 divAteendesEvent">' +
         '<div class="divIniciais me-3 w-35px">' +
@@ -75,7 +81,7 @@ class utilitariosCalendario {
         '</div>' +
         '</div>';
 
-      $('.divParticipantes').html(bodyDivParticipantes);
+      $('.divParticipantes, .divParticipantesEdit').html(bodyDivParticipantes);
       $('[data-bs-toggle="tooltip"]').tooltip();
     }
   }
@@ -137,13 +143,11 @@ class utilitariosCalendario {
     $('[data-bs-toggle="tooltip"]').tooltip();
   }
 
-
   addTitleButtonCopyAuthor(event) {
     $('.divEventOrganizador').attr('data-bs-original-title', event.extendedProps.eventAuthorAddress);
     $('.divEventOrganizador').tooltip('dispose'); // Remove o tooltip antigo
     $('.divEventOrganizador').tooltip(); // Inicializa o novo tooltip
   }
-
 
   formatDate(date) {
     const localDate = new Date(date);
@@ -307,6 +311,26 @@ class utilitariosCalendario {
     });
   }
 
+  isInPerson(arg) {
+    if (arg.title.includes('[Presencial]')) {
+      $('.inputButtonLocation').attr('checked', true);
+    } else {
+      $('.inputButtonLocation').attr('checked', false);
+    }
+  }
+
+  onInPerson() {
+    $('.labelButtonLocation').on('click', function () {
+      var title = $('[name="calendar_event_name"]');
+      title.val(title.val().replace(/ \[Presencial\]/g, ''));
+
+      if ($('.inputButtonLocation').get(0).checked) {
+        title.val(title.val() + " [Presencial]");
+      } else {
+        title.val(title.val().replace(/ \[Presencial\]/g, ''));
+      }
+    });
+  }
 }
 
 var objUtilitariosCalendario = new utilitariosCalendario();
@@ -361,7 +385,6 @@ var KTAppCalendar = function () {
   var eventAuthorAddress;
   var eventUrl;
   var eventBody;
-  var startDate;
   var isOrganizer;
   var isOnlineMeeting;
 
@@ -502,6 +525,8 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.handleDeleteEvent(viewModal, viewDeleteButton, arg.event);
         objUtilitariosCalendario.handleResponseEvent(viewResponseButton, arg.event);
         objUtilitariosCalendario.initializeTinyMCE();
+        objUtilitariosCalendario.isInPerson(arg.event);
+        objUtilitariosCalendario.onInPerson();
         handleViewEvent();
       }
     });
@@ -705,17 +730,14 @@ var KTAppCalendar = function () {
     });
   }
 
-  // Handle edit event
+  // Modal para Editar Evento
   const handleEditEvent = () => {
-    // Update modal title
     modalTitle.innerText = "Editar evento";
 
     modal.show();
 
-    // Select datepicker wrapper elements
     const datepickerWrappers = form.querySelectorAll('[data-kt-calendar="datepicker"]');
 
-    // Handle all day toggle
     const allDayToggle = form.querySelector('#kt_calendar_datepicker_allday');
     allDayToggle.addEventListener('click', e => {
       if (e.target.checked) {
@@ -944,9 +966,11 @@ var KTAppCalendar = function () {
   }
 
   // Populate form 
-  const populateForm = () => {
+  const populateForm = (data) => {
+    console.log(data);
     eventName.value = data.eventName ? data.eventName : '';
-    eventDescription.value = data.eventDescription ? data.eventDescription : '';
+    //eventAuthor.value = data.eventAuthor ? data.eventAuthor : '';
+    tinymce.get("tiny").execCommand('mceInsertContent', false, data.eventDescription);
     eventLocation.value = data.eventLocation ? data.eventLocation : '';
     startFlatpickr.setDate(data.startDate, true, 'Y-m-d');
     // Handle null end dates
