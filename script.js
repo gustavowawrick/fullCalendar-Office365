@@ -30,12 +30,6 @@ class utilitariosCalendario {
         status = '<span class="text-gray-500 fw-semibold d-block pt-1">Não respondido</span>';
       }
 
-      //if ($('.divParticipantesEdit')) {
-      //iconeParticipantes = '<i class="ki-outline ki-cross fs-1"></i>';
-      //} else {
-      //iconeParticipantes = '<i class="ki-outline ki-copy fs-3 text-gray-900"></i>';
-      //}
-
       divAttendees = '<div data-bs-toggle="tooltip" title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-3 divAteendesEvent">' +
         '<div class="divIniciais me-3 w-35px">' +
         '<div class="iniciaisParticipantes">' + event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('') + '</div>' +
@@ -219,6 +213,13 @@ class utilitariosCalendario {
     });
   }
 
+  hideDivButtonTeams(arg) {
+    $('.inputButtonTeams').attr('disabled', false).attr('checked', false);
+    if (arg.extendedProps.type === false) {
+      $('.inputButtonTeams').attr('disabled', true).attr('checked', true);
+    }
+  }
+
   copiarEmail(selector) {
     $(selector).on('click', function () {
       const email = $(this).parent().attr('data-bs-original-title');
@@ -334,8 +335,6 @@ class utilitariosCalendario {
 }
 
 var objUtilitariosCalendario = new utilitariosCalendario();
-
-
 
 // Class definition
 var KTAppCalendar = function () {
@@ -516,6 +515,7 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.hideButtonEdit(arg.event);
         objUtilitariosCalendario.hideLocation(arg.event);
         objUtilitariosCalendario.hideDescricao(arg.event);
+        objUtilitariosCalendario.hideDivButtonTeams(arg.event);
         objUtilitariosCalendario.addHtmlParticipantes(arg.event);
         objUtilitariosCalendario.addHtmlButtonTeams(arg.event);
         objUtilitariosCalendario.addTitleAuthor(arg.event);
@@ -574,25 +574,29 @@ var KTAppCalendar = function () {
     startFlatpickr = flatpickr(startDatepicker, {
       enableTime: false,
       dateFormat: "d/m/Y",
+      locale: "pt"
     });
 
     endFlatpickr = flatpickr(endDatepicker, {
       enableTime: false,
-      dateFormat: "d/m/Y"
+      dateFormat: "d/m/Y",
+      locale: "pt"
     });
 
     startTimeFlatpickr = flatpickr(startTimepicker, {
       enableTime: true,
       noCalendar: true,
       time_24hr: true,
-      dateFormat: "H:i"
+      dateFormat: "H:i",
+      locale: "pt"
     });
 
     endTimeFlatpickr = flatpickr(endTimepicker, {
       enableTime: true,
       noCalendar: true,
       time_24hr: true,
-      dateFormat: "H:i"
+      dateFormat: "H:i",
+      locale: "pt"
     });
   }
 
