@@ -248,13 +248,14 @@
 
 /* Modal de Edição e Novo evento */
 
-.inputEditTitle{
+.inputEditTitle {
     width: 10vw;
 }
 
-.divEditEventTitulo>input{
+.divEditEventTitulo>input {
     width: 58vw;
 }
+
 .divEditTitleStart,
 .divEditTitleEnd {
     width: 5vw !important;
@@ -278,4 +279,10 @@
 .divEditTitleEnd>div,
 .labelEditAllDay {
     margin-top: 1vh !important;
+}
+
+.iconTeamsLabel {
+    height: 100%;
+    width: 1.3vw;
+    margin-left: 0.5vw;
 }
