@@ -77,6 +77,7 @@ class utilitariosCalendario {
 
       $('.divParticipantes, .divParticipantesEdit').html(bodyDivParticipantes);
       $('[data-bs-toggle="tooltip"]').tooltip();
+      $('.divParticipantes, .divParticipantesEdit, .divEventOrganizador').removeClass('d-none');
     }
   }
 
@@ -214,10 +215,36 @@ class utilitariosCalendario {
   }
 
   hideDivButtonTeams(arg) {
-    $('.inputButtonTeams').attr('disabled', false).attr('checked', false);
+    $('.inputButtonTeams').attr('disabled', true).attr('checked', true);
     if (arg.extendedProps.type === false) {
-      $('.inputButtonTeams').attr('disabled', true).attr('checked', true);
+      $('.inputButtonTeams').attr('disabled', false).attr('checked', false);
     }
+  }
+
+  clearData() {
+    KTAppCalendar.data = {
+      id: '',
+      eventName: '',
+      eventLocation: '',
+      eventAuthor: '',
+      eventAuthorAddress: '',
+      eventUrl: '',
+      eventBody: '',
+      eventDescription: '',
+      eventAttendeesName: '',
+      eventAttendeesStatus: '',
+      eventAttendeesType: '',
+      startDate: '',
+      endDate: '',
+      isOrganizer: false,
+      isOnlineMeeting: false,
+      allDay: false
+    };
+
+    tinymce.remove();
+    $('#in_person').attr('checked', false);
+    $('.inputButtonTeams').attr('disabled', false).attr('checked', false);
+    $('.divParticipantes, .divParticipantesEdit, .divEventOrganizador').addClass('d-none');
   }
 
   copiarEmail(selector) {
@@ -399,15 +426,9 @@ var KTAppCalendar = function () {
   var viewResponseButton;
 
   var viewEventAuthor;
-  var viewEventAuthorAddress;
-  var viewEventUrl;
-  var viewEventBody;
-  var viewIsOrganizer;
-  var viewIsOnlineMeeting;
   var viewEventDescription;
-  var viewEventAttendeesName;
-  var viewEventAttendeesStatus;
-  var viewEventAttendeesType;
+  var viewEventAuthorEdit;
+  var viewMeetingTeams;
 
   // Private functions
   var initCalendarApp = function () {
@@ -504,7 +525,7 @@ var KTAppCalendar = function () {
           eventAttendeesName: attendeeName,
           eventAuthor: arg.event.extendedProps.eventAuthor,
           eventAuthorAddress: arg.event.extendedProps.eventAuthorAddress,
-          eventLocation: locationEvent
+          eventLocation: locationEvent,
         });
 
         console.log(arg);
@@ -608,24 +629,23 @@ var KTAppCalendar = function () {
         id: '',
         eventName: '',
         startDate: new Date(),
-        endDate: new Date(),
+        endDate: '',
         allDay: false
       };
+
       handleNewEvent();
     });
   }
 
-  // Handle add new event
   const handleNewEvent = () => {
-    // Update modal title
+    objUtilitariosCalendario.clearData();
+    objUtilitariosCalendario.initializeTinyMCE();
     modalTitle.innerText = "Adicionar um novo evento";
 
     modal.show();
 
-    // Select datepicker wrapper elements
     const datepickerWrappers = form.querySelectorAll('[data-kt-calendar="datepicker"]');
 
-    // Handle all day toggle
     const allDayToggle = form.querySelector('#kt_calendar_datepicker_allday');
     allDayToggle.addEventListener('click', e => {
       if (e.target.checked) {
@@ -690,13 +710,11 @@ var KTAppCalendar = function () {
                   var endDateTime = moment(endFlatpickr.selectedDates[endFlatpickr.selectedDates.length - 1]).format();
                   if (!allDayEvent) {
                     const startDate = moment(startFlatpickr.selectedDates[0]).format('DD-MM-YYYY');
-                    const endDate = startDate;
                     const startTime = moment(startTimeFlatpickr.selectedDates[0]).format('HH:mm');
                     const endTime = moment(endTimeFlatpickr.selectedDates[0]).format('HH:mm');
 
 
                     startDateTime = startDate + 'T' + startTime;
-                    endDateTime = endDate + 'T' + endTime;
                   }
 
                   // Add new event to calendar
@@ -705,7 +723,7 @@ var KTAppCalendar = function () {
                     title: eventName.value,
                     location: eventLocation.value,
                     start: startDateTime,
-                    end: endDateTime,
+                    end: '',
                     allDay: allDayEvent
                   });
                   calendar.render();
@@ -853,16 +871,13 @@ var KTAppCalendar = function () {
     });
   }
 
-  // Handle view event
   const handleViewEvent = () => {
     viewModal.show();
 
-    // Detect all day event
     var eventNameMod;
     var startDateMod;
     var endDateMod;
 
-    // Generate labels
     if (data.allDay) {
       eventNameMod = 'Dia Inteiro';
       startDateMod = moment(data.startDate).format('DD/MM/YYYY');
@@ -873,7 +888,6 @@ var KTAppCalendar = function () {
       endDateMod = moment(data.endDate).format('DD/MM/YYYY - HH:mm');
     }
 
-    // Populate view data
     viewEventName.innerText = data.eventName;
     viewAllDay.innerText = eventNameMod;
     viewStartDate.innerText = startDateMod;
@@ -883,7 +897,6 @@ var KTAppCalendar = function () {
     viewEventAuthor.innerText = data.eventAuthor;
   }
 
-  // Handle edit button
   const handleEditButton = () => {
     viewEditButton.addEventListener('click', e => {
       e.preventDefault();
@@ -893,9 +906,7 @@ var KTAppCalendar = function () {
     });
   }
 
-  // Handle cancel button
   const handleCancelButton = () => {
-    // Edit event modal cancel button
     cancelButton.addEventListener('click', function (e) {
       e.preventDefault();
 
@@ -912,16 +923,16 @@ var KTAppCalendar = function () {
         }
       }).then(function (result) {
         if (result.value) {
-          form.reset(); // Reset form	
-          modal.hide(); // Hide modal				
+          objUtilitariosCalendario.clearData();
+
+          form.reset();
+          modal.hide();
         }
       });
     });
   }
 
-  // Handle close button
   const handleCloseButton = () => {
-    // Edit event modal close button
     closeButton.addEventListener('click', function (e) {
       e.preventDefault();
 
@@ -938,8 +949,10 @@ var KTAppCalendar = function () {
         }
       }).then(function (result) {
         if (result.value) {
-          form.reset(); // Reset form	
-          modal.hide(); // Hide modal				
+          objUtilitariosCalendario.clearData();
+
+          form.reset();
+          modal.hide();
         }
       });
     });
@@ -971,10 +984,13 @@ var KTAppCalendar = function () {
 
   // Populate form 
   const populateForm = (data) => {
-    console.log(data);
+
     eventName.value = data.eventName ? data.eventName : '';
-    //eventAuthor.value = data.eventAuthor ? data.eventAuthor : '';
-    tinymce.get("tiny").execCommand('mceInsertContent', false, data.eventDescription);
+
+    if(data.eventDescription != undefined){
+      tinymce.get("tiny").insertContent(data.eventDescription);
+    }
+
     eventLocation.value = data.eventLocation ? data.eventLocation : '';
     startFlatpickr.setDate(data.startDate, true, 'Y-m-d');
     // Handle null end dates
@@ -1048,9 +1064,11 @@ var KTAppCalendar = function () {
       viewEventDescription = viewElement.querySelector('[data-kt-calendar="event_description"]');
       viewEndDate = viewElement.querySelector('[data-kt-calendar="event_end_date"]');
       viewEventAuthor = viewElement.querySelector('[data-kt-calendar="event_author"]');
+      //viewEventAuthorEdit = viewElement.querySelector('#event_author_edit');
       viewEditButton = viewElement.querySelector('#kt_modal_view_event_edit');
       viewDeleteButton = viewElement.querySelector('#kt_modal_view_event_delete');
       viewResponseButton = viewElement.querySelector('.buttonResponse');
+      viewMeetingTeams = viewElement.querySelector('.inputButtonTeams');
 
       initCalendarApp();
       initValidator();
