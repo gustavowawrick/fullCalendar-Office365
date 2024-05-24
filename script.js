@@ -17,7 +17,7 @@ class utilitariosCalendario {
     var tituloOpcional = '';
     var status = '';
 
-    $('.divParticipantes, .divParticipantesEdit').html('');
+    $('.divParticipantes').html('');
 
     for (i = 0; i < event.extendedProps.attendees.length; i++) {
       if (event.extendedProps.attendees[i].status.response == 'accepted') {
@@ -75,9 +75,82 @@ class utilitariosCalendario {
         '</div>' +
         '</div>';
 
-      $('.divParticipantes, .divParticipantesEdit').html(bodyDivParticipantes);
+      $('.divParticipantes').html(bodyDivParticipantes);
       $('[data-bs-toggle="tooltip"]').tooltip();
-      $('.divParticipantes, .divParticipantesEdit, .divEventOrganizador').removeClass('d-none');
+      $('.divParticipantes, .divEventOrganizador').removeClass('d-none');
+    }
+  }
+
+  addHtmlParticipantesEdit(event) {
+    var divParticipantes = '';
+    var divParticipantesOpcional = '';
+    var divAttendees = '';
+    var i = 0;
+    var tituloObrigatorio = '';
+    var tituloOpcional = '';
+    var status = '';
+
+    $('.divParticipantesEdit').html('');
+
+    for (i = 0; i < event.extendedProps.attendees.length; i++) {
+      if (event.extendedProps.attendees[i].status.response == 'accepted') {
+        status = '<span class="fw-semibold d-block pt-1 eventAccepted">Aceita</span>';
+      } else if (event.extendedProps.attendees[i].status.response == 'declined') {
+        status = '<span class="fw-semibold d-block pt-1 eventDeclined">Recusada</span>';
+      } else if (event.extendedProps.attendees[i].status.response == 'tentativelyAccepted') {
+        status = '<span class="fw-semibold d-block pt-1 eventTentativelyAccepted">Provisório</span>';
+      } else {
+        status = '<span class="text-gray-500 fw-semibold d-block pt-1">Não respondido</span>';
+      }
+
+      divAttendees = '<div data-bs-toggle="tooltip" title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-3 divAteendesEvent">' +
+        '<div class="divIniciais me-3 w-35px">' +
+        '<div class="iniciaisParticipantes">' + event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('') + '</div>' +
+        '</div>' +
+        '<div class="d-flex align-items-center flex-row-fluid flex-wrap">' +
+        '<div class="flex-grow-1 me-2">' +
+        '<a class="text-gray-700 fs-6 fw-bold attendeeName">' + this.truncateText(event.extendedProps.attendees[i].emailAddress.name, 28) + '</a>' +
+        status +
+        '</div>' +
+        '</div>' +
+        '<a class="text-hover-primary iconeExcluirParticipantes">' +
+        '<i class="ki-outline ki-cross fs-1"></i>' +
+        '</a>' +
+        '</div>';
+
+      if (event.extendedProps.attendees[i].type == 'required') {
+        divParticipantes += divAttendees;
+        tituloObrigatorio = '<span class="tituloObrigatorio"><i class="fas fa-angle-down"></i> Obrigatório</span>';
+      } else if (event.extendedProps.attendees[i].type == 'optional') {
+        divParticipantesOpcional += divAttendees;
+        tituloOpcional = '<span class="tituloOpcional"><i class="fas fa-angle-down"></i> Opcional</span>';
+      }
+    }
+
+    if (i > 0) {
+      var bodyDivParticipantes = '<div class="card-body pt-8">' +
+        '<h3 class="card-title align-items-start flex-column mb-6">' +
+        '<span class="fw-bold titleAuthorView">Participantes</span>' +
+        '</h3>' +
+        '<div class="divScrollParticipantes">' +
+        '<div>' +
+        tituloObrigatorio +
+        '<div class="divScrollParticipantesObrigatorios">' +
+        divParticipantes +
+        '</div>' +
+        '</div>' +
+        '<div>' +
+        tituloOpcional +
+        '<div class="divScrollParticipantesOpcional">' +
+        divParticipantesOpcional +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+
+      $('.divParticipantesEdit').html(bodyDivParticipantes);
+      $('[data-bs-toggle="tooltip"]').tooltip();
+      $('.divParticipantesEdit').removeClass('d-none');
     }
   }
 
@@ -359,6 +432,22 @@ class utilitariosCalendario {
       }
     });
   }
+
+  onDeleteAttendee(selector) {
+    $(selector).on('click', function () {
+      // Encontra o tooltip associado ao elemento clicado
+      var tooltipId = $(this).closest('.divAteendesEvent').attr('aria-describedby');
+
+      // Remove o atributo aria-describedby
+      $(this).closest('.divAteendesEvent').removeAttr('aria-describedby');
+
+      // Remove a div do tooltip
+      $('#' + tooltipId).remove();
+
+      // Remove a div pai correspondente
+      $(this).closest('.divAteendesEvent').remove();
+    });
+  }
 }
 
 var objUtilitariosCalendario = new utilitariosCalendario();
@@ -499,6 +588,7 @@ var KTAppCalendar = function () {
         arg.el.insertBefore(barra, arg.el.firstChild);
       },
       eventClick: function (arg) {
+
         for (var i = 0; i < arg.event.extendedProps.attendees.length; i++) {
           var attendeeName = arg.event.extendedProps.attendees[i].emailAddress.name;
         }
@@ -538,16 +628,17 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.hideDescricao(arg.event);
         objUtilitariosCalendario.hideDivButtonTeams(arg.event);
         objUtilitariosCalendario.addHtmlParticipantes(arg.event);
+        objUtilitariosCalendario.addHtmlParticipantesEdit(arg.event);
         objUtilitariosCalendario.addHtmlButtonTeams(arg.event);
         objUtilitariosCalendario.addTitleAuthor(arg.event);
         objUtilitariosCalendario.addRandomColor();
         objUtilitariosCalendario.copiarEmail('.iconeCopiarOrganizador,.iconeCopiarParticipantes');
+        objUtilitariosCalendario.onDeleteAttendee('.iconeExcluirParticipantes');
         objUtilitariosCalendario.hideParticipantes('.tituloObrigatorio,.tituloOpcional');
         objUtilitariosCalendario.handleDeleteEvent(viewModal, viewDeleteButton, arg.event);
         objUtilitariosCalendario.handleResponseEvent(viewResponseButton, arg.event);
         objUtilitariosCalendario.initializeTinyMCE();
-        objUtilitariosCalendario.isInPerson(arg.event);
-        objUtilitariosCalendario.onInPerson();
+
         handleViewEvent();
       }
     });
@@ -640,6 +731,8 @@ var KTAppCalendar = function () {
   const handleNewEvent = () => {
     objUtilitariosCalendario.clearData();
     objUtilitariosCalendario.initializeTinyMCE();
+    objUtilitariosCalendario.onInPerson();
+
     modalTitle.innerText = "Adicionar um novo evento";
 
     modal.show();
@@ -987,7 +1080,7 @@ var KTAppCalendar = function () {
 
     eventName.value = data.eventName ? data.eventName : '';
 
-    if(data.eventDescription != undefined){
+    if (data.eventDescription != undefined) {
       tinymce.get("tiny").insertContent(data.eventDescription);
     }
 

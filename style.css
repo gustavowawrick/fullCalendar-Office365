@@ -286,3 +286,8 @@
     width: 1.3vw;
     margin-left: 0.5vw;
 }
+
+.iconeExcluirParticipantes{
+    margin-top: 0.3vh;
+    cursor: pointer;
+}
