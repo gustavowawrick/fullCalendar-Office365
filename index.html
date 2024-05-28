@@ -31,6 +31,8 @@
 	<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 	<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 	<!--end::Global Stylesheets Bundle-->
+
+	v
 	<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
 </head>
 
@@ -84,6 +86,11 @@
 															<i class="ki-outline ki-calendar-8 fs-1 text-muted me-5"></i>
 															<input type="text" class="form-control form-control-solid inputEditTitle" placeholder="Título" name="calendar_event_name" />
 														</div>
+														<!-- Div Adicionar Participantes-->
+														<div class="fv-row mb-5 d-flex align-items-center">
+															<i class="ki-outline ki-user-square fs-1 text-muted me-5"></i>
+															<input type="text" class="form-control form-control-solid inputEditAddAttendess typeahead" placeholder="Adicionar participantes" data-kt-flags-path="assets/media/flags/" id="kt_modal_calendar_add_attendees" />
+														</div>
 														<!-- Div de Data e Hora de Início do Evento -->
 														<div class="row row-cols-lg-3 g-10">
 															<!-- Título Início -->
@@ -114,7 +121,7 @@
 															</div>
 														</div>
 														<!-- Div de Data e Hora de Término do Evento -->
-														<div class="row mb-5 row-cols-lg-3 g-10">
+														<div class="row mb-1 row-cols-lg-3 g-10">
 															<!-- Título Término -->
 															<div class="col divEditTitleEnd">
 																<div class="fv-row d-flex align-items-center">
@@ -192,8 +199,7 @@
 																		<i class="ki-outline ki-copy iconeCopiar fs-3 text-gray-900"></i>
 																	</a>
 																</div>
-
-															</div>
+															</div>	
 															<!-- Div com os Participantes -->
 															<div class="divParticipantesEdit"></div>
 														</div>

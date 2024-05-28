@@ -287,7 +287,14 @@
     margin-left: 0.5vw;
 }
 
-.iconeExcluirParticipantes{
+.iconeExcluirParticipantes {
     margin-top: 0.3vh;
+    cursor: pointer;
+}
+
+#kt_calendar_datepicker_allday,
+.labelButtonLocation,
+.inputButtonLocation,
+.labelButtonTeams {
     cursor: pointer;
 }

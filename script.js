@@ -399,6 +399,7 @@ class utilitariosCalendario {
       selector: 'textarea',
       language: 'pt_BR',
       width: 548,
+      height: 355,
       plugins: [
         'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
         'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media',
@@ -417,6 +418,16 @@ class utilitariosCalendario {
       $('.inputButtonLocation').attr('checked', true);
     } else {
       $('.inputButtonLocation').attr('checked', false);
+    }
+  }
+
+  nflTeamsWithDefaults(q, sync) {
+    if (q === '') {
+      sync(nflTeams.get('Detroit Lions', 'Green Bay Packers', 'Chicago Bears'));
+    }
+
+    else {
+      nflTeams.search(q, sync);
     }
   }
 
@@ -447,6 +458,56 @@ class utilitariosCalendario {
       // Remove a div pai correspondente
       $(this).closest('.divAteendesEvent').remove();
     });
+  }
+
+  filterAttendess() {
+    var tagifyElement = document.querySelector('#kt_modal_calendar_add_attendees');
+    var tagify = new Tagify(tagifyElement, {
+      delimiters: null,
+      templates: {
+        tag: function (tagData) {
+          const countryPath = tagifyElement.getAttribute("data-kt-flags-path") + tagData.value.toLowerCase().replace(/\s+/g, '-') + '.svg';
+          try {
+            // _ESCAPE_START_
+            return `<tag title='${tagData.value}' contenteditable='false' spellcheck="false" class='tagify__tag ${tagData.class ? tagData.class : ""}' ${this.getAttributes(tagData)}>
+                                <x title='remove tag' class='tagify__tag__removeBtn'></x>
+                                <div class="d-flex align-items-center">
+                                    ${tagData.code ?
+                `<img onerror="this.style.visibility = 'hidden'" class="w-25px rounded-circle me-2" src='${countryPath}' />` : ''
+              }
+                                    <span class='tagify__tag-text'>${tagData.value}</span>
+                                </div>
+                            </tag>`
+            // _ESCAPE_END_
+          }
+          catch (err) { }
+        },
+
+        dropdownItem: function (tagData) {
+          const countryPath = tagifyElement.getAttribute("data-kt-flags-path") + tagData.value.toLowerCase().replace(/\s+/g, '-') + '.svg';
+          try {
+            // _ESCAPE_START_
+            return `<div class='tagify__dropdown__item ${tagData.class ? tagData.class : ""}'>
+                                    <img onerror="this.style.visibility = 'hidden'" class="w-25px rounded-circle me-2"
+                                         src='${countryPath}' />
+                                    <span>${tagData.value}</span>
+                                </div>`
+            // _ESCAPE_END_
+          }
+          catch (err) { }
+        }
+      },
+      enforceWhitelist: true,
+      whitelist: [
+        { value: 'Argentina', code: 'AR' },
+        { value: 'Australia', code: 'AU', searchBy: 'beach, sub-tropical' },
+        { value: 'Brazil', code: 'BR' }
+      ],
+      dropdown: {
+        enabled: 1, // suggest tags after a single character input
+        classname: 'extra-properties' // custom class for the suggestions dropdown
+      } // map tags' values to this property name, so this property will be the actual value and not the printed value on the screen
+    })
   }
 }
 
@@ -638,6 +699,7 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.handleDeleteEvent(viewModal, viewDeleteButton, arg.event);
         objUtilitariosCalendario.handleResponseEvent(viewResponseButton, arg.event);
         objUtilitariosCalendario.initializeTinyMCE();
+        objUtilitariosCalendario.filterAttendess();
 
         handleViewEvent();
       }
@@ -1157,7 +1219,6 @@ var KTAppCalendar = function () {
       viewEventDescription = viewElement.querySelector('[data-kt-calendar="event_description"]');
       viewEndDate = viewElement.querySelector('[data-kt-calendar="event_end_date"]');
       viewEventAuthor = viewElement.querySelector('[data-kt-calendar="event_author"]');
-      //viewEventAuthorEdit = viewElement.querySelector('#event_author_edit');
       viewEditButton = viewElement.querySelector('#kt_modal_view_event_edit');
       viewDeleteButton = viewElement.querySelector('#kt_modal_view_event_delete');
       viewResponseButton = viewElement.querySelector('.buttonResponse');
