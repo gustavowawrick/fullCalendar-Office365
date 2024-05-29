@@ -399,7 +399,7 @@ class utilitariosCalendario {
       selector: 'textarea',
       language: 'pt_BR',
       width: 548,
-      height: 355,
+      height: 290,
       plugins: [
         'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
         'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media',
@@ -408,7 +408,7 @@ class utilitariosCalendario {
       toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
         'bullist numlist outdent indent | ' +
         'forecolor backcolor emoticons',
-      menubar: 'edit insert format',
+      menubar: false,
       statusbar: false
     });
   }
@@ -461,54 +461,77 @@ class utilitariosCalendario {
   }
 
   filterAttendess() {
-    var tagifyElement = document.querySelector('#kt_modal_calendar_add_attendees');
-    var tagify = new Tagify(tagifyElement, {
-      delimiters: null,
-      templates: {
-        tag: function (tagData) {
-          const countryPath = tagifyElement.getAttribute("data-kt-flags-path") + tagData.value.toLowerCase().replace(/\s+/g, '-') + '.svg';
-          try {
-            // _ESCAPE_START_
-            return `<tag title='${tagData.value}' contenteditable='false' spellcheck="false" class='tagify__tag ${tagData.class ? tagData.class : ""}' ${this.getAttributes(tagData)}>
-                                <x title='remove tag' class='tagify__tag__removeBtn'></x>
-                                <div class="d-flex align-items-center">
-                                    ${tagData.code ?
-                `<img onerror="this.style.visibility = 'hidden'" class="w-25px rounded-circle me-2" src='${countryPath}' />` : ''
-              }
-                                    <span class='tagify__tag-text'>${tagData.value}</span>
-                                </div>
-                            </tag>`
-            // _ESCAPE_END_
-          }
-          catch (err) { }
-        },
-
-        dropdownItem: function (tagData) {
-          const countryPath = tagifyElement.getAttribute("data-kt-flags-path") + tagData.value.toLowerCase().replace(/\s+/g, '-') + '.svg';
-          try {
-            // _ESCAPE_START_
-            return `<div class='tagify__dropdown__item ${tagData.class ? tagData.class : ""}'>
-                                    <img onerror="this.style.visibility = 'hidden'" class="w-25px rounded-circle me-2"
-                                         src='${countryPath}' />
-                                    <span>${tagData.value}</span>
-                                </div>`
-            // _ESCAPE_END_
-          }
-          catch (err) { }
+    var inputObg = document.querySelector('#kt_modal_calendar_add_attendees_obrigatorio'),
+      // init Tagify script on the above inputs
+      tagify = new Tagify(inputObg, {
+        whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
+        dropdown: {
+          classname: 'tags-look', // <- custom classname for this dropdown, so it could be targeted
+          enabled: 0,             // <- show suggestions on focus
+          closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
         }
-      },
-      enforceWhitelist: true,
-      whitelist: [
-        { value: 'Argentina', code: 'AR' },
-        { value: 'Australia', code: 'AU', searchBy: 'beach, sub-tropical' },
-        { value: 'Brazil', code: 'BR' }
-      ],
-      dropdown: {
-        enabled: 1, // suggest tags after a single character input
-        classname: 'extra-properties' // custom class for the suggestions dropdown
-      } // map tags' values to this property name, so this property will be the actual value and not the printed value on the screen
-    })
+      });
+
+      var inputOp = document.querySelector('#kt_modal_calendar_add_attendees_opcional'),
+      // init Tagify script on the above inputs
+      tagify = new Tagify(inputOp, {
+        whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
+        dropdown: {          // <- mixumum allowed rendered suggestions
+          classname: 'tags-look', // <- custom classname for this dropdown, so it could be targeted
+          enabled: 0,             // <- show suggestions on focus
+          closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
+        }
+      })
   }
+}
+
+function tagTemplate(tagData) {
+  return `${tagData.name}`
+}
+
+function suggestionItemTemplate(tagData) {
+  return `
+  ${tagData.avatar ? ` ` : ''}
+  ${tagData.name}
+  ${tagData.email}`
+}
+
+function dropdownHeaderTemplate(suggestions) {
+  return `
+  ${this.value.length ? `Add Remaning` : 'Add All'}
+  ${suggestions.length} members Remove all`
+}
+
+function escapeHTML(s) {
+  return typeof s;
+}
+
+function onSelectSuggestion(e) {
+  if (e.detail.event.target.matches('.remove-all-tags')) {
+    tagify.removeAllTags();
+  }
+
+  // custom class from "dropdownHeaderTemplate"
+  else if (e.detail.elm.classList.contains(`${tagify.settings.classNames.dropdownItem}__addAll`));
+  tagify.dropdown.selectAll();
+}
+
+function onEditStart({ detail: { tag, data } }) {
+  tagify.setTagTextNode(tag, `${data.name} <${data.email}>`);
+}
+
+// https://stackoverflow.com/a/9204568/104380
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function parseFullValue(value) {
+  // https://stackoverflow.com/a/11592042/104380
+  var parts = value.split(/<(.*?)>/g),
+    name = parts[0].trim(),
+    email = parts[1]?.replace(/<(.*?)>/g, '').trim();
+
+  return { name, email }
 }
 
 var objUtilitariosCalendario = new utilitariosCalendario();
