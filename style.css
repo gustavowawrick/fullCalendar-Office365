@@ -150,10 +150,10 @@
     color: #fff;
 }
 
-.tituloObrigatorio,
-.tituloOpcional,
-.tituloObrigatorio>i,
-.tituloOpcional>i {
+.titleRequired,
+.titleOptional,
+.titleRequired>i,
+.titleOptional>i {
     color: #858585 !important;
     font-size: 1.1rem;
     margin-bottom: 1.5vh;
@@ -172,7 +172,7 @@
     border-radius: 5px;
 }
 
-.divScrollParticipantes {
+.divScrollAttendees {
     width: 15.8vw;
     height: 45vh;
     word-wrap: break-word;
@@ -193,13 +193,13 @@
     color: #ff0000;
 }
 
-.iconeCopiarParticipantes {
+.iconCopyAttendees {
     position: relative;
     margin-right: 0.3vw;
     cursor: pointer;
 }
 
-.iconeCopiarOrganizador {
+.iconCopyAuthor {
     margin-right: 0.3vw;
     cursor: pointer;
 }
@@ -208,25 +208,25 @@
     margin-left: 1.5vw;
 }
 
-.eventReuniaoAceita,
-.iconeReuniaoAceita {
+.eventMeetingAccepted,
+.iconMeetingAccepted {
     color: #27a92e !important;
 }
 
-.eventReuniaoRecusada,
-.iconeReuniaoRecusada {
+.eventMeetingDeclined,
+.iconMeetingDeclined {
     color: #ff0000 !important;
 }
 
-.eventReuniaoProvisoria,
-.iconeReuniaoProvisoria,
+.eventMeetingProvisional,
+.iconMeetingProvisional,
 .eventTentativelyAccepted {
     color: #320cbb !important;
 }
 
-.iconeReuniaoAceita,
-.iconeReuniaoRecusada,
-.iconeReuniaoProvisoria {
+.iconMeetingAccepted,
+.iconMeetingDeclined,
+.iconMeetingProvisional {
     margin-right: 0.3vw;
 }
 
@@ -240,7 +240,7 @@
     background-color: #4e5cc7 !important;
 }
 
-.iconTeamsBranco {
+.iconTeamsWhite {
     height: 100%;
     width: 1vw;
     margin-right: 0.4vw;
@@ -287,7 +287,7 @@
     margin-left: 0.5vw;
 }
 
-.iconeExcluirParticipantes {
+.iconDeleteAttendees {
     margin-top: 0.3vh;
     cursor: pointer;
 }
@@ -339,7 +339,7 @@
     border-color: #DBDFE9 !important;
 }
 
-.buttonEditOpcional {
+.buttonEditOptional {
     height: 4.6vh;
     width: 5vw;
     display: flex;
@@ -354,7 +354,7 @@
     cursor: pointer;
 }
 
-.buttonEditOpcional:hover{
+.buttonEditOptional:hover{
     background-color: rgb(208, 228, 244);
     color: rgb(15, 108, 189);
 }

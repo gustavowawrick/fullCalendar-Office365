@@ -40,17 +40,17 @@ class utilitariosCalendario {
         status +
         '</div>' +
         '</div>' +
-        '<a class="text-hover-primary iconeCopiarParticipantes">' +
+        '<a class="text-hover-primary iconCopyAttendees">' +
         '<i class="ki-outline ki-copy fs-3 text-gray-900"></i>' +
         '</a>' +
         '</div>';
 
       if (event.extendedProps.attendees[i].type == 'required') {
         divParticipantes += divAttendees;
-        tituloObrigatorio = '<span class="tituloObrigatorio"><i class="fas fa-angle-down"></i> Obrigatório</span>';
+        tituloObrigatorio = '<span class="titleRequired"><i class="fas fa-angle-down"></i> Obrigatório</span>';
       } else if (event.extendedProps.attendees[i].type == 'optional') {
         divParticipantesOpcional += divAttendees;
-        tituloOpcional = '<span class="tituloOpcional"><i class="fas fa-angle-down"></i> Opcional</span>';
+        tituloOpcional = '<span class="titleOptional"><i class="fas fa-angle-down"></i> Opcional</span>';
       }
     }
 
@@ -59,16 +59,16 @@ class utilitariosCalendario {
         '<h3 class="card-title align-items-start flex-column mb-6">' +
         '<span class="fw-bold titleAuthorView">Participantes</span>' +
         '</h3>' +
-        '<div class="divScrollParticipantes">' +
+        '<div class="divScrollAttendees">' +
         '<div>' +
         tituloObrigatorio +
-        '<div class="divScrollParticipantesObrigatorios">' +
+        '<div class="divScrollAttendeesRequired">' +
         divParticipantes +
         '</div>' +
         '</div>' +
         '<div>' +
         tituloOpcional +
-        '<div class="divScrollParticipantesOpcional">' +
+        '<div class="divScrollAttendeesOptional">' +
         divParticipantesOpcional +
         '</div>' +
         '</div>' +
@@ -77,7 +77,7 @@ class utilitariosCalendario {
 
       $('.divAttendees').html(bodyDivParticipantes);
       $('[data-bs-toggle="tooltip"]').tooltip();
-      $('.divAttendees, .divEventOrganizador').removeClass('d-none');
+      $('.divAttendees, .divEventAuthor').removeClass('d-none');
     }
   }
 
@@ -113,17 +113,17 @@ class utilitariosCalendario {
         status +
         '</div>' +
         '</div>' +
-        '<a class="text-hover-primary iconeExcluirParticipantes">' +
+        '<a class="text-hover-primary iconDeleteAttendees">' +
         '<i class="ki-outline ki-cross fs-1"></i>' +
         '</a>' +
         '</div>';
 
       if (event.extendedProps.attendees[i].type == 'required') {
         divParticipantes += divAttendees;
-        tituloObrigatorio = '<span class="tituloObrigatorio"><i class="fas fa-angle-down"></i> Obrigatório</span>';
+        tituloObrigatorio = '<span class="titleRequired"><i class="fas fa-angle-down"></i> Obrigatório</span>';
       } else if (event.extendedProps.attendees[i].type == 'optional') {
         divParticipantesOpcional += divAttendees;
-        tituloOpcional = '<span class="tituloOpcional"><i class="fas fa-angle-down"></i> Opcional</span>';
+        tituloOpcional = '<span class="titleOptional"><i class="fas fa-angle-down"></i> Opcional</span>';
       }
     }
 
@@ -132,16 +132,16 @@ class utilitariosCalendario {
         '<h3 class="card-title align-items-start flex-column mb-6">' +
         '<span class="fw-bold titleAuthorView">Participantes</span>' +
         '</h3>' +
-        '<div class="divScrollParticipantes">' +
+        '<div class="divScrollAttendees">' +
         '<div>' +
         tituloObrigatorio +
-        '<div class="divScrollParticipantesObrigatorios">' +
+        '<div class="divScrollAttendeesRequired">' +
         divParticipantes +
         '</div>' +
         '</div>' +
         '<div>' +
         tituloOpcional +
-        '<div class="divScrollParticipantesOpcional">' +
+        '<div class="divScrollAttendeesOptional">' +
         divParticipantesOpcional +
         '</div>' +
         '</div>' +
@@ -182,7 +182,7 @@ class utilitariosCalendario {
     if (event.extendedProps.type) {
       buttonTeams =
         '<button onclick="window.open(\'' + event.extendedProps.url + '\', \'_blank\')" class="btn btn-flex eventButtonTeams">' +
-        '<img src="./img/iconeTeamsBranco.png" class="iconTeamsBranco">Ingressar na reunião</button>';
+        '<img src="./img/iconeTeamsBranco.png" class="iconTeamsWhite">Ingressar na reunião</button>';
     }
 
     $('.eventButtonLocation').html(buttonTeams);
@@ -212,9 +212,9 @@ class utilitariosCalendario {
   }
 
   addTitleButtonCopyAuthor(event) {
-    $('.divEventOrganizador').attr('data-bs-original-title', event.extendedProps.eventAuthorAddress);
-    $('.divEventOrganizador').tooltip('dispose'); // Remove o tooltip antigo
-    $('.divEventOrganizador').tooltip(); // Inicializa o novo tooltip
+    $('.divEventAuthor').attr('data-bs-original-title', event.extendedProps.eventAuthorAddress);
+    $('.divEventAuthor').tooltip('dispose'); // Remove o tooltip antigo
+    $('.divEventAuthor').tooltip(); // Inicializa o novo tooltip
   }
 
   formatDate(date) {
@@ -236,14 +236,14 @@ class utilitariosCalendario {
       $('.buttonResponse').show();
 
       $('.buttonResponse select').on('select2:select', function (e) {
-        $(this).next().find('.select2-selection__rendered').removeClass('eventReuniaoAceita eventReuniaoRecusada eventReuniaoProvisoria');
+        $(this).next().find('.select2-selection__rendered').removeClass('eventMeetingAccepted eventMeetingDeclined eventMeetingProvisional');
 
         if (e.params.data.id === 'accepted') {
-          $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoAceita').html('<i class="fas fa-check iconeReuniaoAceita"></i>Reunião Aceita');
+          $(this).next().find('.select2-selection__rendered').addClass('eventMeetingAccepted').html('<i class="fas fa-check iconMeetingAccepted"></i>Reunião Aceita');
         } else if (e.params.data.id === 'declined') {
-          $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoRecusada').html('<i class="fas fa-times iconeReuniaoRecusada"></i>Reunião Recusada');
+          $(this).next().find('.select2-selection__rendered').addClass('eventMeetingDeclined').html('<i class="fas fa-times iconMeetingDeclined"></i>Reunião Recusada');
         } else if (e.params.data.id === 'tentativelyAccepted') {
-          $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoProvisoria').html('<i class="fas fa-question iconeReuniaoProvisoria"></i>Provisório');
+          $(this).next().find('.select2-selection__rendered').addClass('eventMeetingProvisional').html('<i class="fas fa-question iconMeetingProvisional"></i>Provisório');
         }
       });
     }
@@ -257,25 +257,25 @@ class utilitariosCalendario {
   }
 
   hideLocation(event) {
-    $('.divLocalizacao').removeClass('d-none');
+    $('.divLocation').removeClass('d-none');
     if (event.extendedProps.location.length === 0) {
-      $('.divLocalizacao').addClass('d-none');
+      $('.divLocation').addClass('d-none');
     }
   }
 
   hideDescription(event) {
-    $('.divDescricao').removeClass('d-none');
+    $('.divDescription').removeClass('d-none');
     if (event.extendedProps.body == "") {
-      $('.divDescricao').addClass('d-none');
+      $('.divDescription').addClass('d-none');
     }
   }
 
   hideAttendees(selector) {
     $(selector).on('click', function () {
-      if ($(this).hasClass('tituloObrigatorio')) {
-        $('.divScrollParticipantesObrigatorios').toggle();
-      } else if ($(this).hasClass('tituloOpcional')) {
-        $('.divScrollParticipantesOpcional').toggle();
+      if ($(this).hasClass('titleRequired')) {
+        $('.divScrollAttendeesRequired').toggle();
+      } else if ($(this).hasClass('titleOptional')) {
+        $('.divScrollAttendeesOptional').toggle();
       }
 
       var icon = $(this).find('i');
@@ -295,12 +295,12 @@ class utilitariosCalendario {
   }
 
   hideButtonEditOptional() {
-    $('.buttonEditOpcional').removeClass('d-none');
-    $('.divAttendeeOpcional').addClass('d-none');
+    $('.buttonEditOptional').removeClass('d-none');
+    $('.divAttendeeOptional').addClass('d-none');
 
-    $('.buttonEditOpcional').on('click', function () {
-      $('.buttonEditOpcional').addClass('d-none');
-      $('.divAttendeeOpcional').removeClass('d-none');
+    $('.buttonEditOptional').on('click', function () {
+      $('.buttonEditOptional').addClass('d-none');
+      $('.divAttendeeOptional').removeClass('d-none');
     });
   }
 
@@ -327,7 +327,7 @@ class utilitariosCalendario {
     tinymce.remove();
     $('#in_person').attr('checked', false);
     $('.inputButtonTeams').attr('disabled', false).attr('checked', false);
-    $('.divParticipantes, .divParticipantesEdit, .divEventOrganizador').addClass('d-none');
+    $('.divAttendees, .divAttendeesEdit, .divEventAuthor').addClass('d-none');
   }
 
   copyEmail(selector) {
@@ -461,7 +461,7 @@ class utilitariosCalendario {
   }
 
   filterAttendess() {
-    var inputObg = document.querySelector('#kt_modal_calendar_add_attendees_obrigatorio'),
+    var inputObg = document.querySelector('#kt_modal_calendar_add_attendees_required'),
       // init Tagify script on the above inputs
       tagify = new Tagify(inputObg, {
         whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
@@ -472,7 +472,7 @@ class utilitariosCalendario {
         }
       });
 
-    var inputOp = document.querySelector('#kt_modal_calendar_add_attendees_opcional'),
+    var inputOp = document.querySelector('#kt_modal_calendar_add_attendees_optional'),
       // init Tagify script on the above inputs
       tagify = new Tagify(inputOp, {
         whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
@@ -485,7 +485,7 @@ class utilitariosCalendario {
   }
 
   adaptSizeDescription() {
-    if (!$('.divAttendeeOpcional').hasClass('d-none')) {
+    if (!$('.divAttendeeOptional').hasClass('d-none')) {
       $('#tiny_ifr').parent().css('height', '4000px');
     }
   }
@@ -723,9 +723,9 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.addHtmlButtonTeams(arg.event);
         objUtilitariosCalendario.addTitleAuthor(arg.event);
         objUtilitariosCalendario.addRandomColor();
-        objUtilitariosCalendario.copyEmail('.iconeCopiarOrganizador,.iconeCopiarParticipantes');
-        objUtilitariosCalendario.onDeleteAttendee('.iconeExcluirParticipantes');
-        objUtilitariosCalendario.hideAttendees('.tituloObrigatorio,.tituloOpcional');
+        objUtilitariosCalendario.copyEmail('.iconCopyAuthor,.iconCopyAttendees');
+        objUtilitariosCalendario.onDeleteAttendee('.iconDeleteAttendees');
+        objUtilitariosCalendario.hideAttendees('.titleRequired,.titleOptional');
         objUtilitariosCalendario.handleDeleteEvent(viewModal, viewDeleteButton, arg.event);
         objUtilitariosCalendario.handleResponseEvent(viewResponseButton, arg.event);
         objUtilitariosCalendario.initializeTinyMCE();

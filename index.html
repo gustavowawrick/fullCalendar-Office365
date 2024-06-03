@@ -89,13 +89,13 @@
 														<!-- Div Adicionar participantes obrigatório -->
 														<div class="fv-row mb-5 d-flex align-items-center position-relative">
 															<i class="ki-outline ki-user-square fs-1 text-muted me-5"></i>
-															<input type="text" name="input-custom-dropdown" class="tagify--custom-dropdown form-control form-control-solid" placeholder="Adicionar participante obrigatório" value="css, html, javascript" id="kt_modal_calendar_add_attendees_obrigatorio">
-															<span class="buttonEditOpcional">Opcional</span>
+															<input type="text" name="input-custom-dropdown" class="tagify--custom-dropdown form-control form-control-solid" placeholder="Adicionar participante obrigatório" value="css, html, javascript" id="kt_modal_calendar_add_attendees_required">
+															<span class="buttonEditOptional">Opcional</span>
 														</div>
 														<!-- Div Adicionar participantes opcional -->
-														<div class="fv-row mb-5 d-flex align-items-center d-none divAttendeeOpcional">
+														<div class="fv-row mb-5 d-flex align-items-center d-none divAttendeeOptional">
 															<i class="ki-outline ki-user-square fs-1 text-muted me-5"></i>
-															<input type="text" name='input-custom-dropdown' class='tagify--custom-dropdown form-control form-control-solid ' placeholder='Adicionar participante opcional' value='css, html, javascript' id="kt_modal_calendar_add_attendees_opcional">
+															<input type="text" name='input-custom-dropdown' class='tagify--custom-dropdown form-control form-control-solid ' placeholder='Adicionar participante opcional' value='css, html, javascript' id="kt_modal_calendar_add_attendees_optional">
 														</div>
 														<!-- Div de Data e Hora de Início do Evento -->
 														<div class="row row-cols-lg-3 g-10">
@@ -192,7 +192,7 @@
 																<h3 class="card-title align-items-start flex-column mb-3">
 																	<span class="fw-bold titleAuthorView">Organizador</span>
 																</h3>
-																<div class="d-flex flex-stack mb-6 divEventOrganizador">
+																<div class="d-flex flex-stack mb-6 divEventAuthor">
 																	<div class="divInitials me-3 w-35px">
 																		<div class="initialsAuthor"></div>
 																	</div>
@@ -201,7 +201,7 @@
 																			<a class="fw-bold" data-kt-calendar="event_author_edit" id="event_author_edit"></a>
 																		</div>
 																	</div>
-																	<a class="text-hover-primary iconeCopiarOrganizador">
+																	<a class="text-hover-primary iconCopyAuthor">
 																		<i class="ki-outline ki-copy iconeCopiar fs-3 text-gray-900"></i>
 																	</a>
 																</div>
@@ -307,13 +307,13 @@
 															</div>
 														</div>
 														<!-- Div de Localização do evento -->
-														<div class="d-flex align-items-center mb-9 divLocalizacao">
+														<div class="d-flex align-items-center mb-9 divLocation">
 															<i class="ki-outline ki-geolocation fs-1 text-muted me-5"></i>
 															<div class="eventButtonLocation"></div>
 															<div class="fs-6 eventLocation" title="" data-bs-toggle="tooltip" data-kt-calendar="event_location"></div>
 														</div>
 														<!-- Div de Descrição do evento -->
-														<div class="d-flex align-items-start mb-9 divDescricao">
+														<div class="d-flex align-items-start mb-9 divDescription">
 															<i class="ki-outline ki-subtitle fs-1 text-muted me-5"></i>
 															<div class="fs-6" data-kt-calendar="event_description">
 															</div>
@@ -334,7 +334,7 @@
 																<h3 class="card-title align-items-start flex-column mb-3">
 																	<span class="fw-bold titleAuthorView">Organizador</span>
 																</h3>
-																<div class="d-flex flex-stack mb-6 divEventOrganizador">
+																<div class="d-flex flex-stack mb-6 divEventAuthor">
 																	<div class="divInitials me-3 w-35px">
 																		<div class="initialsAuthor"></div>
 																	</div>
@@ -343,7 +343,7 @@
 																			<a class="fw-bold" data-kt-calendar="event_author"></a>
 																		</div>
 																	</div>
-																	<a class="text-hover-primary iconeCopiarOrganizador">
+																	<a class="text-hover-primary iconCopyAuthor">
 																		<i class="ki-outline ki-copy iconeCopiar fs-3 text-gray-900"></i>
 																	</a>
 																</div>
