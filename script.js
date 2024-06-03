@@ -5,10 +5,10 @@ class utilitariosCalendario {
   addTitleAuthor(event) {
     var iniciais = event.extendedProps.eventAuthor.split(' ').map(name => name.charAt(0).toUpperCase()).join('');
 
-    $('.iniciaisAuthor').html(iniciais);
+    $('.initialsAuthor').html(iniciais);
   }
 
-  addHtmlParticipantes(event) {
+  addHtmlAttendees(event) {
     var divParticipantes = '';
     var divParticipantesOpcional = '';
     var divAttendees = '';
@@ -17,7 +17,7 @@ class utilitariosCalendario {
     var tituloOpcional = '';
     var status = '';
 
-    $('.divParticipantes').html('');
+    $('.divAttendees').html('');
 
     for (i = 0; i < event.extendedProps.attendees.length; i++) {
       if (event.extendedProps.attendees[i].status.response == 'accepted') {
@@ -31,8 +31,8 @@ class utilitariosCalendario {
       }
 
       divAttendees = '<div data-bs-toggle="tooltip" title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-3 divAteendesEvent">' +
-        '<div class="divIniciais me-3 w-35px">' +
-        '<div class="iniciaisParticipantes">' + event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('') + '</div>' +
+        '<div class="divInitials me-3 w-35px">' +
+        '<div class="initialsAttendees">' + event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('') + '</div>' +
         '</div>' +
         '<div class="d-flex align-items-center flex-row-fluid flex-wrap">' +
         '<div class="flex-grow-1 me-2">' +
@@ -75,13 +75,13 @@ class utilitariosCalendario {
         '</div>' +
         '</div>';
 
-      $('.divParticipantes').html(bodyDivParticipantes);
+      $('.divAttendees').html(bodyDivParticipantes);
       $('[data-bs-toggle="tooltip"]').tooltip();
-      $('.divParticipantes, .divEventOrganizador').removeClass('d-none');
+      $('.divAttendees, .divEventOrganizador').removeClass('d-none');
     }
   }
 
-  addHtmlParticipantesEdit(event) {
+  addHtmlAttendeesEdit(event) {
     var divParticipantes = '';
     var divParticipantesOpcional = '';
     var divAttendees = '';
@@ -90,7 +90,7 @@ class utilitariosCalendario {
     var tituloOpcional = '';
     var status = '';
 
-    $('.divParticipantesEdit').html('');
+    $('.divAttendeesEdit').html('');
 
     for (i = 0; i < event.extendedProps.attendees.length; i++) {
       if (event.extendedProps.attendees[i].status.response == 'accepted') {
@@ -104,8 +104,8 @@ class utilitariosCalendario {
       }
 
       divAttendees = '<div data-bs-toggle="tooltip" title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-3 divAteendesEvent">' +
-        '<div class="divIniciais me-3 w-35px">' +
-        '<div class="iniciaisParticipantes">' + event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('') + '</div>' +
+        '<div class="divInitials me-3 w-35px">' +
+        '<div class="initialsAttendees">' + event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('') + '</div>' +
         '</div>' +
         '<div class="d-flex align-items-center flex-row-fluid flex-wrap">' +
         '<div class="flex-grow-1 me-2">' +
@@ -148,9 +148,9 @@ class utilitariosCalendario {
         '</div>' +
         '</div>';
 
-      $('.divParticipantesEdit').html(bodyDivParticipantes);
+      $('.divAttendeesEdit').html(bodyDivParticipantes);
       $('[data-bs-toggle="tooltip"]').tooltip();
-      $('.divParticipantesEdit').removeClass('d-none');
+      $('.divAttendeesEdit').removeClass('d-none');
     }
   }
 
@@ -167,7 +167,7 @@ class utilitariosCalendario {
       return luminance < 0.7;
     });
 
-    var divs = document.querySelectorAll('.divIniciais');
+    var divs = document.querySelectorAll('.divInitials');
 
     divs.forEach(function (div) {
       var randomColor = colors[Math.floor(Math.random() * colors.length)];
@@ -263,14 +263,14 @@ class utilitariosCalendario {
     }
   }
 
-  hideDescricao(event) {
+  hideDescription(event) {
     $('.divDescricao').removeClass('d-none');
     if (event.extendedProps.body == "") {
       $('.divDescricao').addClass('d-none');
     }
   }
 
-  hideParticipantes(selector) {
+  hideAttendees(selector) {
     $(selector).on('click', function () {
       if ($(this).hasClass('tituloObrigatorio')) {
         $('.divScrollParticipantesObrigatorios').toggle();
@@ -294,7 +294,7 @@ class utilitariosCalendario {
     }
   }
 
-  hideButtonEditOpcional() {
+  hideButtonEditOptional() {
     $('.buttonEditOpcional').removeClass('d-none');
     $('.divAttendeeOpcional').addClass('d-none');
 
@@ -330,7 +330,7 @@ class utilitariosCalendario {
     $('.divParticipantes, .divParticipantesEdit, .divEventOrganizador').addClass('d-none');
   }
 
-  copiarEmail(selector) {
+  copyEmail(selector) {
     $(selector).on('click', function () {
       const email = $(this).parent().attr('data-bs-original-title');
 
@@ -431,16 +431,6 @@ class utilitariosCalendario {
     }
   }
 
-  nflTeamsWithDefaults(q, sync) {
-    if (q === '') {
-      sync(nflTeams.get('Detroit Lions', 'Green Bay Packers', 'Chicago Bears'));
-    }
-
-    else {
-      nflTeams.search(q, sync);
-    }
-  }
-
   onInPerson() {
     $('.labelButtonLocation').on('click', function () {
       var title = $('[name="calendar_event_name"]');
@@ -494,12 +484,11 @@ class utilitariosCalendario {
       })
   }
 
-  ajustaTamanhoDescricao() {
+  adaptSizeDescription() {
     if (!$('.divAttendeeOpcional').hasClass('d-none')) {
       $('#tiny_ifr').parent().css('height', '4000px');
     }
   }
-
 }
 
 function tagTemplate(tagData) {
@@ -726,22 +715,24 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.showButtonResponse(arg.event);
         objUtilitariosCalendario.hideButtonEdit(arg.event);
         objUtilitariosCalendario.hideLocation(arg.event);
-        objUtilitariosCalendario.hideDescricao(arg.event);
+        objUtilitariosCalendario.hideDescription(arg.event);
         objUtilitariosCalendario.hideDivButtonTeams(arg.event);
-        objUtilitariosCalendario.hideButtonEditOpcional();
-        objUtilitariosCalendario.addHtmlParticipantes(arg.event);
-        objUtilitariosCalendario.addHtmlParticipantesEdit(arg.event);
+        objUtilitariosCalendario.hideButtonEditOptional();
+        objUtilitariosCalendario.addHtmlAttendees(arg.event);
+        objUtilitariosCalendario.addHtmlAttendeesEdit(arg.event);
         objUtilitariosCalendario.addHtmlButtonTeams(arg.event);
         objUtilitariosCalendario.addTitleAuthor(arg.event);
         objUtilitariosCalendario.addRandomColor();
-        objUtilitariosCalendario.copiarEmail('.iconeCopiarOrganizador,.iconeCopiarParticipantes');
+        objUtilitariosCalendario.copyEmail('.iconeCopiarOrganizador,.iconeCopiarParticipantes');
         objUtilitariosCalendario.onDeleteAttendee('.iconeExcluirParticipantes');
-        objUtilitariosCalendario.hideParticipantes('.tituloObrigatorio,.tituloOpcional');
+        objUtilitariosCalendario.hideAttendees('.tituloObrigatorio,.tituloOpcional');
         objUtilitariosCalendario.handleDeleteEvent(viewModal, viewDeleteButton, arg.event);
         objUtilitariosCalendario.handleResponseEvent(viewResponseButton, arg.event);
         objUtilitariosCalendario.initializeTinyMCE();
         objUtilitariosCalendario.filterAttendess();
-        objUtilitariosCalendario.ajustaTamanhoDescricao();
+        objUtilitariosCalendario.adaptSizeDescription();
+        objUtilitariosCalendario.isInPerson(arg.event);
+        objUtilitariosCalendario.onInPerson();
 
         handleViewEvent();
       }

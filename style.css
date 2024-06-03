@@ -134,7 +134,7 @@
     font-size: 1.15rem;
 }
 
-.divIniciais {
+.divInitials {
     width: 35px;
     height: 35px;
     border-radius: 50%;
@@ -144,8 +144,8 @@
     justify-content: center;
 }
 
-.iniciaisAuthor,
-.iniciaisParticipantes {
+.initialsAuthor,
+.initialsAttendees {
     font-size: 1rem;
     color: #fff;
 }
