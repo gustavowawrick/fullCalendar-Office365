@@ -659,7 +659,7 @@ var KTAppCalendar = function () {
         let iconTeams = '<img src="./img/iconeTeams.png" class="iconTeams">';
         let iconNote = '<img src="./img/iconeNota.png" class="iconNote">';
 
-        barra.className = 'barra-evento';
+        barra.className = 'eventBar';
 
         //Verifica o tipo do evento e aplica uma Cor e um Ícone a ele
         if (arg.event.extendedProps.type) {

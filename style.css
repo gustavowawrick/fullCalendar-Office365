@@ -57,7 +57,7 @@
     background-color: rgb(136 198 241) !important;
 }
 
-.barra-evento {
+.eventBar {
     width: 0.3vw;
     height: 100%;
     position: absolute;
@@ -90,7 +90,7 @@
     word-wrap: break-word !important;
 }
 
-.divEventTitulo {
+.divEventTitle {
     margin-top: 0.5vh;
 }
 
@@ -111,13 +111,13 @@
 
 /* Div Direta */
 
-.divEventAcompanhamento {
+.divEventTracking {
     min-height: 0.5vh !important;
 }
 
 
 
-.titleAcompanhamentoView {
+.titleTrackingView {
     display: flex;
     font-size: 1.5rem;
     justify-content: center;
@@ -165,7 +165,7 @@
 }
 
 .divAteendesEvent,
-.divEventOrganizador {
+.divEventAuthor {
     width: 15vw;
     height: 5vh;
     padding-left: 0.5vw;
@@ -181,7 +181,7 @@
 }
 
 .divAteendesEvent:hover,
-.divEventOrganizador:hover {
+.divEventAuthor:hover {
     background-color: #00000014;
 }
 
@@ -252,7 +252,7 @@
     width: 10vw;
 }
 
-.divEditEventTitulo>input {
+.divEditEventTitle>input {
     width: 58vw;
 }
 
@@ -335,7 +335,7 @@
     z-index: 99999999 !important;
 }
 
-.form-control.form-control-solid{
+.form-control.form-control-solid {
     border-color: #DBDFE9 !important;
 }
 
@@ -354,7 +354,7 @@
     cursor: pointer;
 }
 
-.buttonEditOptional:hover{
+.buttonEditOptional:hover {
     background-color: rgb(208, 228, 244);
     color: rgb(15, 108, 189);
 }
