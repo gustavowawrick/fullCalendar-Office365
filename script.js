@@ -336,7 +336,7 @@ class utilitariosCalendario {
 
       navigator.clipboard.writeText(email)
         .then(() => {
-          $(this).find('i').removeClass('ki-outline ki-copy').addClass('ki-outline ki-check iconeCopiar');
+          $(this).find('i').removeClass('ki-outline ki-copy').addClass('ki-outline ki-check iconCopy');
           setTimeout(() => {
             $(this).find('i').removeClass('ki-outline ki-check').addClass('ki-outline ki-copy');
           }, 1800)
