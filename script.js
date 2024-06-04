@@ -621,7 +621,6 @@ var KTAppCalendar = function () {
 
     calendar = new FullCalendar.Calendar(calendarEl, {
       locale: 'pt-br',
-      timeZone: 'UTC',
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
@@ -658,7 +657,6 @@ var KTAppCalendar = function () {
         let barra = document.createElement('div');
         let iconTeams = '<img src="./img/iconeTeams.png" class="iconTeams">';
         let iconNote = '<img src="./img/iconeNota.png" class="iconNote">';
-
         barra.className = 'eventBar';
 
         //Verifica o tipo do evento e aplica uma Cor e um Ícone a ele
@@ -698,8 +696,8 @@ var KTAppCalendar = function () {
           title: arg.event.title,
           location: arg.event.extendedProps.location,
           description: arg.event.extendedProps.body,
-          startStr: arg.event.start,
-          endStr: arg.event.endStr,
+          start: arg.event.start,
+          end: arg.event.end,
           allDay: arg.event.extendedProps.allDay,
           type: arg.event.extendedProps.type,
           eventAttendeesName: attendeeName,
@@ -737,7 +735,6 @@ var KTAppCalendar = function () {
         handleViewEvent();
       }
     });
-
     calendar.render();
   }
 
@@ -1209,8 +1206,8 @@ var KTAppCalendar = function () {
     data.eventName = res.title;
     data.eventLocation = res.eventLocation;
     data.eventDescription = res.description;
-    data.startDate = res.startStr;
-    data.endDate = res.endStr;
+    data.startDate = res.start;
+    data.endDate = res.end;
     data.allDay = res.allDay;
     data.eventAuthor = res.eventAuthor;
     data.eventAuthorAddress = res.eventAuthorAddress;
