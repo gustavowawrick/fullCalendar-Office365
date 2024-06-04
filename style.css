@@ -358,3 +358,7 @@
     background-color: rgb(208, 228, 244);
     color: rgb(15, 108, 189);
 }
+
+.eventAllDay>.fc-event-time{
+    display: none;
+}

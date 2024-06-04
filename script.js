@@ -672,6 +672,10 @@ var KTAppCalendar = function () {
           $(arg.el).addClass('divNote');
         }
 
+        if(arg.event.extendedProps.allDay == true){
+          $(arg.el).addClass('eventAllDay');
+        }
+
         arg.el.style.backgroundColor = eventColor;
         arg.el.insertBefore(barra, arg.el.firstChild);
       },
