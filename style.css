@@ -362,3 +362,7 @@
 .eventAllDay>.fc-event-time{
     display: none;
 }
+
+.form-check-input{
+    cursor: pointer;
+}
