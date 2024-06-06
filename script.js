@@ -8,34 +8,6 @@ class utilitariosCalendario {
     $('.initialsAuthor').html(iniciais);
   }
 
-  addHtmlButtonFilterEvents() {
-    var buttonFilter = '<div class="d-flex align-items-center gap-4 filterEvents">' +
-      '<a href="#" class="text-hover-primary ps-4" data-kt-menu-trigger="click"' +
-      'data-kt-menu-placement="bottom-end">' +
-      '<i class="ki-outline ki-filter fs-2 text-gray-500"></i></a>' +
-      '<div class="menu menu-sub menu-sub-dropdown w-250px w-md-250px" data-kt-menu="true" id="kt_menu_654bba6b413a2">' +
-      '<div class="px-7 py-5">' +
-      '<div class="fs-5 text-gray-900 fw-bold">Filtrar Eventos</div></div>' +
-      '<div class="separator border-gray-200"></div>' +
-      '<div class="px-7 py-5">' +
-      '<div class="d-flex flex-column">' +
-      '<label class="form-check form-check-sm form-check-custom form-check-solid mb-3 filterOptionMeeting">' +
-      '<input class="form-check-input" type="checkbox" value="1" checked="checked" />' +
-      '<span class="form-check-label">Reunião</span></label>' +
-      '<label class="form-check form-check-sm form-check-custom form-check-solid mb-3">' +
-      '<input class="form-check-input" type="checkbox" value="2" checked="checked" />' +
-      '<span class="form-check-label">Anotação</span></label>' +
-      '<label class="form-check form-check-sm form-check-custom form-check-solid mb-3">' +
-      '<input class="form-check-input" type="checkbox" value="3" checked="checked" />' +
-      '<span class="form-check-label">Apontamento</span></label>' +
-      '<label class="form-check form-check-sm form-check-custom form-check-solid">' +
-      '<input class="form-check-input" type="checkbox" value="4" checked="checked" />' +
-      '<span class="form-check-label">Feriado</span></label>' +
-      '</div></div></div></div>';
-
-    $('.fc-dayGridMonth-button ').parent().before(buttonFilter);
-  }
-
   addHtmlAttendees(event) {
     var divParticipantes = '';
     var divParticipantesOpcional = '';
@@ -489,6 +461,8 @@ class utilitariosCalendario {
   }
 
   filterEvents() {
+    $('.filterEvents').insertBefore($('.fc-dayGridMonth-button').parent());
+
     $('.form-check-input').on('change', function () {
       if ($(this).val() === '1') {
         if ($(this).is(':checked')) {
@@ -528,12 +502,6 @@ class utilitariosCalendario {
           closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
         }
       })
-  }
-
-  adaptSizeDescription() {
-    if (!$('.divAttendeeOptional').hasClass('d-none')) {
-      $('#tiny_ifr').parent().css('height', '4000px');
-    }
   }
 }
 
@@ -664,12 +632,11 @@ var KTAppCalendar = function () {
     var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
 
     calendar = new FullCalendar.Calendar(calendarEl, {
-      themeSystem: 'bootstrap5',
       locale: 'pt-br',
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
-        right: 'myCustomButton dayGridMonth,timeGridWeek,timeGridDay'
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
       slotLabelFormat: {
         hour: '2-digit',
@@ -692,37 +659,6 @@ var KTAppCalendar = function () {
         url: 'Eventos.php',
         method: 'GET',
         extraParams: { action: 'LIST' },
-      },
-      customButtons: {
-        myCustomButton: {
-          icon: 'fa-solid fa-filter',
-          click: function() {
-            // Limpa o conteúdo do modal e depois adiciona o HTML do filtro
-            $('#kt_menu_654bba6b413a2').html('' +
-              '<div class="px-7 py-5">' +
-              '<div class="fs-5 text-gray-900 fw-bold">Filtrar Eventos</div></div>' +
-              '<div class="separator border-gray-200"></div>' +
-              '<div class="px-7 py-5">' +
-              '<div class="d-flex flex-column">' +
-              '<label class="form-check form-check-sm form-check-custom form-check-solid mb-3 filterOptionMeeting">' +
-              '<input class="form-check-input" type="checkbox" value="1" checked="checked" />' +
-              '<span class="form-check-label">Reunião</span></label>' +
-              '<label class="form-check form-check-sm form-check-custom form-check-solid mb-3">' +
-              '<input class="form-check-input" type="checkbox" value="2" checked="checked" />' +
-              '<span class="form-check-label">Anotação</span></label>' +
-              '<label class="form-check form-check-sm form-check-custom form-check-solid mb-3">' +
-              '<input class="form-check-input" type="checkbox" value="3" checked="checked" />' +
-              '<span class="form-check-label">Apontamento</span></label>' +
-              '<label class="form-check form-check-sm form-check-custom form-check-solid">' +
-              '<input class="form-check-input" type="checkbox" value="4" checked="checked" />' +
-              '<span class="form-check-label">Feriado</span></label>' +
-              '</div></div>'
-            );
-  
-            // Abre o modal
-            $('#kt_menu_654bba6b413a2').modal('show');
-          }
-        }
       },
       select: function (arg) {
         formatArgs(arg);
@@ -808,7 +744,6 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.handleResponseEvent(viewResponseButton, arg.event);
         objUtilitariosCalendario.initializeTinyMCE();
         objUtilitariosCalendario.filterAttendess();
-        objUtilitariosCalendario.adaptSizeDescription();
         objUtilitariosCalendario.isInPerson(arg.event);
         objUtilitariosCalendario.onInPerson();
 
