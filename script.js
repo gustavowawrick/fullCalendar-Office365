@@ -461,7 +461,7 @@ class utilitariosCalendario {
   }
 
   filterEvents() {
-    $('.filterEvents').insertBefore($('.fc-dayGridMonth-button').parent());
+    $('.buttonFilterEvents').insertBefore($('.fc-dayGridMonth-button').parent());
 
     $('.form-check-input').on('change', function () {
       if ($(this).val() === '1') {
@@ -502,6 +502,10 @@ class utilitariosCalendario {
           closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
         }
       })
+  }
+
+  moveButtonAddEvents() {
+    $('.buttonAddEvents').insertBefore($('.buttonFilterEvents'));
   }
 }
 
@@ -752,6 +756,7 @@ var KTAppCalendar = function () {
     });
     calendar.render();
     objUtilitariosCalendario.filterEvents();
+    objUtilitariosCalendario.moveButtonAddEvents();
   }
 
   const initValidator = () => {

@@ -359,7 +359,8 @@
     color: rgb(15, 108, 189);
 }
 
-.eventAllDay>.fc-event-time {
+.eventAllDay>.fc-event-time,
+.eventAllDay>.fc-event-main>.fc-event-main-frame>.fc-event-time {
     display: none;
 }
 
@@ -372,25 +373,19 @@
     align-items: center;
 }
 
-.filterEvents {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 4vh;
-    width: 2.3vw;
-    margin-right: 1rem;
-    background-color: #F9F9F9;
+.buttonFilterEvents,
+.buttonAddEvents {
+    width: 3.1vw !important;
+    background-color: #F9F9F9 !important;
+}
+
+.buttonFilterEvents {
+    margin-right: 3rem;
     border-radius: .85rem;
-    padding-right: 1rem;
-    padding-top: 0.4rem;
-    cursor: pointer;
     text-align: center;
 }
 
-.filterEvents:hover {
+.buttonFilterEvents:hover,
+.buttonAddEvents:hover {
     background-color: #0000001c !important;
-}
-
-.filterEvents>a>i:hover{
-    color: white;
 }
