@@ -668,6 +668,13 @@ var KTAppCalendar = function () {
         formatArgs(arg);
         handleNewEvent();
       },
+      eventClassNames: function (arg) {
+        if (arg.event.extendedProps.type) {
+          return ['divTeams'];
+        } else {
+          return ['divNote'];
+        }
+      },
       eventDidMount: function (arg) {
         let eventColor = '';
         let barra = document.createElement('div');
@@ -679,16 +686,33 @@ var KTAppCalendar = function () {
         if (arg.event.extendedProps.type) {
           eventColor = 'rgb(197, 203, 250)';
           barra.style.backgroundColor = 'rgb(103 120 255)';
-          $(arg.el).find('.fc-daygrid-event-dot, .fc-list-event-dot').removeClass('fc-daygrid-event-dot fc-list-event-dot').append(iconTeams);
-          $(arg.el).addClass('divTeams');
+
+          if ($(arg.el).closest('.fc-timeGridWeek-view').length || $(arg.el).closest('.fc-timeGridDay-view').length) {
+            if (arg.event.extendedProps.allDay) {
+              $(arg.el).find('.fc-event-title.fc-sticky').addClass('eventTeamsWeek').prepend(iconTeams);
+            } else {
+              $(arg.el).find('.fc-event-main-frame').addClass('eventTeamsWeek').prepend(iconTeams);
+            }
+          } else {
+            $(arg.el).find('.fc-daygrid-event-dot, .fc-list-event-dot').addClass('eventTeamsMonth').removeClass('fc-daygrid-event-dot fc-list-event-dot').append(iconTeams);
+          }
+
         } else {
           eventColor = 'rgb(144 209 255)';
           barra.style.backgroundColor = 'rgb(45 147 219)';
-          $(arg.el).find('.fc-daygrid-event-dot, .fc-list-event-dot').removeClass('fc-daygrid-event-dot fc-list-event-dot').append(iconNote);
-          $(arg.el).addClass('divNote');
+
+          if ($(arg.el).closest('.fc-timeGridWeek-view').length || $(arg.el).closest('.fc-timeGridDay-view').length) {
+            if (arg.event.extendedProps.allDay) {
+              $(arg.el).find('.fc-event-title.fc-sticky').addClass('eventNoteWeek').prepend(iconNote);
+            } else {
+              $(arg.el).find('.fc-event-main-frame').addClass('eventNoteWeek').prepend(iconNote);
+            }
+          } else {
+            $(arg.el).find('.fc-daygrid-event-dot, .fc-list-event-dot').addClass('eventNoteMonth').removeClass('fc-daygrid-event-dot fc-list-event-dot').append(iconNote);
+          }
         }
 
-        if (arg.event.extendedProps.allDay == true) {
+        if (arg.event.extendedProps.allDay) {
           $(arg.el).addClass('eventAllDay');
         }
 

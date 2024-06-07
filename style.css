@@ -44,9 +44,17 @@
 
 .iconTeams,
 .iconNote {
-    height: 100%;
     width: 1vw;
+}
+
+.eventTeamsMonth,
+.eventNoteMonth {
     margin-left: 0.5vw;
+}
+
+.eventTeamsWeek>img,
+.eventNoteWeek>img {
+    margin-right: 0.2vw;
 }
 
 .divTeams:hover {
