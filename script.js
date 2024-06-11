@@ -2,10 +2,8 @@
 
 class utilitariosCalendario {
 
-  addTitleAuthor(event) {
-    var iniciais = event.extendedProps.eventAuthor.split(' ').map(name => name.charAt(0).toUpperCase()).join('');
-
-    $('.initialsAuthor').html(iniciais);
+  addInitialsAuthor(event) {
+    $('.initialsAuthor').html(this.getInitials(event.extendedProps.eventAuthor));
   }
 
   addHtmlAttendees(event) {
@@ -32,7 +30,7 @@ class utilitariosCalendario {
 
       divAttendees = '<div data-bs-toggle="tooltip" title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-3 divAteendesEvent">' +
         '<div class="divInitials me-3 w-35px">' +
-        '<div class="initialsAttendees">' + event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('') + '</div>' +
+        '<div class="initialsAttendees">' + this.getInitials(event.extendedProps.attendees[i].emailAddress.name) + '</div>' +
         '</div>' +
         '<div class="d-flex align-items-center flex-row-fluid flex-wrap">' +
         '<div class="flex-grow-1 me-2">' +
@@ -404,6 +402,16 @@ class utilitariosCalendario {
     });
   }
 
+  getInitials(fullName) {
+    const nameParts = fullName.split(' ').map(name => name.charAt(0).toUpperCase());
+
+    if (nameParts.length > 1) {
+      return nameParts[0] + nameParts[nameParts.length - 1];
+    } else {
+      return nameParts[0];
+    }
+  }
+
   initializeTinyMCE() {
     tinymce.init({
       selector: 'textarea',
@@ -763,7 +771,7 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.addHtmlAttendees(arg.event);
         objUtilitariosCalendario.addHtmlAttendeesEdit(arg.event);
         objUtilitariosCalendario.addHtmlButtonTeams(arg.event);
-        objUtilitariosCalendario.addTitleAuthor(arg.event);
+        objUtilitariosCalendario.addInitialsAuthor(arg.event);
         objUtilitariosCalendario.addRandomColor();
         objUtilitariosCalendario.copyEmail('.iconCopyAuthor,.iconCopyAttendees');
         objUtilitariosCalendario.onDeleteAttendee('.iconDeleteAttendees');
