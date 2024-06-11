@@ -229,19 +229,46 @@ class utilitariosCalendario {
   }
 
   showButtonResponse(event) {
-    $('.buttonResponse').hide();
-    if (event.extendedProps.type && event.extendedProps.isOrganizer == false) {
-      $('.buttonResponse').show();
+    const userEmail = 'gustavo.wawrick@acertacertificadora.com.br';
 
-      $('.buttonResponse select').on('select2:select', function (e) {
-        $(this).next().find('.select2-selection__rendered').removeClass('eventMeetingAccepted eventMeetingDeclined eventMeetingProvisional');
+    const buttonResponse = $(event.el).find('.buttonResponse');
+    buttonResponse.hide();
+
+    const selectElement = buttonResponse.find('select');
+    selectElement.val(null).trigger('change');
+
+    if (event.extendedProps.type && !event.extendedProps.isOrganizer) {
+      buttonResponse.show();
+
+      const attendee = event.extendedProps.attendees.find(att => att.emailAddress.address === userEmail);
+
+      if (attendee && attendee.status && attendee.status.response) {
+        const response = attendee.status.response;
+
+        selectElement.val(response).trigger('change');
+
+        const renderedSelection = selectElement.next().find('.select2-selection__rendered');
+        renderedSelection.removeClass('eventMeetingAccepted eventMeetingDeclined eventMeetingProvisional');
+
+        if (response === 'accepted') {
+          renderedSelection.addClass('eventMeetingAccepted').html('<i class="fas fa-check iconMeetingAccepted"></i>Reunião Aceita');
+        } else if (response === 'declined') {
+          renderedSelection.addClass('eventMeetingDeclined').html('<i class="fas fa-times iconMeetingDeclined"></i>Reunião Recusada');
+        } else if (response === 'tentativelyAccepted') {
+          renderedSelection.addClass('eventMeetingProvisional').html('<i class="fas fa-question iconMeetingProvisional"></i>Provisório');
+        }
+      }
+
+      selectElement.off('select2:select').on('select2:select', function (e) {
+        const renderedSelection = $(this).next().find('.select2-selection__rendered');
+        renderedSelection.removeClass('eventMeetingAccepted eventMeetingDeclined eventMeetingProvisional');
 
         if (e.params.data.id === 'accepted') {
-          $(this).next().find('.select2-selection__rendered').addClass('eventMeetingAccepted').html('<i class="fas fa-check iconMeetingAccepted"></i>Reunião Aceita');
+          renderedSelection.addClass('eventMeetingAccepted').html('<i class="fas fa-check iconMeetingAccepted"></i>Reunião Aceita');
         } else if (e.params.data.id === 'declined') {
-          $(this).next().find('.select2-selection__rendered').addClass('eventMeetingDeclined').html('<i class="fas fa-times iconMeetingDeclined"></i>Reunião Recusada');
+          renderedSelection.addClass('eventMeetingDeclined').html('<i class="fas fa-times iconMeetingDeclined"></i>Reunião Recusada');
         } else if (e.params.data.id === 'tentativelyAccepted') {
-          $(this).next().find('.select2-selection__rendered').addClass('eventMeetingProvisional').html('<i class="fas fa-question iconMeetingProvisional"></i>Provisório');
+          renderedSelection.addClass('eventMeetingProvisional').html('<i class="fas fa-question iconMeetingProvisional"></i>Provisório');
         }
       });
     }
