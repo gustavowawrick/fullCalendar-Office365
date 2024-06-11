@@ -161,16 +161,34 @@ class utilitariosCalendario {
   showButtonResponse(event) {
     $('.buttonResponse').hide();
     if (event.extendedProps.type && event.extendedProps.isOrganizer == false) {
+
+      $('.buttonResponse .select2-selection__rendered').removeClass('eventReuniaoAceita eventReuniaoRecusada eventReuniaoProvisoria');
+      $('.buttonResponse .select2-selection__rendered').html('Responder Reunião');
+
+      for(let i = 0; i < event.extendedProps.attendees.length; i++){
+        console.log(event.extendedProps.attendees[i].status.response);
+        if (event.extendedProps.attendees[i].emailAddress.address == event.extendedProps.userMail){
+          
+          if (event.extendedProps.attendees[i].status.response === 'accepted') {
+            $('.buttonResponse .select2-selection__rendered').addClass('eventReuniaoAceita').html('<i class="fas fa-check iconeReuniaoAceita"></i>Reunião Aceita');
+          } else if (event.extendedProps.attendees[i].status.response === 'declined') {
+            $('.buttonResponse .select2-selection__rendered').addClass('eventReuniaoRecusada').html('<i class="fas fa-times iconeReuniaoRecusada"></i>Reunião Recusada');
+          } else if (event.extendedProps.attendees[i].status.response === 'tentativelyAccepted') {
+            $('.buttonResponse .select2-selection__rendered').addClass('eventReuniaoProvisoria').html('<i class="fas fa-question iconeReuniaoProvisoria"></i>Provisório');
+          }
+        }
+      }
+
       $('.buttonResponse').show();
 
-      $('.buttonResponse select').on('select2:select', function (e) {
+      $('.buttonResponse select').on('change', function (e) {
         $(this).next().find('.select2-selection__rendered').removeClass('eventReuniaoAceita eventReuniaoRecusada eventReuniaoProvisoria');
 
-        if (e.params.data.id === 'accepted') {
+        if ($(this).val() === 'accepted') {
           $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoAceita').html('<i class="fas fa-check iconeReuniaoAceita"></i>Reunião Aceita');
-        } else if (e.params.data.id === 'declined') {
+        } else if ($(this).val() === 'declined') {
           $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoRecusada').html('<i class="fas fa-times iconeReuniaoRecusada"></i>Reunião Recusada');
-        } else if (e.params.data.id === 'tentativelyAccepted') {
+        } else if ($(this).val() === 'tentativelyAccepted') {
           $(this).next().find('.select2-selection__rendered').addClass('eventReuniaoProvisoria').html('<i class="fas fa-question iconeReuniaoProvisoria"></i>Provisório');
         }
       });

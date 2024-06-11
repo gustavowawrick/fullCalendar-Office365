@@ -2,6 +2,7 @@
 
 class Calendar{
 
+    private const GRAPH_API_ENDPOINT_ME = 'https://graph.microsoft.com/v1.0/me';
     private const GRAPH_API_ENDPOINT_EVENTS = 'https://graph.microsoft.com/v1.0/me/calendar/events';
     private const GRAPH_API_ENDPOINT_EVENTS_RESPONSE = 'https://graph.microsoft.com/v1.0/me/events/%s/%s';
     private const MAX_PAGE_LOAD = 250;
@@ -60,6 +61,23 @@ class Calendar{
         ];
 
         return $this->executeCurl($graphApiEndpoint, $headers, "GET");
+    }
+
+    public function getUser(){
+        $accessToken = $this->getAccessToken();
+
+        // Endpoint da API do Microsoft Graph para obter os dados do usuário
+        $graphApiEndpoint = self::GRAPH_API_ENDPOINT_ME;
+
+        $headers = [
+            'Authorization: Bearer ' . $accessToken, 
+            'Prefer: outlook.timezone = "America/Sao_Paulo"',
+            'Content-type: application/json'
+        ];
+
+        $user = $this->executeCurl($graphApiEndpoint, $headers, "GET");
+
+        return $user;
     }
 
     public function deleteEvent($eventId){
@@ -137,6 +155,8 @@ class Calendar{
             if (isset($itemCalendar->attendees)) {
                 $item->extendedProps->attendees =  $itemCalendar->attendees;
             }
+
+            $item->extendedProps->userMail = $this->getUser()->mail;
     
             $arrayItens[] = $item;
         }
