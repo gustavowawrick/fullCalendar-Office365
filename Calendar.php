@@ -1,6 +1,7 @@
 <?php
 
-class Calendar{
+class Calendar
+{
 
     private const GRAPH_API_ENDPOINT_ME = 'https://graph.microsoft.com/v1.0/me';
     private const GRAPH_API_ENDPOINT_EVENTS = 'https://graph.microsoft.com/v1.0/me/calendar/events';
@@ -12,7 +13,7 @@ class Calendar{
     {
         $this->setAccessToken($accessToken);
 
-        $action = isset($_REQUEST['action']) ? $_REQUEST['action']: '';
+        $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
 
         switch ($action) {
             case 'LIST':
@@ -27,15 +28,18 @@ class Calendar{
         }
     }
 
-    public function setAccessToken($accessToken){
+    public function setAccessToken($accessToken)
+    {
         $this->accessToken = $accessToken;
     }
 
-    public function getAccessToken(){
+    public function getAccessToken()
+    {
         return $this->accessToken;
     }
 
-    public function getEvents($eventId = '', $pageToken = null){
+    public function getEvents($eventId = '', $pageToken = null)
+    {
         $accessToken = $this->getAccessToken();
 
         // Endpoint da API do Microsoft Graph para obter os eventos do calendário do usuário
@@ -55,7 +59,7 @@ class Calendar{
         $graphApiEndpoint .= '?' . http_build_query($queryParams);
 
         $headers = [
-            'Authorization: Bearer ' . $accessToken, 
+            'Authorization: Bearer ' . $accessToken,
             'Prefer: outlook.timezone = "America/Sao_Paulo"',
             'Content-type: application/json'
         ];
@@ -88,7 +92,7 @@ class Calendar{
         $graphApiEndpoint .= '/' . $eventId;
 
         $headers = [
-            'Authorization: Bearer ' . $accessToken, 
+            'Authorization: Bearer ' . $accessToken,
             'Prefer: outlook.timezone = "America/Sao_Paulo"',
             'Content-type: application/json'
         ];
@@ -96,7 +100,8 @@ class Calendar{
         return $this->executeCurl($graphApiEndpoint, $headers, "DELETE");
     }
 
-    public function responseStatus($eventId, $response){
+    public function responseStatus($eventId, $response)
+    {
         $accessToken = $this->getAccessToken();
 
         $status = [
@@ -106,11 +111,11 @@ class Calendar{
         ];
 
         // Endpoint da API do Microsoft Graph para obter os eventos do calendário do usuário
-        $graphApiEndpoint = sprintf(self::GRAPH_API_ENDPOINT_EVENTS_RESPONSE,$eventId, $status[$response]);
+        $graphApiEndpoint = sprintf(self::GRAPH_API_ENDPOINT_EVENTS_RESPONSE, $eventId, $status[$response]);
 
         // Configura o cabeçalho da requisição
         $headers = [
-            'Authorization: Bearer ' . $accessToken, 
+            'Authorization: Bearer ' . $accessToken,
             'Prefer: outlook.timezone = "America/Sao_Paulo"',
             'Content-type: application/json'
         ];
@@ -122,27 +127,28 @@ class Calendar{
         return $this->executeCurl($graphApiEndpoint, $headers, "POST", $data);
     }
 
-    public function formatEventsFullCalendar($responseEvents){
+    public function formatEventsFullCalendar($responseEvents)
+    {
         // Formata a resposta dos eventos para ser retornada ao cliente
         $arrayItens = [];
-    
+
         foreach ($responseEvents->value as $itemCalendar) {
             $item = new stdClass();
             $item->start = $itemCalendar->start->dateTime;
             $item->end = $itemCalendar->end->dateTime;
-            $item->title = $itemCalendar->subject;
+            $item->title = str_replace(' [In-person]', ' [Presencial]', $itemCalendar->subject);
             $item->eventAuthor = $itemCalendar->organizer->emailAddress->name;
             $item->eventAuthorAddress = $itemCalendar->organizer->emailAddress->address;
             $item->extendedProps = new stdClass();
-    
+
             if ($itemCalendar->isOnlineMeeting == true) {
                 $item->extendedProps->type = true;
             } else {
                 $item->extendedProps->type = false;
             }
-    
+
             $item->extendedProps->url = '';
-            if (isset($itemCalendar->onlineMeeting) && isset($itemCalendar->onlineMeeting->joinUrl)){
+            if (isset($itemCalendar->onlineMeeting) && isset($itemCalendar->onlineMeeting->joinUrl)) {
                 $item->extendedProps->url = $itemCalendar->onlineMeeting->joinUrl;
             }
             $item->extendedProps->body = $itemCalendar->body->content;
@@ -151,7 +157,7 @@ class Calendar{
             $item->extendedProps->allDay = $itemCalendar->isAllDay;
             $item->extendedProps->location = $itemCalendar->locations;
             $item->extendedProps->attendees = [];
-    
+
             if (isset($itemCalendar->attendees)) {
                 $item->extendedProps->attendees =  $itemCalendar->attendees;
             }
@@ -160,16 +166,18 @@ class Calendar{
     
             $arrayItens[] = $item;
         }
-    
+
         return $arrayItens;
     }
 
-    public function renderFullCalendar(){
+    public function renderFullCalendar()
+    {
         $events = $this->getEvents();
         echo json_encode($this->formatEventsFullCalendar($events));
     }
 
-    private function executeCurl($endpoint, $headers, $type, $data = []){
+    private function executeCurl($endpoint, $headers, $type, $data = [])
+    {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $endpoint);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -179,9 +187,9 @@ class Calendar{
 
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $type);
 
-        if (!empty($data)){
+        if (!empty($data)) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        }else{
+        } else {
             curl_setopt($ch, CURLOPT_POST, false);
         }
 
@@ -195,5 +203,4 @@ class Calendar{
             return json_decode($response);
         }
     }
-
 }
