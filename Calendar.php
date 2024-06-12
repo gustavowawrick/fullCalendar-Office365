@@ -67,14 +67,15 @@ class Calendar
         return $this->executeCurl($graphApiEndpoint, $headers, "GET");
     }
 
-    public function getUser(){
+    public function getUser()
+    {
         $accessToken = $this->getAccessToken();
 
         // Endpoint da API do Microsoft Graph para obter os dados do usuário
         $graphApiEndpoint = self::GRAPH_API_ENDPOINT_ME;
 
         $headers = [
-            'Authorization: Bearer ' . $accessToken, 
+            'Authorization: Bearer ' . $accessToken,
             'Prefer: outlook.timezone = "America/Sao_Paulo"',
             'Content-type: application/json'
         ];
@@ -84,7 +85,8 @@ class Calendar
         return $user;
     }
 
-    public function deleteEvent($eventId){
+    public function deleteEvent($eventId)
+    {
         $accessToken = $this->getAccessToken();
 
         // Endpoint da API do Microsoft Graph para obter os eventos do calendário do usuário
@@ -132,6 +134,8 @@ class Calendar
         // Formata a resposta dos eventos para ser retornada ao cliente
         $arrayItens = [];
 
+        $emailAddress = $this->getUser()->mail;
+
         foreach ($responseEvents->value as $itemCalendar) {
             $item = new stdClass();
             $item->start = $itemCalendar->start->dateTime;
@@ -139,6 +143,7 @@ class Calendar
             $item->title = str_replace(' [In-person]', ' [Presencial]', $itemCalendar->subject);
             $item->eventAuthor = $itemCalendar->organizer->emailAddress->name;
             $item->eventAuthorAddress = $itemCalendar->organizer->emailAddress->address;
+            $item->allDay = $itemCalendar->isAllDay;
             $item->extendedProps = new stdClass();
 
             if ($itemCalendar->isOnlineMeeting == true) {
@@ -154,16 +159,15 @@ class Calendar
             $item->extendedProps->body = $itemCalendar->body->content;
             $item->extendedProps->id = $itemCalendar->id;
             $item->extendedProps->isOrganizer = $itemCalendar->isOrganizer;
-            $item->extendedProps->allDay = $itemCalendar->isAllDay;
             $item->extendedProps->location = $itemCalendar->locations;
             $item->extendedProps->attendees = [];
 
             if (isset($itemCalendar->attendees)) {
-                $item->extendedProps->attendees =  $itemCalendar->attendees;
+                $item->extendedProps->attendees = $itemCalendar->attendees;
             }
 
-            $item->extendedProps->userMail = $this->getUser()->mail;
-    
+            $item->extendedProps->userMail = $emailAddress;
+
             $arrayItens[] = $item;
         }
 

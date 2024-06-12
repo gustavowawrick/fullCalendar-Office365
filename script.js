@@ -680,7 +680,7 @@ var KTAppCalendar = function () {
       selectable: true,
       selectMirror: true,
       editable: false,
-      allDaySlot: false,
+      allDaySlot: true,
       dayHeaderFormat: {
         weekday: 'long'
       },
@@ -688,7 +688,7 @@ var KTAppCalendar = function () {
       events: {
         url: 'Eventos.php',
         method: 'GET',
-        extraParams: { action: 'LIST' },
+        extraParams: { action: 'LIST' }
       },
       select: function (arg) {
         formatArgs(arg);
@@ -714,7 +714,7 @@ var KTAppCalendar = function () {
           barra.style.backgroundColor = 'rgb(103 120 255)';
 
           if ($(arg.el).closest('.fc-timeGridWeek-view').length || $(arg.el).closest('.fc-timeGridDay-view').length) {
-            if (arg.event.extendedProps.allDay) {
+            if (arg.event.allDay) {
               $(arg.el).find('.fc-event-title.fc-sticky').addClass('eventTeamsWeek').prepend(iconTeams);
             } else {
               $(arg.el).find('.fc-event-main-frame').addClass('eventTeamsWeek').prepend(iconTeams);
@@ -728,7 +728,7 @@ var KTAppCalendar = function () {
           barra.style.backgroundColor = 'rgb(45 147 219)';
 
           if ($(arg.el).closest('.fc-timeGridWeek-view').length || $(arg.el).closest('.fc-timeGridDay-view').length) {
-            if (arg.event.extendedProps.allDay) {
+            if (arg.event.allDay) {
               $(arg.el).find('.fc-event-title.fc-sticky').addClass('eventNoteWeek').prepend(iconNote);
             } else {
               $(arg.el).find('.fc-event-main-frame').addClass('eventNoteWeek').prepend(iconNote);
@@ -738,7 +738,7 @@ var KTAppCalendar = function () {
           }
         }
 
-        if (arg.event.extendedProps.allDay) {
+        if (arg.event.allDay) {
           $(arg.el).addClass('eventAllDay');
         }
 
@@ -768,7 +768,7 @@ var KTAppCalendar = function () {
           description: arg.event.extendedProps.body,
           start: arg.event.start,
           end: arg.event.end,
-          allDay: arg.event.extendedProps.allDay,
+          allDay: arg.event.allDay,
           type: arg.event.extendedProps.type,
           eventAttendeesName: attendeeName,
           eventAuthor: arg.event.extendedProps.eventAuthor,
