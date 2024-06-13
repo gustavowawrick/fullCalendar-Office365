@@ -235,10 +235,10 @@ class utilitariosCalendario {
       $('.buttonResponse .select2-selection__rendered').removeClass('eventReuniaoAceita eventReuniaoRecusada eventReuniaoProvisoria');
       $('.buttonResponse .select2-selection__rendered').html('Responder Reunião');
 
-      for(let i = 0; i < event.extendedProps.attendees.length; i++){
+      for (let i = 0; i < event.extendedProps.attendees.length; i++) {
         console.log(event.extendedProps.attendees[i].status.response);
-        if (event.extendedProps.attendees[i].emailAddress.address == event.extendedProps.userMail){
-          
+        if (event.extendedProps.attendees[i].emailAddress.address == event.extendedProps.userMail) {
+
           if (event.extendedProps.attendees[i].status.response === 'accepted') {
             $('.buttonResponse .select2-selection__rendered').addClass('eventReuniaoAceita').html('<i class="fas fa-check iconeReuniaoAceita"></i>Reunião Aceita');
           } else if (event.extendedProps.attendees[i].status.response === 'declined') {
@@ -685,6 +685,11 @@ var KTAppCalendar = function () {
         weekday: 'long'
       },
       dayMaxEvents: true,
+      eventTimeFormat: { // configura o formato do horário do evento
+        hour: '2-digit',
+        minute: '2-digit',
+        meridiem: false // desativa AM/PM
+      },
       events: {
         url: 'Eventos.php',
         method: 'GET',
