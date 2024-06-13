@@ -685,10 +685,10 @@ var KTAppCalendar = function () {
         weekday: 'long'
       },
       dayMaxEvents: true,
-      eventTimeFormat: { // configura o formato do horário do evento
+      eventTimeFormat: {
         hour: '2-digit',
         minute: '2-digit',
-        meridiem: false // desativa AM/PM
+        meridiem: false
       },
       events: {
         url: 'Eventos.php',
@@ -726,6 +726,7 @@ var KTAppCalendar = function () {
             }
           } else {
             $(arg.el).find('.fc-daygrid-event-dot, .fc-list-event-dot').addClass('eventTeamsMonth').removeClass('fc-daygrid-event-dot fc-list-event-dot').append(iconTeams);
+            $(arg.el).find('.fc-event-title.fc-sticky').before(iconTeams);
           }
 
         } else {
@@ -740,6 +741,7 @@ var KTAppCalendar = function () {
             }
           } else {
             $(arg.el).find('.fc-daygrid-event-dot, .fc-list-event-dot').addClass('eventNoteMonth').removeClass('fc-daygrid-event-dot fc-list-event-dot').append(iconNote);
+            $(arg.el).find('.fc-event-title.fc-sticky').before(iconNote);
           }
         }
 

@@ -65,6 +65,30 @@
     background-color: rgb(136 198 241) !important;
 }
 
+.divNote.eventAllDay,
+.divTeams.eventAllDay {
+    display: flex;
+    align-items: center;
+    padding: 2px 0;
+    border: none !important;
+}
+
+.eventAllDay>.fc-event-main>.fc-event-main-frame>.fc-event-title-container>.iconNote,
+.eventAllDay>.fc-event-main>.fc-event-main-frame>.fc-event-title-container>.iconTeams {
+    margin-top: 0.3vh;
+    margin-left: 0.1vw;
+    margin-right: 0.1vw;
+}
+
+.fc-daygrid-day-events{
+    margin-bottom: 0 !important;
+}
+
+.fc-event-title.fc-sticky {
+    max-width: 10vw !important;
+    font-weight: 500;
+}
+
 .eventBar {
     width: 0.3vw;
     height: 100%;
