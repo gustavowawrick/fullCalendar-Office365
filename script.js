@@ -173,6 +173,7 @@ class utilitariosCalendario {
 
       // Verificar se existe o atributo address
       if (event.extendedProps.location[i].address) {
+
         title = event.extendedProps.location[i].address.street + ", " + event.extendedProps.location[i].address.city + " - " + event.extendedProps.location[i].address.state + ", " + event.extendedProps.location[i].address.countryOrRegion;
       } else if (title.length > 30) {
         title = objUtilitariosCalendario.truncateText(title, 30);
@@ -506,28 +507,91 @@ class utilitariosCalendario {
     });
   }
 
-  filterAttendess() {
+  filterAttendees() {
+    const attendeesList = [
+      { name: "Alice Silva", email: "alice@example.com" },
+      { name: "Carlos Oliveira", email: "carlos@example.com" },
+      { name: "Bruna Santos", email: "bruna@example.com" },
+      { name: "Fernando Pereira", email: "fernando@example.com" },
+      { name: "Patrícia Costa", email: "patricia@example.com" },
+      { name: "Ricardo Almeida", email: "ricardo@example.com" },
+      { name: "Ana Oliveira", email: "ana@example.com" },
+      { name: "Pedro Rocha", email: "pedro@example.com" },
+      { name: "Mariana Cardoso", email: "mariana@example.com" },
+      { name: "Gustavo Lima", email: "gustavo@example.com" },
+      { name: "Larissa Fernandes", email: "larissa@example.com" },
+      { name: "Jorge Santos", email: "jorge@example.com" },
+      { name: "Amanda Costa", email: "amanda@example.com" },
+      { name: "Rodrigo Pereira", email: "rodrigo@example.com" },
+      { name: "Beatriz Santos", email: "beatriz@example.com" },
+      { name: "Lucas Oliveira", email: "lucas@example.com" },
+      { name: "Carolina Almeida", email: "julio@example.com" },
+      { name: "José Silva", email: "gustavo.nunes@example.com" },
+      { name: "Vanessa Rocha", email: "vanessa@example.com" },
+      { name: "Felipe Cardoso", email: "felipe@example.com" }
+    ];
+
+    // Mapear a lista para incluir name e email em uma única string
+    const tagifyWhitelist = attendeesList.map(attendee => ({
+      value: attendee.name, // Apenas o nome será exibido
+      email: attendee.email // Mantém o email separadamente para referência
+    }));
+
     var inputObg = document.querySelector('#kt_modal_calendar_add_attendees_required'),
-      // init Tagify script on the above inputs
-      tagify = new Tagify(inputObg, {
-        whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
+      tagifyRequired = new Tagify(inputObg, {
+        whitelist: tagifyWhitelist,
         dropdown: {
-          classname: 'tags-look', // <- custom classname for this dropdown, so it could be targeted
-          enabled: 0,             // <- show suggestions on focus
-          closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-        }
+          classname: 'tags-look',
+          enabled: 0,
+          closeOnSelect: false
+        },
+        callbacks: {
+          // Função de filtro para permitir pesquisa por nome ou email
+          filter: function (inputValue, tagData) {
+            const searchString = inputValue.toLowerCase().trim();
+            const email = tagData.email.toLowerCase();
+
+            // Verifica se o inputValue corresponde ao email
+            if (email.includes(searchString)) {
+              return { value: tagData.value }; // Retorna apenas o nome correspondente
+            }
+
+            return false;
+          }
+        },
+        // Mapear o objeto para exibir apenas o name (sem email)
+        valueKey: 'value',
+        searchKeys: ['value'], // Pesquisa baseada apenas no nome
+        mapValueToProp: true
       });
 
     var inputOp = document.querySelector('#kt_modal_calendar_add_attendees_optional'),
-      // init Tagify script on the above inputs
-      tagify = new Tagify(inputOp, {
-        whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
-        dropdown: {          // <- mixumum allowed rendered suggestions
-          classname: 'tags-look', // <- custom classname for this dropdown, so it could be targeted
-          enabled: 0,             // <- show suggestions on focus
-          closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-        }
-      })
+      tagifyOptional = new Tagify(inputOp, {
+        whitelist: tagifyWhitelist,
+        dropdown: {
+          classname: 'tags-look',
+          enabled: 0,
+          closeOnSelect: false
+        },
+        callbacks: {
+          // Função de filtro para permitir pesquisa por nome ou email
+          filter: function (inputValue, tagData) {
+            const searchString = inputValue.toLowerCase().trim();
+            const email = tagData.email.toLowerCase();
+
+            // Verifica se o inputValue corresponde ao email
+            if (email.includes(searchString)) {
+              return { value: tagData.value }; // Retorna apenas o nome correspondente
+            }
+
+            return false;
+          }
+        },
+        // Mapear o objeto para exibir apenas o name
+        valueKey: 'value',
+        searchKeys: ['value'], // Pesquisa baseada apenas no nome
+        mapValueToProp: true
+      });
   }
 
   moveButtonAddEvents() {
@@ -561,7 +625,6 @@ function onSelectSuggestion(e) {
     tagify.removeAllTags();
   }
 
-  // custom class from "dropdownHeaderTemplate"
   else if (e.detail.elm.classList.contains(`${tagify.settings.classNames.dropdownItem}__addAll`));
   tagify.dropdown.selectAll();
 }
@@ -570,13 +633,11 @@ function onEditStart({ detail: { tag, data } }) {
   tagify.setTagTextNode(tag, `${data.name} <${data.email}>`);
 }
 
-// https://stackoverflow.com/a/9204568/104380
 function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 function parseFullValue(value) {
-  // https://stackoverflow.com/a/11592042/104380
   var parts = value.split(/<(.*?)>/g),
     name = parts[0].trim(),
     email = parts[1]?.replace(/<(.*?)>/g, '').trim();
@@ -804,7 +865,7 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.handleDeleteEvent(viewModal, viewDeleteButton, arg.event);
         objUtilitariosCalendario.handleResponseEvent(viewResponseButton, arg.event);
         objUtilitariosCalendario.initializeTinyMCE();
-        objUtilitariosCalendario.filterAttendess();
+        objUtilitariosCalendario.filterAttendees();
         objUtilitariosCalendario.isInPerson(arg.event);
         objUtilitariosCalendario.onInPerson();
 
@@ -852,81 +913,81 @@ var KTAppCalendar = function () {
 
   const initDatepickers = () => {
     startFlatpickr = flatpickr(startDatepicker, {
-        enableTime: false,
-        dateFormat: "d/m/Y",
-        locale: "pt",
-        onChange: function (selectedDates, dateStr, instance) {
-            if (selectedDates.length > 0) {
-                endFlatpickr.set('minDate', selectedDates[0]);
-                if (endFlatpickr.selectedDates.length > 0 && moment(selectedDates[0]).isSame(endFlatpickr.selectedDates[0], 'day')) {
-                    endTimeFlatpickr.set('minTime', startTimeFlatpickr.selectedDates[0]);
-                } else {
-                    endTimeFlatpickr.set('minTime', null);
-                }
-            }
+      enableTime: false,
+      dateFormat: "d/m/Y",
+      locale: "pt",
+      onChange: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length > 0) {
+          endFlatpickr.set('minDate', selectedDates[0]);
+          if (endFlatpickr.selectedDates.length > 0 && moment(selectedDates[0]).isSame(endFlatpickr.selectedDates[0], 'day')) {
+            endTimeFlatpickr.set('minTime', startTimeFlatpickr.selectedDates[0]);
+          } else {
+            endTimeFlatpickr.set('minTime', null);
+          }
         }
+      }
     });
 
     endFlatpickr = flatpickr(endDatepicker, {
-        enableTime: false,
-        dateFormat: "d/m/Y",
-        locale: "pt",
-        onChange: function (selectedDates, dateStr, instance) {
-            if (selectedDates.length > 0) {
-                startFlatpickr.set('maxDate', selectedDates[0]);
-                if (startFlatpickr.selectedDates.length > 0) {
-                    if (moment(selectedDates[0]).isSame(startFlatpickr.selectedDates[0], 'day')) {
-                        endTimeFlatpickr.set('minTime', startTimeFlatpickr.selectedDates[0]);
-                        // Check if end time is before start time
-                        if (endTimeFlatpickr.selectedDates.length > 0 && moment(endTimeFlatpickr.selectedDates[0]).isBefore(startTimeFlatpickr.selectedDates[0])) {
-                            endTimeFlatpickr.setDate(startTimeFlatpickr.selectedDates[0], true, 'H:i');
-                        }
-                    } else {
-                        endTimeFlatpickr.set('minTime', null);
-                    }
-                }
+      enableTime: false,
+      dateFormat: "d/m/Y",
+      locale: "pt",
+      onChange: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length > 0) {
+          startFlatpickr.set('maxDate', selectedDates[0]);
+          if (startFlatpickr.selectedDates.length > 0) {
+            if (moment(selectedDates[0]).isSame(startFlatpickr.selectedDates[0], 'day')) {
+              endTimeFlatpickr.set('minTime', startTimeFlatpickr.selectedDates[0]);
+              // Check if end time is before start time
+              if (endTimeFlatpickr.selectedDates.length > 0 && moment(endTimeFlatpickr.selectedDates[0]).isBefore(startTimeFlatpickr.selectedDates[0])) {
+                endTimeFlatpickr.setDate(startTimeFlatpickr.selectedDates[0], true, 'H:i');
+              }
+            } else {
+              endTimeFlatpickr.set('minTime', null);
             }
+          }
         }
+      }
     });
 
     startTimeFlatpickr = flatpickr(startTimepicker, {
-        enableTime: true,
-        noCalendar: true,
-        time_24hr: true,
-        dateFormat: "H:i",
-        locale: "pt",
-        onChange: function (selectedDates, dateStr, instance) {
-            if (selectedDates.length > 0) {
-                if (endFlatpickr.selectedDates.length > 0 && moment(startFlatpickr.selectedDates[0]).isSame(endFlatpickr.selectedDates[0], 'day')) {
-                    endTimeFlatpickr.set('minTime', selectedDates[0]);
-                    // Check if end time is before start time
-                    if (endTimeFlatpickr.selectedDates.length > 0 && moment(endTimeFlatpickr.selectedDates[0]).isBefore(selectedDates[0])) {
-                        endTimeFlatpickr.setDate(selectedDates[0], true, 'H:i');
-                    }
-                } else {
-                    endTimeFlatpickr.set('minTime', null);
-                }
+      enableTime: true,
+      noCalendar: true,
+      time_24hr: true,
+      dateFormat: "H:i",
+      locale: "pt",
+      onChange: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length > 0) {
+          if (endFlatpickr.selectedDates.length > 0 && moment(startFlatpickr.selectedDates[0]).isSame(endFlatpickr.selectedDates[0], 'day')) {
+            endTimeFlatpickr.set('minTime', selectedDates[0]);
+            // Check if end time is before start time
+            if (endTimeFlatpickr.selectedDates.length > 0 && moment(endTimeFlatpickr.selectedDates[0]).isBefore(selectedDates[0])) {
+              endTimeFlatpickr.setDate(selectedDates[0], true, 'H:i');
             }
+          } else {
+            endTimeFlatpickr.set('minTime', null);
+          }
         }
+      }
     });
 
     endTimeFlatpickr = flatpickr(endTimepicker, {
-        enableTime: true,
-        noCalendar: true,
-        time_24hr: true,
-        dateFormat: "H:i",
-        locale: "pt",
-        onChange: function (selectedDates, dateStr, instance) {
-            if (selectedDates.length > 0) {
-                if (startFlatpickr.selectedDates.length > 0 && moment(startFlatpickr.selectedDates[0]).isSame(endFlatpickr.selectedDates[0], 'day')) {
-                    startTimeFlatpickr.set('maxTime', selectedDates[0]);
-                } else {
-                    startTimeFlatpickr.set('maxTime', null);
-                }
-            }
+      enableTime: true,
+      noCalendar: true,
+      time_24hr: true,
+      dateFormat: "H:i",
+      locale: "pt",
+      onChange: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length > 0) {
+          if (startFlatpickr.selectedDates.length > 0 && moment(startFlatpickr.selectedDates[0]).isSame(endFlatpickr.selectedDates[0], 'day')) {
+            startTimeFlatpickr.set('maxTime', selectedDates[0]);
+          } else {
+            startTimeFlatpickr.set('maxTime', null);
+          }
         }
+      }
     });
-}
+  }
 
   // Handle add button
   const handleAddButton = () => {
