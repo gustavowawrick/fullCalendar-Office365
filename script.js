@@ -850,36 +850,83 @@ var KTAppCalendar = function () {
     );
   }
 
-  // Initialize datepickers --- more info: https://flatpickr.js.org/
   const initDatepickers = () => {
     startFlatpickr = flatpickr(startDatepicker, {
-      enableTime: false,
-      dateFormat: "d/m/Y",
-      locale: "pt"
+        enableTime: false,
+        dateFormat: "d/m/Y",
+        locale: "pt",
+        onChange: function (selectedDates, dateStr, instance) {
+            if (selectedDates.length > 0) {
+                endFlatpickr.set('minDate', selectedDates[0]);
+                if (endFlatpickr.selectedDates.length > 0 && moment(selectedDates[0]).isSame(endFlatpickr.selectedDates[0], 'day')) {
+                    endTimeFlatpickr.set('minTime', startTimeFlatpickr.selectedDates[0]);
+                } else {
+                    endTimeFlatpickr.set('minTime', null);
+                }
+            }
+        }
     });
 
     endFlatpickr = flatpickr(endDatepicker, {
-      enableTime: false,
-      dateFormat: "d/m/Y",
-      locale: "pt"
+        enableTime: false,
+        dateFormat: "d/m/Y",
+        locale: "pt",
+        onChange: function (selectedDates, dateStr, instance) {
+            if (selectedDates.length > 0) {
+                startFlatpickr.set('maxDate', selectedDates[0]);
+                if (startFlatpickr.selectedDates.length > 0) {
+                    if (moment(selectedDates[0]).isSame(startFlatpickr.selectedDates[0], 'day')) {
+                        endTimeFlatpickr.set('minTime', startTimeFlatpickr.selectedDates[0]);
+                        // Check if end time is before start time
+                        if (endTimeFlatpickr.selectedDates.length > 0 && moment(endTimeFlatpickr.selectedDates[0]).isBefore(startTimeFlatpickr.selectedDates[0])) {
+                            endTimeFlatpickr.setDate(startTimeFlatpickr.selectedDates[0], true, 'H:i');
+                        }
+                    } else {
+                        endTimeFlatpickr.set('minTime', null);
+                    }
+                }
+            }
+        }
     });
 
     startTimeFlatpickr = flatpickr(startTimepicker, {
-      enableTime: true,
-      noCalendar: true,
-      time_24hr: true,
-      dateFormat: "H:i",
-      locale: "pt"
+        enableTime: true,
+        noCalendar: true,
+        time_24hr: true,
+        dateFormat: "H:i",
+        locale: "pt",
+        onChange: function (selectedDates, dateStr, instance) {
+            if (selectedDates.length > 0) {
+                if (endFlatpickr.selectedDates.length > 0 && moment(startFlatpickr.selectedDates[0]).isSame(endFlatpickr.selectedDates[0], 'day')) {
+                    endTimeFlatpickr.set('minTime', selectedDates[0]);
+                    // Check if end time is before start time
+                    if (endTimeFlatpickr.selectedDates.length > 0 && moment(endTimeFlatpickr.selectedDates[0]).isBefore(selectedDates[0])) {
+                        endTimeFlatpickr.setDate(selectedDates[0], true, 'H:i');
+                    }
+                } else {
+                    endTimeFlatpickr.set('minTime', null);
+                }
+            }
+        }
     });
 
     endTimeFlatpickr = flatpickr(endTimepicker, {
-      enableTime: true,
-      noCalendar: true,
-      time_24hr: true,
-      dateFormat: "H:i",
-      locale: "pt"
+        enableTime: true,
+        noCalendar: true,
+        time_24hr: true,
+        dateFormat: "H:i",
+        locale: "pt",
+        onChange: function (selectedDates, dateStr, instance) {
+            if (selectedDates.length > 0) {
+                if (startFlatpickr.selectedDates.length > 0 && moment(startFlatpickr.selectedDates[0]).isSame(endFlatpickr.selectedDates[0], 'day')) {
+                    startTimeFlatpickr.set('maxTime', selectedDates[0]);
+                } else {
+                    startTimeFlatpickr.set('maxTime', null);
+                }
+            }
+        }
     });
-  }
+}
 
   // Handle add button
   const handleAddButton = () => {
