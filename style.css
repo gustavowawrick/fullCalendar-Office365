@@ -80,7 +80,7 @@
     margin-right: 0.1vw;
 }
 
-.fc-daygrid-day-events{
+.fc-daygrid-day-events {
     margin-bottom: 0 !important;
 }
 
@@ -166,9 +166,10 @@
     font-size: 1.15rem;
 }
 
-.divInitials {
-    width: 35px;
-    height: 35px;
+.divInitials,
+.divInitialsInvite {
+    width: 2.6rem;
+    height: 2.6rem;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
@@ -177,7 +178,8 @@
 }
 
 .initialsAuthor,
-.initialsAttendees {
+.initialsAttendees,
+.initialsInviteAttendees {
     font-size: 1rem;
     color: #fff;
 }
@@ -192,8 +194,13 @@
     cursor: pointer;
 }
 
-.attendeeName {
+.attendeeName,
+.invateAttendeeName {
     white-space: nowrap;
+}
+
+.inviteAttendeeEmail {
+    color: #4B5675;
 }
 
 .divAteendesEvent,
@@ -202,6 +209,13 @@
     height: 5vh;
     padding-left: 0.5vw;
     border-radius: 5px;
+}
+
+.divInviteAteendesEvent {
+    height: 5vh;
+    padding-left: 0.5vw;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .divScrollAttendees {
@@ -213,6 +227,7 @@
 }
 
 .divAteendesEvent:hover,
+.divInviteAteendesEvent:hover,
 .divEventAuthor:hover {
     background-color: #00000014;
 }

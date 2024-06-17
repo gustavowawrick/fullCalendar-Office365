@@ -29,7 +29,7 @@ class utilitariosCalendario {
       }
 
       divAttendees = '<div data-bs-toggle="tooltip" title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-3 divAteendesEvent">' +
-        '<div class="divInitials me-3 w-35px">' +
+        '<div class="divInitials me-3">' +
         '<div class="initialsAttendees">' + this.getInitials(event.extendedProps.attendees[i].emailAddress.name) + '</div>' +
         '</div>' +
         '<div class="d-flex align-items-center flex-row-fluid flex-wrap">' +
@@ -102,7 +102,7 @@ class utilitariosCalendario {
       }
 
       divAttendees = '<div data-bs-toggle="tooltip" title="' + event.extendedProps.attendees[i].emailAddress.address + '"class="d-flex flex-stack mb-3 divAteendesEvent">' +
-        '<div class="divInitials me-3 w-35px">' +
+        '<div class="divInitials me-3">' +
         '<div class="initialsAttendees">' + event.extendedProps.attendees[i].emailAddress.name.split(' ').map(name => name.charAt(0).toUpperCase()).join('') + '</div>' +
         '</div>' +
         '<div class="d-flex align-items-center flex-row-fluid flex-wrap">' +
@@ -509,8 +509,8 @@ class utilitariosCalendario {
 
   filterAttendees() {
     const attendeesList = [
-      { name: "Alice Silva", email: "alice@example.com" },
-      { name: "Carlos Oliveira", email: "carlos@example.com" },
+      { name: "Alice Silva Alice Silva Alice Silva Alice Silva Alice Silva Alice Silva Alice Silva", email: "alice@example.com" },
+      { name: "Carlos", email: "carlos@example.com" },
       { name: "Bruna Santos", email: "bruna@example.com" },
       { name: "Fernando Pereira", email: "fernando@example.com" },
       { name: "Patrícia Costa", email: "patricia@example.com" },
@@ -545,6 +545,25 @@ class utilitariosCalendario {
           enabled: 0,
           closeOnSelect: false
         },
+        templates: {
+          // Personalizar o template do dropdown
+          dropdownItem: function (tagData) {
+            // Gera as iniciais a partir do nome
+            const initials = tagData.value.split(" ").map((name, index, arr) => index === 0 || index === arr.length - 1 ? name[0] : '').join("");
+
+            return `<div data-bs-toggle="tooltip" class="d-flex flex-stack divInviteAteendesEvent">
+                        <div class="divInitialsInvite me-3" style="background-color: rgb(87, 51, 255);">
+                            <div class="initialsInviteAttendees">${initials}</div>
+                        </div>
+                        <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                            <div class="flex-grow-1 me-2">
+                                <a class="text-gray-700 fs-6 fw-bold inviteAttendeeName">${objUtilitariosCalendario.truncateText(tagData.value, 62)}</a>
+                                <span class="fw-semibold d-block pt-1 inviteAttendeeEmail">${tagData.email}</span>
+                            </div>
+                        </div>
+                    </div>`;
+          }
+        },
         callbacks: {
           // Função de filtro para permitir pesquisa por nome ou email
           filter: function (inputValue, tagData) {
@@ -572,6 +591,25 @@ class utilitariosCalendario {
           classname: 'tags-look',
           enabled: 0,
           closeOnSelect: false
+        },
+        templates: {
+          // Personalizar o template do dropdown
+          dropdownItem: function (tagData) {
+            // Gera as iniciais a partir do nome
+            const initials = tagData.value.split(" ").map((name, index, arr) => index === 0 || index === arr.length - 1 ? name[0] : '').join("");
+
+            return `<div data-bs-toggle="tooltip" class="d-flex flex-stack divInviteAteendesEvent">
+                        <div class="divInitialsInvite me-3" style="background-color: rgb(87, 51, 255);">
+                            <div class="initialsInviteAttendees">${initials}</div>
+                        </div>
+                        <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                            <div class="flex-grow-1 me-2">
+                                <a class="text-gray-700 fs-6 fw-bold inviteAttendeeName">${objUtilitariosCalendario.truncateText(tagData.value, 62)}</a>
+                                <span class="fw-semibold d-block pt-1 inviteAttendeeEmail">${tagData.email}</span>
+                            </div>
+                        </div>
+                    </div>`;
+          }
         },
         callbacks: {
           // Função de filtro para permitir pesquisa por nome ou email
@@ -858,7 +896,6 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.addHtmlAttendeesEdit(arg.event);
         objUtilitariosCalendario.addHtmlButtonTeams(arg.event);
         objUtilitariosCalendario.addInitialsAuthor(arg.event);
-        objUtilitariosCalendario.addRandomColor();
         objUtilitariosCalendario.copyEmail('.iconCopyAuthor,.iconCopyAttendees');
         objUtilitariosCalendario.onDeleteAttendee('.iconDeleteAttendees');
         objUtilitariosCalendario.hideAttendees('.titleRequired,.titleOptional');
@@ -868,6 +905,7 @@ var KTAppCalendar = function () {
         objUtilitariosCalendario.filterAttendees();
         objUtilitariosCalendario.isInPerson(arg.event);
         objUtilitariosCalendario.onInPerson();
+        objUtilitariosCalendario.addRandomColor();
 
         handleViewEvent();
       }
