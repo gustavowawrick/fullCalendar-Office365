@@ -237,7 +237,6 @@ class utilitariosCalendario {
       $('.buttonResponse .select2-selection__rendered').html('Responder Reunião');
 
       for (let i = 0; i < event.extendedProps.attendees.length; i++) {
-        console.log(event.extendedProps.attendees[i].status.response);
         if (event.extendedProps.attendees[i].emailAddress.address == event.extendedProps.userMail) {
 
           if (event.extendedProps.attendees[i].status.response === 'accepted') {
@@ -340,6 +339,13 @@ class utilitariosCalendario {
       isOnlineMeeting: false,
       allDay: false
     };
+
+    KTAppCalendar.newData = {
+      eventName: '',
+      startDate: new Date(),
+      endDate: '',
+      allDay: false
+    }
 
     tinymce.remove();
     $('#in_person').attr('checked', false);
@@ -709,6 +715,13 @@ var KTAppCalendar = function () {
     allDay: false
   };
 
+  var newData = {
+    eventName: '',
+    startDate: new Date(),
+    endDate: '',
+    allDay: false
+  }
+
   // Add event variables
   var eventName;
   var eventLocation;
@@ -1031,15 +1044,6 @@ var KTAppCalendar = function () {
   // Modal botão adicionar
   const handleAddButton = () => {
     addButton.addEventListener('click', e => {
-      // Reset form data
-      data = {
-        id: '',
-        eventName: '',
-        startDate: new Date(),
-        endDate: '',
-        allDay: false
-      };
-
       handleNewEvent();
     });
   }
@@ -1049,6 +1053,7 @@ var KTAppCalendar = function () {
     objUtilitariosCalendario.clearData();
     objUtilitariosCalendario.initializeTinyMCE();
     objUtilitariosCalendario.onInPerson();
+    $('#kt_modal_add_event').addClass('modalAddEvent');
 
     modalTitle.innerText = "Adicionar um novo evento";
 
@@ -1063,14 +1068,14 @@ var KTAppCalendar = function () {
           dw.classList.add('d-none');
         });
       } else {
-        endFlatpickr.setDate(data.startDate, true, 'Y-m-d');
+        endFlatpickr.setDate(newData.startDate, true, 'Y-m-d');
         datepickerWrappers.forEach(dw => {
           dw.classList.remove('d-none');
         });
       }
     });
 
-    populateForm(data);
+    populateForm(newData);
 
     // Handle submit form
     submitButton.addEventListener('click', function (e) {
@@ -1132,9 +1137,9 @@ var KTAppCalendar = function () {
                     id: uid(),
                     title: eventName.value,
                     location: eventLocation.value,
-                    start: startDateTime,
+                    start: new Date(),
                     end: '',
-                    allDay: allDayEvent
+                    allDay: false
                   });
                   calendar.render();
 
@@ -1165,6 +1170,7 @@ var KTAppCalendar = function () {
   // Modal para editar evento
   const handleEditEvent = () => {
     modalTitle.innerText = "Editar evento";
+    $('#kt_modal_add_event').removeClass('modalAddEvent');
 
     modal.show();
 
@@ -1321,7 +1327,7 @@ var KTAppCalendar = function () {
     });
   }
 
-   // Método botão de cancelar
+  // Método botão de cancelar
   const handleCancelButton = () => {
     cancelButton.addEventListener('click', function (e) {
       e.preventDefault();
@@ -1348,7 +1354,7 @@ var KTAppCalendar = function () {
     });
   }
 
-   // Método botão de fechar
+  // Método botão de fechar
   const handleCloseButton = () => {
     closeButton.addEventListener('click', function (e) {
       e.preventDefault();
@@ -1375,7 +1381,7 @@ var KTAppCalendar = function () {
     });
   }
 
-   // Método botão de visualizar
+  // Método botão de visualizar
   const handleViewButton = () => {
     const viewButton = document.querySelector('#kt_calendar_event_view_button');
     viewButton.addEventListener('click', e => {

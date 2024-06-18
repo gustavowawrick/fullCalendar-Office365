@@ -437,3 +437,15 @@
 .buttonAddEvents:hover {
     background-color: #0000001c !important;
 }
+
+.modalAddEvent .divRightView {
+    display: none;
+}
+
+.modalAddEvent .divLeftView {
+    width: 100%;
+}
+
+.modalAddEvent .mw-1000px {
+    max-width: 695px !important;
+}
