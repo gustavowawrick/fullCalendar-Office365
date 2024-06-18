@@ -1305,6 +1305,8 @@ var KTAppCalendar = function () {
     viewEventLocation.innerText = data.eventLocation;
     viewEventAuthor.innerText = data.eventAuthor;
     viewEventAuthorEdit.innerText = data.eventAuthor;
+
+    $('.divAttendees, .divAttendeesEdit, .divEventAuthor').removeClass('d-none');
   }
 
   const handleEditButton = () => {
