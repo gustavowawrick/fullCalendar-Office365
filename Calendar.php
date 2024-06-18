@@ -25,6 +25,9 @@ class Calendar
             case 'RESPONSE':
                 $this->responseStatus($_POST['eventId'], $_POST['response']);
                 break;
+            case 'USER':
+                $this->returnUser();
+                break;
         }
     }
 
@@ -83,6 +86,11 @@ class Calendar
         $user = $this->executeCurl($graphApiEndpoint, $headers, "GET");
 
         return $user;
+    }
+
+    public function returnUser(){
+        $user = $this->getUser();
+        echo json_encode(['user'=>['mail' => $user->mail, 'name' => $user->displayName]]);
     }
 
     public function deleteEvent($eventId)
