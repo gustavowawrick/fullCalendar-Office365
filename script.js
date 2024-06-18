@@ -1028,7 +1028,7 @@ var KTAppCalendar = function () {
     });
   }
 
-  // Handle add button
+  // Modal botão adicionar
   const handleAddButton = () => {
     addButton.addEventListener('click', e => {
       // Reset form data
@@ -1044,6 +1044,7 @@ var KTAppCalendar = function () {
     });
   }
 
+  // Modal novo evento
   const handleNewEvent = () => {
     objUtilitariosCalendario.clearData();
     objUtilitariosCalendario.initializeTinyMCE();
@@ -1161,7 +1162,7 @@ var KTAppCalendar = function () {
     });
   }
 
-  // Modal para Editar Evento
+  // Modal para editar evento
   const handleEditEvent = () => {
     modalTitle.innerText = "Editar evento";
 
@@ -1280,6 +1281,7 @@ var KTAppCalendar = function () {
     });
   }
 
+  // Modal de visualização do evento
   const handleViewEvent = () => {
     viewModal.show();
 
@@ -1309,6 +1311,7 @@ var KTAppCalendar = function () {
     $('.divAttendees, .divAttendeesEdit, .divEventAuthor').removeClass('d-none');
   }
 
+  // Método botão de edição
   const handleEditButton = () => {
     viewEditButton.addEventListener('click', e => {
       e.preventDefault();
@@ -1318,6 +1321,7 @@ var KTAppCalendar = function () {
     });
   }
 
+   // Método botão de cancelar
   const handleCancelButton = () => {
     cancelButton.addEventListener('click', function (e) {
       e.preventDefault();
@@ -1344,6 +1348,7 @@ var KTAppCalendar = function () {
     });
   }
 
+   // Método botão de fechar
   const handleCloseButton = () => {
     closeButton.addEventListener('click', function (e) {
       e.preventDefault();
@@ -1370,7 +1375,7 @@ var KTAppCalendar = function () {
     });
   }
 
-  // Handle view button
+   // Método botão de visualizar
   const handleViewButton = () => {
     const viewButton = document.querySelector('#kt_calendar_event_view_button');
     viewButton.addEventListener('click', e => {
