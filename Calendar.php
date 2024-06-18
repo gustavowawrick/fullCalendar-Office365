@@ -134,7 +134,9 @@ class Calendar
         // Formata a resposta dos eventos para ser retornada ao cliente
         $arrayItens = [];
 
-        $emailAddress = $this->getUser()->mail;
+        $user = $this->getUser();
+        $userMail = $user->mail;
+        $userName = $user->displayName;
 
         foreach ($responseEvents->value as $itemCalendar) {
             $item = new stdClass();
@@ -166,7 +168,8 @@ class Calendar
                 $item->extendedProps->attendees = $itemCalendar->attendees;
             }
 
-            $item->extendedProps->userMail = $emailAddress;
+            $item->extendedProps->userMail = $userMail;
+            $item->extendedProps->userName = $userName;
 
             $arrayItens[] = $item;
         }
