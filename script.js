@@ -748,6 +748,7 @@ var KTAppCalendar = function () {
   var viewResponseButton;
 
   var viewEventAuthor;
+  var viewEventAuthorEdit;
   var viewEventDescription;
 
   // Private functions
@@ -1303,6 +1304,7 @@ var KTAppCalendar = function () {
     viewEventDescription.innerHTML = data.eventDescription;
     viewEventLocation.innerText = data.eventLocation;
     viewEventAuthor.innerText = data.eventAuthor;
+    viewEventAuthorEdit.innerText = data.eventAuthor;
   }
 
   const handleEditButton = () => {
@@ -1472,6 +1474,7 @@ var KTAppCalendar = function () {
       viewEventDescription = viewElement.querySelector('[data-kt-calendar="event_description"]');
       viewEndDate = viewElement.querySelector('[data-kt-calendar="event_end_date"]');
       viewEventAuthor = viewElement.querySelector('[data-kt-calendar="event_author"]');
+      viewEventAuthorEdit = element.querySelector('[data-kt-calendar="event_author_edit"]');
       viewEditButton = viewElement.querySelector('#kt_modal_view_event_edit');
       viewDeleteButton = viewElement.querySelector('#kt_modal_view_event_delete');
       viewResponseButton = viewElement.querySelector('.buttonResponse');

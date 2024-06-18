@@ -161,7 +161,8 @@
     font-size: 1.2rem;
 }
 
-[data-kt-calendar="event_author"] {
+[data-kt-calendar="event_author"],
+[data-kt-calendar="event_author_edit"] {
     color: #4b4848;
     font-size: 1.15rem;
 }
