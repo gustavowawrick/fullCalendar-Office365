@@ -1050,17 +1050,30 @@ var KTAppCalendar = function () {
 
   // Modal novo evento
   const handleNewEvent = () => {
+    // Limpar dados e re-inicializar componentes
     objUtilitariosCalendario.clearData();
     objUtilitariosCalendario.initializeTinyMCE();
     objUtilitariosCalendario.onInPerson();
     $('#kt_modal_add_event').addClass('modalAddEvent');
 
+    // Definir o título da modal
     modalTitle.innerText = "Adicionar um novo evento";
 
+    // Exibir a modal
     modal.show();
 
-    const datepickerWrappers = form.querySelectorAll('[data-kt-calendar="datepicker"]');
+    // Inicializar ou resetar o datepicker de data de início
+    if (startFlatpickr) {
+      startFlatpickr.destroy();
+    }
+    startFlatpickr = flatpickr("#kt_calendar_datepicker_start_date", {
+      enableTime: false,
+      dateFormat: "d/m/Y",
+      defaultDate: new Date()
+    });
 
+    // Manipular o toggle de evento do dia todo
+    const datepickerWrappers = form.querySelectorAll('[data-kt-calendar="datepicker"]');
     const allDayToggle = form.querySelector('#kt_calendar_datepicker_allday');
     allDayToggle.addEventListener('click', e => {
       if (e.target.checked) {
@@ -1075,9 +1088,10 @@ var KTAppCalendar = function () {
       }
     });
 
+    // Preencher o formulário com os dados iniciais
     populateForm(newData);
 
-    // Handle submit form
+    // Adicionar event listener para submissão do formulário
     submitButton.addEventListener('click', function (e) {
       // Prevent default button action
       e.preventDefault();
@@ -1128,7 +1142,6 @@ var KTAppCalendar = function () {
                     const startTime = moment(startTimeFlatpickr.selectedDates[0]).format('HH:mm');
                     const endTime = moment(endTimeFlatpickr.selectedDates[0]).format('HH:mm');
 
-
                     startDateTime = startDate + 'T' + startTime;
                   }
 
@@ -1166,6 +1179,7 @@ var KTAppCalendar = function () {
       }
     });
   }
+
 
   // Modal para editar evento
   const handleEditEvent = () => {
