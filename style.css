@@ -73,8 +73,8 @@
     border: none !important;
 }
 
-.eventAllDay>.fc-event-main>.fc-event-main-frame>.fc-event-title-container>.iconNote,
-.eventAllDay>.fc-event-main>.fc-event-main-frame>.fc-event-title-container>.iconTeams {
+.eventAllDay .iconNote,
+.eventAllDay .iconTeams {
     margin-top: 0.3vh;
     margin-left: 0.1vw;
     margin-right: 0.1vw;
@@ -153,7 +153,7 @@
     display: flex;
     font-size: 1.5rem;
     justify-content: center;
-    width: 12.5vw;
+    width: 23rem;
 }
 
 .titleAuthorView {
@@ -448,4 +448,57 @@
 
 .modalAddEvent .mw-1000px {
     max-width: 695px !important;
+}
+
+@media screen and (max-width: 1366px) and (max-height: 768px) {
+
+    .buttonAddEvents>i,
+    .buttonFilterEvents .ki-filter {
+        margin-left: -0.6rem;
+    }
+
+    .iconTeams,
+    .iconNote {
+        width: 1.3rem;
+    }
+
+    .eventAllDay .iconNote,
+    .eventAllDay .iconTeams {
+        margin-top: 0.35rem;
+    }
+
+    .eventAllDay .fc-event-title {
+        max-width: 9rem !important;
+    }
+
+    .fc-more-popover .fc-daygrid-event-harness {
+        width: 14.3rem !important;
+    }
+
+    [data-kt-calendar="event_description"]{
+        height: 20rem;
+    }
+
+    .divScrollAttendees{
+        width: 23rem;
+        height: 28rem;
+    }
+
+    .divAteendesEvent, .divEventAuthor{
+        width: 22rem;
+    }
+    
+    #kt_modal_add_event .divLeftView, #kt_modal_add_event .divRightView{
+        max-height: 37rem;
+    }
+
+    .buttonEditOptional{
+        height: 3.35rem;
+        width: 7rem;
+        padding-left: 0.5rem;
+    }
+    
+    .divEditTitleStart, .divEditTitleEnd{
+        width: 8rem !important;
+    }
 }
