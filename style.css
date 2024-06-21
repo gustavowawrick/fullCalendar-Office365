@@ -475,30 +475,62 @@
         width: 14.3rem !important;
     }
 
-    [data-kt-calendar="event_description"]{
+    [data-kt-calendar="event_description"] {
         height: 20rem;
     }
 
-    .divScrollAttendees{
+    .divScrollAttendees {
         width: 23rem;
         height: 28rem;
     }
 
-    .divAteendesEvent, .divEventAuthor{
+    .divAteendesEvent,
+    .divEventAuthor {
         width: 22rem;
     }
-    
-    #kt_modal_add_event .divLeftView, #kt_modal_add_event .divRightView{
-        max-height: 37rem;
+
+    #kt_modal_add_event .divLeftView,
+    #kt_modal_add_event .divRightView {
+        max-height: 40rem;
     }
 
-    .buttonEditOptional{
+    .buttonEditOptional {
         height: 3.35rem;
         width: 7rem;
         padding-left: 0.5rem;
     }
-    
-    .divEditTitleStart, .divEditTitleEnd{
+
+    .divEditTitleStart,
+    .divEditTitleEnd {
         width: 8rem !important;
+    }
+
+    .modal-header {
+        padding: 1rem 1.75rem !important;
+    }
+
+    .modal-footer {
+        height: 5rem;
+        padding: 0 !important;
+    }
+
+    #kt_modal_add_event_cancel,
+    #kt_modal_add_event_submit {
+        font-size: 1rem !important;
+    }
+
+    .divScrollAttendees {
+        height: 24rem;
+    }
+
+    .tox {
+        height: 220px !important;
+    }
+
+    .divEditStartDate,
+    .divEditStartTime,
+    .divEditEndDate,
+    .divEditEndTime {
+        width: 9.5rem !important;
     }
 }
