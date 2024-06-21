@@ -454,7 +454,7 @@
 
     .buttonAddEvents>i,
     .buttonFilterEvents .ki-filter {
-        margin-left: -0.6rem;
+        margin-left: -0.7rem;
     }
 
     .iconTeams,
@@ -476,22 +476,45 @@
     }
 
     [data-kt-calendar="event_description"] {
+        height: 13rem;
+    }
+
+    #kt_modal_add_event .divScrollAttendees {
+        width: 23rem;
+        height: 16.6rem;
+    }
+
+    #kt_modal_view_event .divScrollAttendees {
+        width: 23rem;
         height: 20rem;
     }
 
-    .divScrollAttendees {
-        width: 23rem;
-        height: 28rem;
+    #kt_modal_add_event .py-10 {
+        padding-bottom: 0 !important;
+    }
+
+    .divAttendeesEdit .pt-8 {
+        padding-top: 0.6rem !important;
     }
 
     .divAteendesEvent,
     .divEventAuthor {
         width: 22rem;
+        height: 3.5rem;
+    }
+
+    .mb-3.divAteendesEvent {
+        margin-bottom: 0.1rem !important;
+    }
+
+    #kt_modal_add_event .divLeftView {
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
 
     #kt_modal_add_event .divLeftView,
     #kt_modal_add_event .divRightView {
-        max-height: 40rem;
+        max-height: 32.6rem;
     }
 
     .buttonEditOptional {
@@ -519,18 +542,34 @@
         font-size: 1rem !important;
     }
 
-    .divScrollAttendees {
-        height: 24rem;
+    #kt_modal_add_event .tox {
+        height: 250px !important;
     }
 
-    .tox {
-        height: 220px !important;
+    .divColStartDate,
+    .divColEndDate {
+        width: 10rem !important;
     }
 
     .divEditStartDate,
+    .divEditEndDate {
+        width: 8.5rem !important;
+    }
+
     .divEditStartTime,
-    .divEditEndDate,
     .divEditEndTime {
-        width: 9.5rem !important;
+        width: 5.2rem !important;
+    }
+
+    .divInviteAteendesEvent {
+        height: 3.5rem;
+    }
+
+    .tagify__dropdown__wrapper {
+        max-height: 273px !important;
+    }
+
+    .fc-timeGridDay-view .fc-event-title.fc-sticky {
+        max-width: 63rem !important;
     }
 }
