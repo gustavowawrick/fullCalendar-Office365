@@ -450,21 +450,98 @@
     max-width: 695px !important;
 }
 
-.fc-timeGridWeek-view .fc-event-time {
+.fc-timeGridWeek-view .fc-event-time,
+.fc-timeGridDay-view .fc-event-time {
     display: none;
 }
 
 .fc-timeGridDay-view .eventAllDay,
-    .fc-timeGridWeek-view .eventAllDay {
-        height: 2rem;
+.fc-timeGridWeek-view .eventAllDay {
+    height: 2rem;
+}
+
+.fc-timeGridWeek-view .eventAllDay .iconNote,
+.fc-timeGridWeek-view .eventAllDay .iconTeams,
+.fc-timeGridDay-view .eventAllDay .iconNote,
+.fc-timeGridDay-view .eventAllDay .iconTeams {
+    margin-top: -0.06rem
+}
+
+@media screen and (max-width: 1600px) and (max-height: 900px) {
+
+    .fc-dayGridMonth-view .eventAllDay .iconNote,
+    .fc-dayGridMonth-view .eventAllDay .iconTeams {
+        margin-top: 0.35rem;
     }
 
-    .fc-timeGridWeek-view .eventAllDay .iconNote,
-    .fc-timeGridWeek-view .eventAllDay .iconTeams,
-    .fc-timeGridDay-view .eventAllDay .iconNote,
-    .fc-timeGridDay-view .eventAllDay .iconTeams {
-        margin-top: -0.06rem
+    .fc-timeGridDay-view .fc-event-title.fc-sticky {
+        max-width: 88rem !important;
     }
+
+    /* Modal de visualização do evento */
+    #kt_modal_view_event [data-kt-calendar="event_description"] {
+        height: 20rem !important;
+    }
+
+    #kt_modal_view_event .divScrollAttendees {
+        height: 28rem !important;
+    }
+
+    #kt_modal_view_event .divScrollAttendees {
+        width: 26.5rem !important;
+    }
+
+    .divAteendesEvent,
+    .divEventAuthor {
+        width: 22rem !important;
+    }
+
+    #kt_modal_view_event .kt_modal_view_event {
+        width: 22rem !important;
+    }
+
+    /* Modal de inserção e edição do evento */
+    #kt_modal_add_event .divLeftView,
+    #kt_modal_add_event .divRightView {
+        max-height: 67vh;
+    }
+
+    .buttonEditOptional {
+        height: 3.35rem;
+        width: 7rem;
+        padding-left: 0.5rem;
+    }
+
+    #kt_modal_add_event .divScrollAttendees {
+        height: 24.3rem !important;
+    }
+
+    #kt_modal_add_event .divAttendeesEdit>.pt-8 {
+        padding-top: 1rem !important;
+    }
+
+    #kt_modal_add_event .divLeftView {
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    #kt_modal_add_event .py-10 {
+        padding-bottom: 0 !important;
+    }
+
+    #kt_modal_add_event .divEditTitleStart,
+    #kt_modal_add_event .divEditTitleEnd {
+        width: 7rem !important;
+    }
+
+    #kt_modal_add_event .divRightView {
+        padding-left: 2rem !important;
+    }
+
+    #kt_modal_add_event .divScrollAttendees {
+        width: 24.5rem !important;
+    }
+}
 
 @media screen and (max-width: 1366px) and (max-height: 768px) {
 
@@ -604,8 +681,4 @@
     .fc-timeGridWeek-view .fc-event-title {
         max-width: 9.9rem !important;
     }
-}
-
-@media screen and (max-width: 1600px) and (max-height: 900px) {
-
 }
