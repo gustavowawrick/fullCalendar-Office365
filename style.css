@@ -450,6 +450,22 @@
     max-width: 695px !important;
 }
 
+.fc-timeGridWeek-view .fc-event-time {
+    display: none;
+}
+
+.fc-timeGridDay-view .eventAllDay,
+    .fc-timeGridWeek-view .eventAllDay {
+        height: 2rem;
+    }
+
+    .fc-timeGridWeek-view .eventAllDay .iconNote,
+    .fc-timeGridWeek-view .eventAllDay .iconTeams,
+    .fc-timeGridDay-view .eventAllDay .iconNote,
+    .fc-timeGridDay-view .eventAllDay .iconTeams {
+        margin-top: -0.06rem
+    }
+
 @media screen and (max-width: 1366px) and (max-height: 768px) {
 
     .buttonAddEvents>i,
@@ -573,10 +589,6 @@
         max-width: 63rem !important;
     }
 
-    .fc-timeGridWeek-view .fc-event-time {
-        display: none;
-    }
-
     .fc-timeGridDay-view .eventAllDay,
     .fc-timeGridWeek-view .eventAllDay {
         height: 2rem;
@@ -592,4 +604,8 @@
     .fc-timeGridWeek-view .fc-event-title {
         max-width: 9.9rem !important;
     }
+}
+
+@media screen and (max-width: 1600px) and (max-height: 900px) {
+
 }
