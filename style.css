@@ -462,8 +462,8 @@
         width: 1.3rem;
     }
 
-    .eventAllDay .iconNote,
-    .eventAllDay .iconTeams {
+    .fc-dayGridMonth-view .eventAllDay .iconNote,
+    .fc-dayGridMonth-view .eventAllDay .iconTeams {
         margin-top: 0.35rem;
     }
 
@@ -571,5 +571,25 @@
 
     .fc-timeGridDay-view .fc-event-title.fc-sticky {
         max-width: 63rem !important;
+    }
+
+    .fc-timeGridWeek-view .fc-event-time {
+        display: none;
+    }
+
+    .fc-timeGridDay-view .eventAllDay,
+    .fc-timeGridWeek-view .eventAllDay {
+        height: 2rem;
+    }
+
+    .fc-timeGridWeek-view .eventAllDay .iconNote,
+    .fc-timeGridWeek-view .eventAllDay .iconTeams,
+    .fc-timeGridDay-view .eventAllDay .iconNote,
+    .fc-timeGridDay-view .eventAllDay .iconTeams {
+        margin-top: -0.06rem
+    }
+
+    .fc-timeGridWeek-view .fc-event-title {
+        max-width: 9.9rem !important;
     }
 }
