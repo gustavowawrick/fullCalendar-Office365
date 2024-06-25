@@ -467,7 +467,7 @@
     margin-top: -0.06rem
 }
 
-@media screen and (max-width: 1600px) and (max-height: 900px) {
+@media screen and (max-width: 1600px) {
 
     .fc-dayGridMonth-view .eventAllDay .iconNote,
     .fc-dayGridMonth-view .eventAllDay .iconTeams {
@@ -543,7 +543,7 @@
     }
 }
 
-@media screen and (max-width: 1440px) and (max-height: 900px) {
+@media screen and (max-width: 1440px) {
 
     .buttonAddEvents>i,
     .buttonFilterEvents .ki-filter {
@@ -554,12 +554,12 @@
         max-width: 9.9rem !important;
     }
 
-    .fc-daygrid-event .eventNoteWeek{
+    .fc-daygrid-event .eventNoteWeek {
         max-width: 10.5rem !important;
     }
 }
 
-@media screen and (max-width: 1366px) and (max-height: 768px) {
+@media screen and (max-width: 1366px) {
 
     .buttonAddEvents>i,
     .buttonFilterEvents .ki-filter {
@@ -696,5 +696,37 @@
 
     .fc-timeGridWeek-view .fc-event-title {
         max-width: 9.9rem !important;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+
+    .eventAllDay .fc-event-title {
+        max-width: 8.2rem !important;
+    }
+
+    .fc-timeGridWeek-view .fc-event-title {
+        max-width: 8.9rem !important;
+    }
+
+    .fc-more-popover .fc-daygrid-event-harness {
+        width: 13.2rem !important;
+    }
+
+    .eventAllDay .iconNote,
+    .eventAllDay .iconTeams {
+        margin-top: 0.25rem;
+    }
+
+    #kt_modal_view_event [data-kt-calendar="event_description"] {
+        height: 13rem !important;
+    }
+
+    #kt_modal_view_event .divScrollAttendees {
+        height: 20.1rem !important;
+    }
+
+    #kt_modal_add_event .divScrollAttendees {
+        height: 16.3rem !important;
     }
 }
