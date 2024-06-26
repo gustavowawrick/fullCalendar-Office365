@@ -467,7 +467,7 @@
     margin-top: -0.06rem
 }
 
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1600px) and (min-width: 1441px) {
 
     .fc-dayGridMonth-view .eventAllDay .iconNote,
     .fc-dayGridMonth-view .eventAllDay .iconTeams {
@@ -475,19 +475,25 @@
     }
 
     .fc-timeGridDay-view .fc-event-title.fc-sticky {
-        max-width: 88rem !important;
+        max-width: 93rem !important;
+    }
+
+    .fc-event-title.fc-sticky {
+        max-width: 11.7rem !important;
+    }
+
+    .buttonAddEvents>i,
+    .buttonFilterEvents .ki-filter {
+        margin-left: -0.3rem;
     }
 
     /* Modal de visualização do evento */
     #kt_modal_view_event [data-kt-calendar="event_description"] {
-        height: 20rem !important;
+        height: 23.7rem !important;
     }
 
     #kt_modal_view_event .divScrollAttendees {
-        height: 28rem !important;
-    }
-
-    #kt_modal_view_event .divScrollAttendees {
+        height: 31rem !important;
         width: 26.5rem !important;
     }
 
@@ -513,7 +519,8 @@
     }
 
     #kt_modal_add_event .divScrollAttendees {
-        height: 24.3rem !important;
+        height: 30rem !important;
+        width: 24.5rem !important;
     }
 
     #kt_modal_add_event .divAttendeesEdit>.pt-8 {
@@ -538,12 +545,18 @@
         padding-left: 2rem !important;
     }
 
-    #kt_modal_add_event .divScrollAttendees {
-        width: 24.5rem !important;
+    .divColStartDate,
+    .divColEndDate {
+        margin-right: 1rem;
+    }
+
+    .divEditStartDate,
+    .divEditEndDate {
+        width: 10rem !important;
     }
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1440px) and (min-width: 1367px) {
 
     .buttonAddEvents>i,
     .buttonFilterEvents .ki-filter {
@@ -557,9 +570,13 @@
     .fc-daygrid-event .eventNoteWeek {
         max-width: 10.5rem !important;
     }
+
+    #kt_modal_add_event .divScrollAttendees {
+        height: 30rem !important;
+    }
 }
 
-@media screen and (max-width: 1366px) {
+@media screen and (max-width: 1366px) and (min-width: 1281px) {
 
     .buttonAddEvents>i,
     .buttonFilterEvents .ki-filter {
@@ -590,7 +607,7 @@
 
     #kt_modal_add_event .divScrollAttendees {
         width: 23rem;
-        height: 16.6rem;
+        height: 16.6rem !important;
     }
 
     #kt_modal_view_event .divScrollAttendees {
@@ -764,11 +781,11 @@
         max-width: 24.5rem !important;
     }
 
-    .fc-daygrid-more-link.fc-more-link{
+    .fc-daygrid-more-link.fc-more-link {
         font-size: 0.6rem !important;
     }
 
-    .fc-theme-standard .fc-popover{
+    .fc-theme-standard .fc-popover {
         max-width: 15rem !important;
     }
 }
