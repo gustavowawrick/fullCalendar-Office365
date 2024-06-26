@@ -730,3 +730,45 @@
         height: 16.3rem !important;
     }
 }
+
+@media screen and (max-width: 460px) {
+
+    .fc-col-header-cell-cushion {
+        font-size: 0.6rem !important;
+    }
+
+    .fc-timeGridWeek-view .fc-col-header-cell-cushion {
+        padding: 0 !important;
+    }
+
+    .eventNoteMonth,
+    .eventTeamsMonth,
+    .fc-event-time,
+    .iconTeams,
+    .iconNote {
+        display: none;
+    }
+
+    .fc-event-title {
+        max-width: 3.8rem !important;
+        font-size: 0.7rem !important;
+        margin-top: 0.1rem !important;
+    }
+
+    .fc-daygrid-event .fc-event-title {
+        max-width: 3rem !important;
+        font-size: 0.7rem !important;
+    }
+
+    .fc-timeGridDay-view .fc-event-title {
+        max-width: 24.5rem !important;
+    }
+
+    .fc-daygrid-more-link.fc-more-link{
+        font-size: 0.6rem !important;
+    }
+
+    .fc-theme-standard .fc-popover{
+        max-width: 15rem !important;
+    }
+}
