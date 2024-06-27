@@ -563,16 +563,111 @@
         margin-left: -0.6rem;
     }
 
-    .fc-event-title.fc-sticky {
-        max-width: 9.9rem !important;
+    .iconTeams,
+    .iconNote {
+        width: 1.5rem;
     }
 
-    .fc-daygrid-event .eventNoteWeek {
-        max-width: 10.5rem !important;
+    .fc-timeGridWeek-view .eventAllDay .iconNote,
+    .fc-timeGridWeek-view .eventAllDay .iconTeams {
+        margin-left: -0.05rem;
+    }
+
+    .divTeams .fc-event-title,
+    .divNote .fc-event-title {
+        max-width: 7.5rem;
+    }
+
+    .eventAllDay .fc-event-title {
+        max-width: 9.8rem !important;
+    }
+
+    .fc-popover-body .divTeams,
+    .fc-popover-body .divNote {
+        width: 14.8rem;
+    }
+
+    .fc-popover-body .fc-event-title {
+        max-width: 9.6rem;
+    }
+
+    .fc-popover-body .eventAllDay .fc-event-title {
+        max-width: 12.5rem !important;
+    }
+
+    .fc-timeGridWeek-view .fc-event-title {
+        max-width: 10.8rem !important;
+    }
+
+    .fc-timeGridDay-view .fc-event-title {
+        max-width: 81rem !important;
+    }
+
+    /* Modal de visualização do evento */
+
+    .divAttendees {
+        width: 26.5rem;
+    }
+
+    #kt_modal_view_event .divScrollAttendees {
+        width: 26rem;
+        height: 31rem !important;
+    }
+
+    #kt_modal_view_event .divAteendesEvent,
+    #kt_modal_view_event .divEventAuthor {
+        width: 22rem !important;
+    }
+
+    /* Modal de inserção e edição do evento */
+
+    .buttonEditOptional {
+        height: 3.35rem;
+        width: 7rem;
+        padding-left: 0.5rem;
+    }
+
+    #kt_modal_add_event .divEditTitleStart,
+    #kt_modal_add_event .divEditTitleEnd {
+        width: 8rem !important;
+    }
+
+    #kt_modal_add_event .divEditStartDate,
+    #kt_modal_add_event .divEditEndDate {
+        width: 10rem !important;
+    }
+
+    #kt_modal_add_event .divEditStartTime,
+    #kt_modal_add_event .divEditEndTime {
+        width: 7.5rem !important;
+    }
+
+    #kt_modal_add_event .divColStartDate,
+    #kt_modal_add_event .divColEndDate {
+        margin-right: 2rem;
+    }
+
+    #kt_modal_add_event .divLeftView,
+    #kt_modal_add_event .divRightView {
+        max-height: 47rem !important;
+    }
+
+    #kt_modal_add_event .divAttendeesEdit {
+        width: 26rem;
     }
 
     #kt_modal_add_event .divScrollAttendees {
-        height: 30rem !important;
+        width: 26rem !important;
+        height: 31rem !important;
+    }
+
+    #kt_modal_add_event .divAteendesEvent,
+    #kt_modal_add_event .divEventAuthor {
+        width: 22rem !important;
+    }
+
+    #kt_modal_add_event .tox.tox-tinymce.tox-platform-touch {
+        height: 253px !important;
     }
 }
 
