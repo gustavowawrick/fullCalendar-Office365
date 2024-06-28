@@ -782,7 +782,7 @@
     }
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1280px) and (min-width: 1000px) {
 
     .buttonAddEvents>i,
     .buttonFilterEvents .ki-filter {
@@ -895,42 +895,64 @@
 
 @media screen and (max-width: 460px) {
 
-    .fc-col-header-cell-cushion {
-        font-size: 0.6rem !important;
+    .divNote.eventAllDay .eventBar,
+    .divNote.fc-event-end .eventBar {
+        width: 0.08rem;
     }
 
-    .fc-timeGridWeek-view .fc-col-header-cell-cushion {
-        padding: 0 !important;
+    .divNote .eventBar {
+        width: 0.1rem;
     }
 
-    .eventNoteMonth,
-    .eventTeamsMonth,
-    .fc-event-time,
     .iconTeams,
-    .iconNote {
-        display: none;
+    .iconNote,
+    .fc-event-time {
+        display: none !important;
     }
 
-    .fc-event-title {
-        max-width: 3.8rem !important;
+    .divTeams .fc-event-title,
+    .divNote .fc-event-title {
         font-size: 0.7rem !important;
-        margin-top: 0.1rem !important;
+        max-width: 3.7rem !important;
     }
 
-    .fc-daygrid-event .fc-event-title {
-        max-width: 3rem !important;
-        font-size: 0.7rem !important;
+    .fc-timeGridWeek-view .fc-daygrid-event .fc-event-title {
+        max-width: 2.7rem !important;
+    }
+
+    .fc-timeGridWeek-view .fc-event-title {
+        margin-top: 1.3px;
     }
 
     .fc-timeGridDay-view .fc-event-title {
         max-width: 24.5rem !important;
     }
 
-    .fc-daygrid-more-link.fc-more-link {
-        font-size: 0.6rem !important;
+    .fc-daygrid-more-link {
+        font-size: 0.6rem
     }
 
     .fc-theme-standard .fc-popover {
         max-width: 15rem !important;
     }
+
+    .fc-popover-body .divTeams,
+    .fc-popover-body .divNote {
+        max-width: 13.3rem !important;
+    }
+
+    .fc-popover-body .divNote.eventAllDay .eventBar {
+        width: 0.1rem !important;
+    }
+
+    .fc-popover-body .fc-event-title {
+        max-width: 13rem !important;
+    }
+
+    /* Modal de visualização do evento */
+
+
+
+    /* Modal de inserção e edição do evento */
+
 }
