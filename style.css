@@ -893,7 +893,7 @@
     }
 }
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 460px) and (min-width: 391px) {
 
     .divNote.eventAllDay .eventBar,
     .divNote.fc-event-end .eventBar {
@@ -955,4 +955,78 @@
 
     /* Modal de inserção e edição do evento */
 
+}
+
+@media screen and (max-width: 390px) and (min-width: 281px) {
+
+    .divNote.eventAllDay .eventBar,
+    .divNote.fc-event-end .eventBar {
+        width: 0.08rem;
+    }
+
+    .divNote .eventBar {
+        width: 0.1rem;
+    }
+
+    .iconTeams,
+    .iconNote,
+    .fc-event-time {
+        display: none !important;
+    }
+
+    .divTeams .fc-event-title,
+    .divNote .fc-event-title {
+        font-size: 0.7rem !important;
+        max-width: 2.9rem !important;
+    }
+
+    .fc-timeGridWeek-view .fc-daygrid-event .fc-event-title {
+        max-width: 2.2rem !important;
+    }
+
+    .fc-timeGridWeek-view .fc-event-title {
+        margin-top: 1.3px;
+    }
+
+    .fc-timeGridDay-view .fc-event-title {
+        max-width: 18.7rem !important;
+    }
+
+    .fc-daygrid-more-link {
+        font-size: 0.5rem
+    }
+
+    .fc-theme-standard .fc-popover {
+        max-width: 15rem !important;
+    }
+
+    .fc-popover-body .divTeams,
+    .fc-popover-body .divNote {
+        max-width: 13.3rem !important;
+    }
+
+    .fc-popover-body .eventAllDay .eventBar {
+        width: 0.01rem !important;
+    }
+
+    .fc-popover-body .divTeams .eventBar {
+        width: 0.01rem !important;
+    }
+
+    .fc-popover-body .fc-event-title {
+        max-width: 13rem !important;
+    }
+
+    /* Modal de visualização do evento */
+
+
+    /* Modal de inserção e edição do evento */
+}
+
+@media screen and (max-width: 280px) and (min-width: 200px) {
+
+    /* Modal de visualização do evento */
+
+
+    /* Modal de inserção e edição do evento */
 }
