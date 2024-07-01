@@ -951,7 +951,33 @@
 
     /* Modal de visualização do evento */
 
+    #kt_modal_view_event {
+        height: 66rem !important;
+        margin-top: 3rem;
+    }
 
+    #kt_modal_view_event .mw-1000px {
+        width: 449px !important;
+    }
+
+    .tox {
+        display: none !important;
+    }
+
+    .modal-body {
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    .divLeftView {
+        min-height: 15rem;
+        max-height: 53rem;
+    }
+
+    .divRightView {
+        min-height: 15rem;
+        max-height: 52rem;
+    }
 
     /* Modal de inserção e edição do evento */
 
@@ -1024,6 +1050,8 @@
 }
 
 @media screen and (max-width: 280px) and (min-width: 200px) {
+
+
 
     /* Modal de visualização do evento */
 
