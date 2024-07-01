@@ -952,35 +952,95 @@
     /* Modal de visualização do evento */
 
     #kt_modal_view_event {
-        height: 66rem !important;
+        height: 67.4rem !important;
         margin-top: 3rem;
     }
 
     #kt_modal_view_event .mw-1000px {
-        width: 449px !important;
+        width: 448px !important;
     }
 
     .tox {
         display: none !important;
     }
 
-    .modal-body {
+    .modal-body>.row {
         overflow-y: scroll;
         overflow-x: hidden;
     }
 
+    .modal-body.pb-20 {
+        padding-bottom: 1rem !important;
+    }
+
     .divLeftView {
         min-height: 15rem;
-        max-height: 53rem;
+        max-height: 60rem;
     }
 
     .divRightView {
         min-height: 15rem;
-        max-height: 52rem;
+        max-height: 50rem;
+    }
+
+    #kt_modal_view_event .iconTeamsWhite {
+        width: 1rem !important;
+    }
+
+    #kt_modal_view_event [data-kt-calendar="event_description"] {
+        padding-right: 0.5rem !important;
+        height: unset !important;
+        max-height: 28rem !important;
+    }
+
+    #kt_modal_view_event .titleTrackingView {
+        width: 35.5rem !important;
+    }
+
+    #kt_modal_view_event .divRightView .card-body.pt-8 {
+        margin-left: 4rem;
+    }
+
+    #kt_modal_view_event .divScrollAttendees {
+        width: 100%;
+    }
+
+    #kt_modal_view_event .divAteendesEvent,
+    #kt_modal_view_event .divEventAuthor {
+        width: 29rem;
     }
 
     /* Modal de inserção e edição do evento */
+    #kt_modal_add_event .form-control {
+        padding-right: 0 !important;
+    }
 
+    #kt_modal_add_event .buttonEditOptional {
+        width: 7rem;
+        padding-left: 0.3rem;
+    }
+
+    #kt_modal_add_event .divEditTitleStart,
+    #kt_modal_add_event .divEditTitleEnd {
+        width: 1rem !important;
+    }
+
+    #kt_modal_add_event .iconTeamsLabel {
+        width: 1.4rem;
+    }
+
+    #kt_modal_add_event .divRightView .card-body.pt-8 {
+        margin-left: 4rem;
+    }
+
+    #kt_modal_add_event .divScrollAttendees {
+        width: 100%;
+    }
+
+    #kt_modal_add_event .divAteendesEvent,
+    #kt_modal_add_event .divEventAuthor {
+        width: 29rem;
+    }
 }
 
 @media screen and (max-width: 390px) and (min-width: 281px) {
