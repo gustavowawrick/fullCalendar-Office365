@@ -1011,6 +1011,7 @@
     }
 
     /* Modal de inserção e edição do evento */
+
     #kt_modal_add_event .form-control {
         padding-right: 0 !important;
     }
@@ -1023,6 +1024,40 @@
     #kt_modal_add_event .divEditTitleStart,
     #kt_modal_add_event .divEditTitleEnd {
         width: 1rem !important;
+    }
+
+    #kt_modal_add_event .divEditStartDate,
+    #kt_modal_add_event .divEditEndDate {
+        width: 9.5rem !important;
+    }
+
+    #kt_modal_add_event .divEditStartTime,
+    #kt_modal_add_event .divEditEndTime {
+        width: 6.7rem !important;
+    }
+
+    #kt_modal_add_event .labelEditAllDay {
+        margin-right: 0.2rem !important;
+    }
+
+    #kt_modal_add_event .divColStartDate {
+        margin-left: -3.1rem !important;
+    }
+
+    #kt_modal_add_event .divColStartTime {
+        margin-right: -0.9rem !important;
+    }
+
+    #kt_modal_add_event .divColEndDate {
+        margin-left: -3rem !important;
+    }
+
+    #kt_modal_add_event .divColEndTime {
+        margin-right: 9rem !important;
+    }
+
+    .row.row-cols-lg-3.g-10 .fv-row {
+        width: unset !important;
     }
 
     #kt_modal_add_event .iconTeamsLabel {
